@@ -10,12 +10,12 @@ export default function ActivityAccordions() {
   return (
     <div>
       <Accordion>
-        <AccordionSummary
+        <AccordionSummary sx={{margin: 2}}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Your recent inbox conversations with ayeshabajwa563</Typography>
+          <Typography variant='h6'>Your recent inbox conversations with ayeshabajwa563</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -25,12 +25,12 @@ export default function ActivityAccordions() {
         </AccordionDetails>
       </Accordion>
       <Accordion>
-        <AccordionSummary
+        <AccordionSummary sx={{margin: 2}}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Your Order Details</Typography>
+          <Typography variant='h6'>Your Order Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
          <OrderTable />
