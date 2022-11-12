@@ -1,0 +1,64 @@
+
+.customContainer{
+    max-width: 1681px;
+    margin: 90px auto;
+}
+.roundIm{
+    text-align: right;
+}
+.roundIm img{
+    border-radius: 50%;
+    width: 230px;
+    height: 230px;
+    margin: 0 auto;
+}
+.teamTitle{
+    margin-top: 30px;
+    align-items: center;
+    font-size: 20px;
+    width: 50%;
+    text-align: center;
+    padding: 14px;
+    border: 1px solid #025EE5;
+    border-radius: 20px;
+}
+.name{
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 25px;    
+}
+.teamLead{
+    font-size: 23px;
+    margin-top: 25px;
+}
+.members{
+    font-size: 23px;
+}
+
+.customBorder{
+    width: 60%;
+    border-bottom: 4px solid #025EE5;
+}
+.ic{
+    cursor: pointer;
+}
+@media screen and (max-width: 768px){
+    .customContainer{
+        margin: 0px auto;
+    }
+    .roundImage{
+        text-align: center;
+    }
+    .teamTitle{
+        width: 100%;
+    }
+    .customBorder{
+        width: 100%;
+    }
+    .name{
+        text-align: center;
+    }
+    .teamLead{
+        text-align: center;
+    }
+  }

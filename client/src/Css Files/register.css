@@ -1,0 +1,109 @@
+nav a div {
+  width: 10rem;
+  height: 6rem;
+}
+
+.first {
+  align-items: center;
+  margin-top: 2%;
+  box-shadow: 1rem 1rem 2rem rgba(0, 0, 0, 0.2),
+    -1rem -1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.second {
+  align-items: center;
+  margin-top: 2%;
+}
+
+.third {
+  width: 100%;
+}
+
+.Fourth {
+  width: 33%;
+  float: left;
+}
+.Fourth img {
+  width: 40%;
+}
+.fifth {
+  float: left;
+  width: 33%;
+  padding-top: 2%;
+  text-align: center;
+}
+.fifth h4 {
+  margin-top: 3%;
+}
+
+.sixth {
+  width: 33%;
+  float: right;
+  text-align: right;
+}
+.sixth img {
+  width: 40%;
+}
+.seven {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.seven input {
+  border: 1px solid #007bff;
+  border-radius: 50px;
+  margin: 1.5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  /* width: 20%; */
+  min-height: 50px;
+}
+.seven span{
+    margin-left: 20px;
+}
+.seven input::placeholder {
+  padding-left: 10%;
+}
+
+.seven button {
+  width: 20%;
+  height: 50px;
+  margin: 2%;
+  border-radius: 30px;
+}
+
+.CNIC-input-front::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.CNIC-input-front::before {
+  content: "Upload Front of CNIC *";
+  margin: 10%;
+  color: #6c757d;
+}
+
+.CNIC-input-back::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.CNIC-input-back::before {
+  content: "Upload Back of CNIC *";
+  margin: 10%;
+  color: #6c757d;
+}
+
+.CNIC-input {
+  display: inline;
+  border: 1px solid #007bff;
+  width: 50%;
+}
+
+.nh {
+  width: 20%;
+  text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}

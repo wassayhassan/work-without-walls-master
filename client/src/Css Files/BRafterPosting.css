@@ -1,0 +1,41 @@
+.cc{
+    background-color: rgb(166, 173, 179);
+    margin-top:1rem;
+    padding-top:1rem;
+    padding-bottom:1rem;
+    border-radius: 2rem;
+}
+
+.ch {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-buget {
+    display: flex;
+    justify-content: space-between;
+    width: 13%;
+}
+@media (min-width: 576px){
+.col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}}
+.ccategory{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 85%;
+    margin-top: 1%;
+}
+
+.de {
+    width: 85%;
+    margin: 1%;
+}
+
+.cd {
+    /* background: rgb(201, 201, 204,0); */
+    border: none;
+}
+ 

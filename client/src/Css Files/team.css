@@ -1,0 +1,512 @@
+.front_main {
+  width: 100%;
+  height: 600px;
+  /* background-color: antiquewhite; */
+}
+.header {
+  width: 100%;
+  height: 70px;
+  background-color: green;
+}
+.logo_ {
+  width: 70%;
+  height: 500px;
+  margin: auto;
+  position: relative;
+  top: 50px;
+}
+.img_logo {
+  width: 80%;
+  height: 400px;
+}
+
+.btn_click {
+  width: 40%;
+  margin: auto;
+}
+
+.btn_start {
+  width: 150px;
+  padding: 10px 30px 10px 30px;
+  background-color: rgb(117, 117, 212);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  margin-left: 30%;
+  text-decoration: none;
+}
+.btn_start:hover {
+  color: white;
+}
+@media screen and (max-width: 800px) {
+  .logo_ {
+    width: 100%;
+
+    position: relative;
+    top: 30px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .img_logo {
+    margin-left: 5%;
+  }
+}
+.cat_hg {
+  text-align: center;
+}
+.cat_logo {
+  width: 200px;
+  height: 200px;
+  border: 1px solid;
+  border-radius: 100%;
+  margin: auto;
+}
+
+@media screen and (max-width: 800px) {
+  .cat_logo {
+    width: 150px;
+    height: 150px;
+    margin: auto;
+  }
+}
+.sec_row {
+  position: relative;
+  top: 50px;
+}
+.name_cat {
+  text-align: center;
+  position: relative;
+  top: 30px;
+  padding-bottom: 30px;
+}
+.flex_cat {
+  width: 200px;
+  margin: auto;
+}
+.link_upload {
+  text-decoration: none;
+  color: black;
+}
+.circle {
+  width: 130px;
+  height: 130px;
+  background-color: green;
+  border-radius: 100%;
+}
+.to_flex {
+  display: flex;
+}
+.sec_uplod_logo {
+  margin-left: 5%;
+  position: relative;
+  top: 30px;
+}
+.main_3 {
+  width: 100%;
+
+  display: flex;
+  /* background-color: aqua; */
+}
+.Up_logo {
+  /* background-color: green; */
+  border-radius: 4px;
+  color: white;
+  width: 97px;
+  position: relative;
+  margin: 15px;
+}
+.team_inp {
+  width: 130px;
+  position: relative;
+  top: 45px;
+  margin-left: 40%;
+  border: 1px solid;
+}
+/* .para_{
+     text-align: justify;
+} */
+
+.inp_data {
+  position: relative;
+  top: 20px;
+  margin: 3%;
+}
+#img {
+  position: relative;
+  top: 20px;
+}
+.team_inp {
+  padding: 6px;
+  border-radius: 14px;
+  outline: none;
+}
+#Last_div {
+  position: relative;
+  top: 30px;
+  margin: 3%;
+  font-weight: bold;
+}
+.mb_num {
+  margin-left: 2%;
+  font-weight: bold;
+  border-radius: 10px;
+  position: relative;
+  bottom: 10px;
+}
+.left_box {
+  border: 1px solid;
+  width: 70%;
+  border-radius: 30px;
+  position: relative;
+  top: 90px;
+  margin: auto;
+  padding: 15px;
+}
+@media screen and (max-width: 1000px) {
+  .left_box {
+    width: 100%;
+  }
+}
+
+.text {
+  padding: 10px;
+}
+.right_div {
+  width: 50%;
+  margin-left: 10%;
+  position: relative;
+  top: 80px;
+
+  /* background-color: bisque; */
+}
+.left_div {
+  width: 80%;
+
+  /* background-color: blue; */
+}
+.middle_sec {
+  margin-left: 4%;
+}
+.para_ {
+  font-size: 13px;
+}
+.text_Para {
+  padding: 10px;
+  text-align: justify;
+  font-size: 13px;
+}
+.imgs {
+  width: 40%;
+  height: 170px;
+  margin: 0.5rem;
+  position: relative;
+  border-radius: 12px;
+
+  /* margin: 20p x; */
+}
+@media screen and (max-width: 1000px) {
+  .main_3 {
+    display: block;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .right_div {
+    margin: auto;
+    position: relative;
+    bottom: 30px;
+    top: 10px;
+    width: 350px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .left_div {
+    width: 90%;
+    margin: auto;
+  }
+}
+.btn__next {
+  width: 200px;
+  padding: 10px 20px 10px 20px;
+  background-color: green;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+}
+.main_4 {
+  width: 100%;
+  padding-left: 20px;
+  padding-bottom: 50px;
+}
+.sec_one_pg_4 {
+  display: flex;
+  width: 400px;
+  margin: auto;
+  /* background-color: aqua; */
+  position: relative;
+  top: 20px;
+}
+.logo_uploaded {
+  width: 160px;
+  height: 160px;
+  background-color: green;
+  border-radius: 100%;
+}
+.link__ {
+  text-decoration: none;
+}
+.team_ti {
+  width: 250px;
+  height: 40px;
+  padding: 10px 20px 10px 20px;
+  border: 1px solid;
+  position: relative;
+  top: 50px;
+  margin-left: 30px;
+  border-radius: 10px;
+}
+.flex_for_4 {
+  display: flex;
+
+  justify-content: space-around;
+  position: relative;
+  top: 50px;
+}
+@media screen and (max-width: 885px) {
+  .flex_for_4 {
+    display: block;
+  }
+}
+.prof_img {
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+}
+.about {
+  display: flex;
+  width: 400px;
+  margin: auto;
+}
+.name {
+  font-weight: bold;
+  margin-left: 30px;
+  position: relative;
+  top: 20px;
+  font-size: 20px;
+}
+.team_text {
+  font-weight: 200;
+  font-size: 13px;
+}
+.contact {
+  width: 80%;
+  height: 200px;
+}
+@media screen and (max-width: 987px) {
+  .contact {
+    width: 100%;
+
+    margin: auto;
+  }
+}
+
+#rate_it {
+  padding-top: 12px;
+}
+
+.flex_rat {
+  display: flex;
+  width: 400px;
+  margin: auto;
+}
+
+
+.stars_sec {
+  position: relative;
+  top: 50px;
+  /* margin-left: 40px; */
+}
+@media screen and (max-width: 987px) {
+  .stars_sec {
+    margin-left: 4%;
+  }
+}
+.Rat_com {
+  width: 240px;
+  height: 50px;
+  font-weight: bold;
+  position: relative;
+  top: 50px;
+  font-size: 20px;
+  text-align: center;
+  /* background-color: green; */
+  border-radius: 10px;
+  margin-right: 30px;
+}
+@media screen and (max-width: 987px) {
+  .Rat_com {
+    font-size: 15px;
+    width: 200px;
+    margin-right: 10%;
+  }
+}
+.input_sec {
+  position: relative;
+  top: 40px;
+  margin-left: 30px;
+  width: 100%;
+}
+@media screen and (max-width: 987px) {
+  .input_sec {
+    width: 100%;
+  }
+}
+.inp_data {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid rgb(124, 124, 214);
+  /* width: 90%; */
+}
+@media screen and (max-width: 687px) {
+  .inp_data {
+    width: 30%;
+  }
+}
+.uploaded_logo {
+  width: 150px;
+  height: 40px;
+  padding: 10px 20px 10px 20px;
+  background-color: green;
+  position: relative;
+  top: 20px;
+  border-radius: 10px;
+  color: white;
+}
+.green_line {
+  width: 150px;
+  height: 2px;
+  /* background-color: green; */
+}
+.img_uplo {
+  display: flex;
+  position: relative;
+  bottom: 60px;
+}
+.form {
+  width: 100%;
+  height: 400px;
+  /* background-color: aqua; */
+  position: relative;
+  top: 40px;
+  padding-bottom: 80px;
+  margin-left: 10%;
+}
+@media screen and (max-width: 487px) {
+  .form {
+    margin-left: 10%;
+  }
+}
+.greenish_line {
+  width: 150px;
+  height: 2px;
+  background-color: seagreen;
+}
+._2ans_flex {
+  display: flex;
+}
+.form_text {
+  margin-left: 6px;
+}
+.link_input {
+  width: 450px;
+  position: relative;
+  top: 50px;
+  margin-left: 3%;
+  margin-right: 3%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid green;
+}
+.input_form {
+  position: relative;
+  top: 50px;
+  margin-left: 3%;
+  margin-right: 3%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid green; /* margin-left:3%; */
+}
+@media screen and (max-width: 487px) {
+  .input_form {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width: 487px) {
+  .link_input {
+    width: 330px;
+  }
+}
+.Submit {
+  margin-left: 18%;
+  text-decoration: none;
+}
+@media screen and (max-width: 487px) {
+  .Submit {
+    margin-left: 20%;
+  }
+}
+.main_4 {
+  width: 100%;
+
+  /* background-color: aqua; */
+}
+.main_5 {
+  width: 100%;
+  display: flex;
+}
+@media screen and (max-width: 1000px) {
+  .main_4 {
+    width: 100%;
+
+    display: block;
+    /* background-color: aqua; */
+  }
+}
+@media screen and (max-width: 1000px) {
+  .main_5 {
+    width: 100%;
+
+    display: block;
+    /* background-color: aqua; */
+  }
+}
+.pro_img {
+  width: 100px;
+  height: 100px;
+}
+.star_rat[type="radio"] {
+  display: none;
+}
+.star {
+  cursor: pointer;
+  transition: color 200ms;
+}
+/* 
+input[type="file"] {
+    display: none;
+} */
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.links{
+  display: flex;
+  justify-content: end;
+  margin-right: 8rem;
+}

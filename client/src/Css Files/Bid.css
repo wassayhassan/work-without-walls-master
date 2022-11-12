@@ -1,0 +1,59 @@
+.ml {
+
+    display: flex;
+    justify-content: center;
+}
+
+
+.area {
+    width: 90%;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    padding: 3%;
+    background: rgb(255, 255, 255);
+    
+}
+
+.offer {
+    background: rgb(255, 255, 255);
+    width: 90%;
+    border-radius: 10px;
+    margin-top: 2%;
+}
+
+.form-control {
+    padding: 3%;    
+}
+
+.buget {
+    background: rgb(255, 255, 255);
+    width: 90%;
+    margin-top: 2%;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.buget input {
+    width: 20%;
+    margin: 1%;
+    border: 2px solid gainsboro;
+    border-radius: 15px;
+}
+
+.submit {
+    width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2%;
+}
+
+.submit button {
+    margin-right: 2%;
+    width: 25%;
+    border-radius: 10px;
+}

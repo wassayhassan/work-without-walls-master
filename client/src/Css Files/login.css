@@ -1,0 +1,87 @@
+.cont {
+    align-items: center;
+    margin-top: 2%;
+    /* border: 2px solid black; */
+}
+
+.ro {
+    margin: 2%;
+    box-shadow: 1rem 1rem 2rem rgba(0, 0, 0, 0.2),
+    -1rem -1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+
+.c1 {
+    width: 70%;
+    padding: 0%;
+}
+
+.c1 img {
+    width: 95%;
+
+}
+
+.c2 {
+    width: 30%;
+    /* border: 2px solid violet; */
+}
+
+.t {
+    /* border: 2px solid blue; */
+    height:40%;
+    position: relative;
+    overflow: hidden;
+}
+
+.im {
+    /* border: 2px solid violet; */
+    float: right;
+    width: 100%;
+    text-align: right;
+}
+
+.im img{
+    width: 40%;
+}
+
+.h {
+    text-align: center;
+}
+
+
+
+.h h4{
+    margin-top: 5%;
+}
+
+.b {
+    /* border: 2px solid brown; */
+    height:60%;
+    padding: 3%;
+    padding-top: 5%;
+    text-align: center;
+}
+
+.b input {
+    border-radius: 50px;
+    margin-bottom: 5%;
+    /* text-align: center; */
+}
+.b input::placeholder {
+padding-left: 5%;
+}
+
+.b button {
+    width: 70%;
+    border-radius: 30px;
+}
+
+.p{
+    margin-top: 30%;
+}
+
+.p span {
+text-decoration: underline;
+cursor: pointer;
+}
+

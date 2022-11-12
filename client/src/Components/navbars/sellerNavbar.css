@@ -1,0 +1,89 @@
+.topbarContainer {
+    height: 60px;
+    width: 100%;
+    background-color: #1877f2;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  .jh{
+    background-color: rgb(157, 175, 191);
+    border-radius:1.5rem ;
+    margin-top: 1rem;
+  }
+  .und{
+    list-style-type: none;
+  }
+  .cb{
+    background-color:rgb(17, 51, 81)
+  }
+ 
+  .topbarLeft {
+    flex: 1;
+  }
+  
+  .logo {
+  
+    margin-left: 20px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .topbarRight {
+    flex: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+  }
+  
+  .topbarIcons {
+    display: flex;
+  }
+  
+  .topbarIconItem {
+    margin-right: 15px;
+    cursor: pointer;
+    position: relative;
+    margin-top: 5px;
+    padding:4px
+  }
+  
+  .topbarIconBadge {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  .topbarImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .pic{
+    width:11rem;
+    height:100px; 
+    object-fit:cover;
+    margin-top: 2rem;
+  }
+
+  .topbarend{
+    flex:1;
+    justify-content: end;
+    margin-right: 77px;
+  }
+  
