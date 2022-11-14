@@ -192,5 +192,15 @@ const getSingleUser = asyncHandler(async (req, res) => {
     throw new Error(error.message);
   }
 });
+const getUserById = async(req, res) => {
+  try{
+    let user = await User.findById(req.params.id);
+    res.status(200).json({name: user.firstname + ' ' + user.lastname, profileImg: user.profileImg, id: user._id})
+  }catch(err){
+    res.status(400).json(err);
+  }
+   
+    
+}
 
-module.exports = { signup, userUpdateHandler, getSingleUser };
+module.exports = { signup, userUpdateHandler, getSingleUser, getUserById};

@@ -41,6 +41,14 @@ const getOffersById = async(req, res) => {
       res.status(400).json(err)
     }
 }
+const updateBid = async(req, res) => {
+   try{
+       let offer = await bidModel.findByIdAndUpdate({_id: req.params.id}, req.body,{new: true});
+       res.status(200).json(offer);
+   }catch(err){
+      res.status(400).json(err);
+   }
+}
 
 
-module.exports = {addNewBid, deleteBid, getOffersById}
+module.exports = {addNewBid, deleteBid, getOffersById, updateBid}

@@ -22,7 +22,7 @@ const ReviewModel = new Schema(
       ref: 'Order',
       required: true,
     },
-    rating: {
+    overallRating: {
       type: Number,
       required: true,
     },

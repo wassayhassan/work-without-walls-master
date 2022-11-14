@@ -96,11 +96,13 @@ const bids = require("./routes/bid.routes");
 const order = require("./routes/order.routes");
 const orderActivites = require('./routes/orderactivitiesRoutes');
 const reviews = require("./routes/review.routes");
+const uploads = require("./routes/ordermaterial.routes");
 
 dbConnection();
 
 app.use("/home", home);
-app.use('/reviews', reviews);
+app.use("/uploads", uploads);
+app.use('/review', reviews);
 app.use("/api", routes);
 app.use("/auth", auth);
 app.use("/admin", admin);

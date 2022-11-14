@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OrderTable from './orderTable';
 
-export default function ActivityAccordions() {
+export default function ActivityAccordions({orderDetails}) {
   return (
     <div>
       <Accordion>
@@ -33,7 +33,7 @@ export default function ActivityAccordions() {
           <Typography variant='h6'>Your Order Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
-         <OrderTable />
+         <OrderTable orderDetails={orderDetails} />
         </AccordionDetails>
       </Accordion>
 

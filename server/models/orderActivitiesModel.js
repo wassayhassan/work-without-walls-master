@@ -7,7 +7,18 @@ const orderActivitiesSchema = new Schema({
     },
     msg: {
         type: String
-    }
+    },
+    activityType: {
+       type: String
+    },
+    deliveryId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Delivery'
+     },
+     reviewId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+     }
 }, {
     timestamps: true
 })

@@ -39,11 +39,10 @@ const SellerNavBar = () => {
 
   return (
     <div className="topbarContainer">
-      <div className="topbarLeft">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">
-            <img className="pic" src={logo} alt=""></img>
-          </span>
+      <div className="topbarLeft h-full ">
+        <Link to="/" className="h-full object-cover max-h-[60px]">
+            <img className="" src={logo} alt=""></img>
+
         </Link>
       </div>
       <div className="topbarRight">

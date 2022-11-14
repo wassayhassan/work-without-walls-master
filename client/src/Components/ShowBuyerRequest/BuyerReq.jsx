@@ -69,7 +69,7 @@ const BuyerReq = () => {
             </div>
 
             <div className="text-right" >
-              <Bid jobid={job._id} jobDescription={job.description} creator={job.createdBy}/>
+              <Bid jobid={job._id} jobDescription={job.description} creator={job.createdBy} job={job}/>
             </div>
           </div> 
         ))}

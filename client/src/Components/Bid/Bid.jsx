@@ -8,7 +8,7 @@ import { UserContext } from "../../context/user.context";
 
 
 
-const Bid = ({jobid, jobDescription, creator}) => {
+const Bid = ({jobid, jobDescription, creator, job}) => {
   const { setuser, user } = useContext(UserContext);
 
   
@@ -17,12 +17,14 @@ const Bid = ({jobid, jobDescription, creator}) => {
   );
   const [bidDetails, setBidDetails] = useState({
       jobId: jobid,
+      status: 'sent',
       senderId: user._id,
       receiverId: creator,
       offer: '',
       budget: '',
       dealTime: '',
-      percentOff: ''
+      percentOff: '',
+      category: job.category,
   })
   function handleBidChange(e){
     let name = e.target.name;

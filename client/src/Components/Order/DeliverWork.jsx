@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import { Button } from 'flowbite-react';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { addDelivery } from '../../api';
+import { UserContext } from "../../context/user.context";
+import { getDeliveriesByOrderId } from '../../api';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,6 +23,18 @@ export default function DeliverWork({orderDetails}) {
   const handleClose = () => setOpen(false);
   const [workfile, setWorkfile] = useState([]);
   const [workdesc, setWorkDesc] = useState("");
+  const [deliveries, setDeliveries] = useState([]);
+
+    useEffect(()=> {
+      if(orderDetails._id){
+          const getDeliveries = async(id) => {
+              let data =  await getDeliveriesByOrderId(id);
+              setDeliveries(data.data)
+      }
+             getDeliveries(orderDetails._id)
+      }
+   
+  }, [orderDetails._id])
   
   function handleWorkChange(e){
     for(let i = 0; i < e.target.files.length; i++){
@@ -37,14 +53,14 @@ export default function DeliverWork({orderDetails}) {
         form.append('file', workfile[i]);
      }
      let data = addDelivery(orderDetails._id, form);
-     console.log(data);
-
   }
 
 
   return (
     <div>
-      <button type="button" className="btn btn-success rounded" onClick={handleOpen}>Deliver Now</button>
+     {orderDetails.status !== 'completed' && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Deliver Again</Button>} 
+     { orderDetails.status !== 'completed' && deliveries.length < 1 && <Button onClick={handleOpen} color="success">Deliver Now</Button>}
+      {orderDetails.status === "completed" && deliveries.length > 0 &&  <Button disabled={true}>Accepted Delivery</Button> }
       <Modal
         open={open}
         onClose={handleClose}

@@ -1,14 +1,17 @@
 import "./message.css";
 import { format } from "timeago.js";
-import { createOrder } from "../../api";
+import { createOrder, updateBid } from "../../api";
 import { useNavigate } from "react-router-dom";
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../context/user.context";
 
 export default function Message({ member, current, message, own }) {
   const [accepted, setAccepted] = useState(message.accepted === "true"? true: false);
+  const [Withdraw, setWithdraw] = useState(false);
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
+
+  const[offerOrderId, setOfferOrderId] = useState(message.orderId);
 
 
 
@@ -19,10 +22,10 @@ export default function Message({ member, current, message, own }) {
     description: message.offer,
     budget: message.budget,
     dealTime: message.dealTime,
-    status: 'assigned',
+    status: 'started',
     createdBy: message.senderId,
     assignedTo: message.senderId,
-    category: 'Web Development',
+    category: message.category,
     assigned: "true",
     completed: "false",
     canceled: 'false',
@@ -30,9 +33,13 @@ export default function Message({ member, current, message, own }) {
   }
 
     const data = await createOrder(dat);
-    console.log(dat);
+    setOfferOrderId(data.data.orderId);
     setAccepted(true)
 
+ }
+ const handleOfferWithDraw = async() => {
+     const data = await updateBid(message._id, {status: 'withdrawn'});
+     console.log(data);
  }
 
 
@@ -60,7 +67,7 @@ export default function Message({ member, current, message, own }) {
 
 
 
-<div className={own ? "message own" : "message"}>
+<div className={own ? "flex flex-row justify-end w-full m-1": "flex flex-row justify-end w-start m-2"}>
 <div className="messageTop">
   <img
     className="messageImg"
@@ -82,10 +89,11 @@ export default function Message({ member, current, message, own }) {
           <h5>Offer Includes</h5>
           <li> {message.dealTime} days delivery</li>
           <li>{message.percentOff} % Off</li>
+          <li>{message.budget}</li>
         </div>
         <div className="d-flex flex-row justify-content-end">
-       {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/seller/orderdetails/${message.orderId}`)}>View Order</button>}
-        <button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>
+       {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/seller/orderdetails/${offerOrderId}`)}>View Order</button>}
+        {(message.senderId === user._id? <button type="button" className="btn btn-light" onClick={handleOfferWithDraw} disabled={Withdraw}>{Withdraw? 'Accepted': 'Withdraw Offer'}</button>:<button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
         </div>
       </div>
   

@@ -19,6 +19,7 @@ Base.interceptors.request.use((config) => {
 export const loginUser = (data) => Base.post("/auth/login", data);
 export const logoutUser = () => Base.post("/auth/logout");
 export const signupUser = (data) => Base.post("/api/register", data);
+export const getUserById = (id) => Base.get(`/api/user/${id}`);
 export const getUserMe = () => Base.get("/api/user");
 export const getJobs = () => Base.get("/Job/") 
 export const createJob=(data)=>Base.post(`/Job/create/`, data)
@@ -36,6 +37,17 @@ export const getBidsById = (id) => Base.get(`/bid/getbyid/${id}`);
 export const createOrder = (data) =>  Base.post('/order/create', data);
 export const getOrderById = (id) => Base.get(`/order/${id}`);
 export const addDelivery = (id, data) => Base.post(`/order/${id}/delivery/add`, data);
-
+export const getDeliveriesByOrderId = (id) => Base.get(`/order/${id}/deliveries`);
+export const getActivitiesByOrderId = (id) => Base.get(`/orderactivity/${id}`);
+export const getDeliveryById = (id) => Base.get(`order/delivery/${id}`);
+export const updateOrder = (id, data) => Base.post(`/order/${id}/update`, data);
+export const createReview  = (id, data) => Base.post(`/review/create/order/${id}`, data);
+export const getReviewsByUserId = (id) => Base.get(`/review//user/${id}`);
+export const getReviewsByOrderId = (id) => Base.get(`/review/order/${id}`);
+export const getReviewById = (id) => Base.get(`/review/${id}`);
+export const updateBid = (id, data) => Base.post(`/bid/${id}/update`, data);
+export const createNote = (data) => Base.post('/order/notes/create', data);
+export const getNotesByOrderId = (id) => Base.get(`/order/${id}/notes`);
+export const getNoteById = (id) => Base.get(`/order/notes/${id}`);
 
 

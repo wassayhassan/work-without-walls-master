@@ -7,6 +7,10 @@ import Box from '@mui/material/Box';
 import SellerOrderActivities from './SellerOrderActivities';
 import Divider from '@mui/material/Divider';
 import OrderTable from './orderTable';
+import { UserContext } from "../../context/user.context";
+import Deliveries from './Deliveries.component';
+import {useState, useEffect} from 'react';
+import { getReviewsByOrderId } from '../../api';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,10 +47,28 @@ function a11yProps(index) {
 
 export default function SellerOrderDetailsLeft({orderDetails}) {
   const [value, setValue] = React.useState(0);
-
+  const [buyerReview, setBuyerReview] = useState(null);
+  const [sellerReview, setSellerReview] = useState(null);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  async function getReviews(id){
+     let data = await getReviewsByOrderId(id);
+     console.log(data.data)
+     data.data.forEach((r)=> {
+      if(r.rtype === "Seller"){
+        setSellerReview(r);
+      }else{
+        setBuyerReview(r);
+      }
+     })
+  }
+  useEffect(()=> {
+    if(orderDetails._id){
+      getReviews(orderDetails._id);
+    }
+    
+  }, [orderDetails])
 
   return (
     <div className='w-75 p-2 gray'>
@@ -54,10 +76,11 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Activity" {...a11yProps(0)} />
           <Tab label="Details" {...a11yProps(1)} />
+          <Tab label="Deliveries" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <SellerOrderActivities orderDetails={orderDetails}/>
+        <SellerOrderActivities orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
          <div className='p-3 mt-4 bg-white'>
@@ -65,7 +88,7 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
           <p className='font-bold text-lg'>I will develop and fix...</p>
           </div>
           <div>
-            <p><span className='text-blue-700'>{orderDetails.assignedBy}</span></p>
+            <p>Buyer<span className='text-blue-700'>{orderDetails.assignedBy}</span></p>
           </div>
           <div>
             <p className='text-base'>Order number <span className='font-semiblod text-base'>#FFFFFFF</span></p>
@@ -75,9 +98,12 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
             <p>Order Page, Review and Feedback Page and connecting frontend and backend</p>
           </div>
           <div>
-            <OrderTable orderDetails={orderDetails} />
+          {orderDetails && orderDetails.budget && <OrderTable orderDetails={orderDetails} /> }  
           </div>
          </div>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+         <Deliveries orderDetails={orderDetails} />
       </TabPanel>
     </div>
   );

@@ -6,11 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TableFooter from '@mui/material/TableFooter';
 
 
 export default function OrderTable({orderDetails}) {
-    const rows = [{description: 'I wil develop thi sand that', quantity: 1, dealTime: 10, budget: 70}]
+    const rows = [{description: orderDetails.description, quantity: 1, dealTime: orderDetails.dealTime, budget: orderDetails.budget}]
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -33,7 +32,7 @@ export default function OrderTable({orderDetails}) {
               </TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
               <TableCell align="right">{row.dealTime}</TableCell>
-              <TableCell align="right">{row.budget}</TableCell>
+              <TableCell align="right">${row.budget}</TableCell>
 
             </TableRow>
           ))}
@@ -41,7 +40,7 @@ export default function OrderTable({orderDetails}) {
           <TableCell component="th" scope="row" colSpan={3}>
               <p className='font-semibold text-base'>Total</p> 
               </TableCell>
-              <TableCell align="right">$70</TableCell>
+              <TableCell align="right">${orderDetails.budget}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

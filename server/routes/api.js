@@ -8,6 +8,7 @@ const {
   signup,
   userUpdateHandler,
   getSingleUser,
+  getUserById
 } = require("../Controller/api");
 router.post("/register", validateRequest(register), signup); //corrected
 router.get("/", async (req, res) => {
@@ -23,5 +24,6 @@ router.get("/", async (req, res) => {
 
 router.put("/profile/:id([0-9a-fA-F]{24})", protect, userUpdateHandler);
 router.get("/user", protect, getSingleUser); //corected
+router.get('/user/:id', protect, getUserById);
 
 module.exports = router;

@@ -14,6 +14,10 @@ const bidSchema = new Schema({
         ref: 'User',
         required: true
     },
+    status: {
+        type: String
+    }
+    ,
     receiverId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -40,6 +44,9 @@ const bidSchema = new Schema({
         required: true
     },
     orderId: {
+        type: String
+    },
+    category: {
         type: String
     }
 }, {timestamps: true})

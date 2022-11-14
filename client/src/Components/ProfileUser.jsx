@@ -5,7 +5,10 @@ import { FaPen } from "react-icons/fa";
 import "reactjs-popup/dist/index.css";
 import Loading from "./Loading";
 import { getUserMe } from "../api";
-import {updateProfile} from '../api/index'
+import Review from "./review.component";
+import Rating from '@mui/material/Rating';
+import {updateProfile, getReviewsByUserId} from '../api/index'
+
 const localStorageUser = JSON.parse(localStorage.getItem("user"));
 
 const ProfileUser = () => {
@@ -13,7 +16,8 @@ const ProfileUser = () => {
     "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
   );
   const [name, setname] = useState("Name");
-
+  const [userRating, setUserRating] = useState(5);
+  const [reviews, setReviews] = useState([]);
   const [title, setTitle] = useState("Dummy title");
   const [rate, setRate] = useState("5.5");
   const [description, setDescription] = useState("Describe your work");
@@ -36,11 +40,12 @@ const ProfileUser = () => {
       if (localStorageUser) {
         const response = await getUserMe();
         const user = response?.data?.data?.user;
-
+         console.log(localStorageUser);
         user.firstname &&
           user.lastname &&
           setname(user.firstname + " " + user.lastname);
         user.profileImg && setProfileImg(user.profileImg);
+  
         user.rate && setRate(user.rate);
         user.description && setDescription(user.description);
         user.title && setTitle(user.title);
@@ -60,13 +65,27 @@ const ProfileUser = () => {
       console.log("error", e);
     }
   };
+  async function getReviews(id){
+    let data = await getReviewsByUserId(id);
+    setReviews(data.data)
+   let rat = 0;
+   data.data.forEach((rati)=> {
+     rat += rati.overallRating;
+   })
+   let finalRating = rat/data.data.length;
+   setUserRating(finalRating);
+  }
+  useEffect(()=> {
+     getReviews(localStorageUser._id);
+  }, [])
 
   useEffect(() => {
     setIsLoading(true);
     fetchUser();
   }, []);
 
-  const submitHandler = async (data) => {
+  const submitHandler = async () => {
+    alert("called")
     const response = await getUserMe();
     const user = response?.data?.data?.user;
     const formData = new FormData();
@@ -83,7 +102,6 @@ const ProfileUser = () => {
     formData.append("lang2",lang2);
     formData.append("lang3",lang3);
     formData.append("user", localStorage.getItem("user"));
-    console.log(data._id)
     const {
       data: { message },
     } = await updateProfile(user._id,formData) ;
@@ -157,24 +175,35 @@ const ProfileUser = () => {
                     ) : (
                       <></>
                     )}
-                    <div className="mt-3">
+                    <div className="mt-3 flex flex-col">
                       <h2>{name}</h2>
                       <h4 className="mb-1">{title}</h4>
+                      <div className="flex flex-row">
+                          <Rating
+                              name="read-only" 
+                              readOnly
+                              value={userRating}
+                            />
+                            <p className="m-1">{"("}{reviews.length}{")"} Reviews</p>
+                      </div>
 
-                      <button
-                        className="btn btn-info rounded px-3 py-2 m-1"
-                        onClick={submitHandler}
-                      >
-                        Save Profile
+                        <div className="flex flex-row">
+                        <button
+                            className="btn btn-info rounded px-3 py-2 m-1"
+                            onClick={()=> submitHandler()}
+                          >
+                            Save Profile
                       </button>
                       <button
-                        className="btn btn-info rounded px-3 py-2 m-1"
-                        onClick={() => {
-                          setEdit(!edit);
-                        }}
-                      >
-                        Edit Profile
+                            className="btn btn-info rounded px-3 py-2 m-1"
+                            onClick={() => {
+                              setEdit(!edit);
+                            }}
+                          >
+                            Edit Profile
                       </button>
+                        </div>
+                     
                     </div>
                   </div>
                 </div>
@@ -532,7 +561,7 @@ const ProfileUser = () => {
                             </button>
                             <div className="card-body">
                               <div className="form-group">
-                                <h4>Descriptioin</h4>
+                                <h4>Description</h4>
                                 <textarea
                                   className="form-control mt-2"
                                   rows="3"
@@ -556,6 +585,16 @@ const ProfileUser = () => {
                     </span>
                   </p>
                   <a>more</a>
+                </div>
+              </div>
+              <div>
+                <div className="reviews p-2">
+                   <p className="font-semibold text-lg">{(reviews.length> 0)? 'Reviews as Seller': null}</p>
+                   <div>
+                    {reviews && reviews.map((review)=> {
+                      return <Review review={review} />
+                    })}
+                   </div>
                 </div>
               </div>
             </div>

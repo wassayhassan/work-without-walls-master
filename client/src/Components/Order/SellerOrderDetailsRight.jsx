@@ -1,29 +1,42 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import Countdown from 'react-countdown';
 import DeliverWork from './DeliverWork';
 import Divider from '@mui/material/Divider';
+import { UserContext } from "../../context/user.context";
+import AcceptDeliveryConfirmation from './AcceptDeliveryConfirmation';
+import ReviewModal from './ReviewModal';
+import { createNote } from '../../api';
 
 const SellerOrderDetailsRight = ({orderDetails}) => {
+  const { user } = useContext(UserContext);
+  const [openBuyerReview, setOpenBuyerReview] = useState(false);
+  const [note, setNote] = useState('');
+
   const date = new Date(orderDetails.createdAt)
   const date2  = addDays(orderDetails.createdAt, 10);
-   console.log(orderDetails)
 
+ async function handleCreateNote(){
+    let data = await createNote();
+ }
 
 
   return (
     <div className='w-25 p-2 mt-5'>
       <div className='delivery-container bg-white shadow-md rounded p-3'>
         <h5 className='text-left font-weight-normal my-1'>
-          Time Left to deliver
+          {(orderDetails.assignedTo === user._id)? 'Time left to be delivered': 'Time Left to deliver'}
         </h5>
         <div className='counter d-flex flex-row justify-content-center w-full my-2'>
           <h4 className=' font-weight-bold'>
             
-          {(orderDetails && orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
+          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
           </h4>
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
-        <DeliverWork orderDetails={orderDetails}/>
+          
+          <ReviewModal openBuyerReview={openBuyerReview} setOpenBuyerReview ={setOpenBuyerReview} orderDetails={orderDetails} />
+          {(orderDetails.assignedBy === user._id)? <AcceptDeliveryConfirmation setOpenBuyerReview={setOpenBuyerReview} orderDetails={orderDetails} /> :<DeliverWork orderDetails={orderDetails}/>}
+        
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
         <button type="button" className="btn btn-link diplay-6">Extend Delivery Date</button>
@@ -62,16 +75,16 @@ const SellerOrderDetailsRight = ({orderDetails}) => {
       </div>
       <div className='bg-white p-3 mt-4'>
         <p className='font-semibold text-lg'>Feedback on the new order page?</p>
-        <p className='text-blue-700 font-normal text-base'>Let us know what you think</p>
+        <p className='text-blue-700 font-normal text-base cursor-pointer'>Let us know what you think</p>
       </div>
       <div className='bg-white p-3 mt-4'>
         <p className='text-semibold text-lg font-bold'>Support</p>
-        <div>
+        <div className='cursor-pointer'>
         <p className='font-semibold text-base'>FAQS</p>
         <p>Find Answers Needed</p>
         </div>
         <Divider sx={{bgcolor: "gray"}} />
-        <div>
+        <div className='cursor-pointer'>
         <p className='font-semibold text-base'>Resolution Center</p>
         <p>Resolve Order Issues</p>
         </div>
