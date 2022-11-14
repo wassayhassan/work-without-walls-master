@@ -15,7 +15,7 @@ export default function IndividualActivity({activity, orderDetails, sellerReview
     const { user } = useContext(UserContext);
     let ext;
     const [deliveryData, setDeliveryData] = useState({});
-    const [reviewData, setReviewData] = useState({});
+    const [reviewData, setReviewData] = useState(null);
     let date = new Date(activity.createdAt);
     
     
@@ -71,7 +71,7 @@ export default function IndividualActivity({activity, orderDetails, sellerReview
         
         
         }
-        {activity.activityType === "review" && <Review review={reviewData} />}
+        {activity.activityType === "review" && reviewData && <Review review={reviewData} />}
    
         </AccordionDetails>
       </Accordion>

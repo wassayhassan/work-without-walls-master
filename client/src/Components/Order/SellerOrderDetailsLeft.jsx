@@ -54,7 +54,6 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
   };
   async function getReviews(id){
      let data = await getReviewsByOrderId(id);
-     console.log(data.data)
      data.data.forEach((r)=> {
       if(r.rtype === "Seller"){
         setSellerReview(r);
@@ -88,14 +87,14 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
           <p className='font-bold text-lg'>I will develop and fix...</p>
           </div>
           <div>
-            <p>Buyer<span className='text-blue-700'>{orderDetails.assignedBy}</span></p>
+            <p className='text-base'>Buyer<span className='text-blue-700 mx-2'>{orderDetails.assignedBy}</span></p>
           </div>
           <div>
-            <p className='text-base'>Order number <span className='font-semiblod text-base'>#FFFFFFF</span></p>
+            <p className='text-base'>Order number <span className='font-semibold text-base'>#{orderDetails._id}</span></p>
           </div>
           <Divider />
           <div>
-            <p>Order Page, Review and Feedback Page and connecting frontend and backend</p>
+            <p>{orderDetails.description}</p>
           </div>
           <div>
           {orderDetails && orderDetails.budget && <OrderTable orderDetails={orderDetails} /> }  

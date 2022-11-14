@@ -49,5 +49,6 @@ export const updateBid = (id, data) => Base.post(`/bid/${id}/update`, data);
 export const createNote = (data) => Base.post('/order/notes/create', data);
 export const getNotesByOrderId = (id) => Base.get(`/order/${id}/notes`);
 export const getNoteById = (id) => Base.get(`/order/notes/${id}`);
-
+export const deleteNote = (id) => Base.delete(`/order/notes/${id}`);
+export const updateNote = (id, data) => Base.put(`/order/notes/${id}`, data);
 

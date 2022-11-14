@@ -5,19 +5,85 @@ import Divider from '@mui/material/Divider';
 import { UserContext } from "../../context/user.context";
 import AcceptDeliveryConfirmation from './AcceptDeliveryConfirmation';
 import ReviewModal from './ReviewModal';
-import { createNote } from '../../api';
+import { createNote, getNotesByOrderId, updateNote, deleteNote } from '../../api';
+import { Textarea, Button } from 'flowbite-react';
+import { useEffect } from 'react';
 
 const SellerOrderDetailsRight = ({orderDetails}) => {
   const { user } = useContext(UserContext);
   const [openBuyerReview, setOpenBuyerReview] = useState(false);
-  const [note, setNote] = useState('');
+  const [note, setNote] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openSave, setOpenSave] = useState(false)
+  const [openNotepad, setOpenNotepad] = useState(false);
 
   const date = new Date(orderDetails.createdAt)
   const date2  = addDays(orderDetails.createdAt, 10);
 
- async function handleCreateNote(){
-    let data = await createNote();
+ const  handleCreateNote = async() => {
+    let t = orderDetails.assignedBy === user._id? 'buyer': 'seller';
+    let data = {
+      orderId: orderDetails._id,
+      creatorId: user._id,
+      noteCreatorType: t,
+      msg: note
+    }
+    let response = await createNote(data);
+    console.log(response);
+    // setNote(response.data)
+    setOpenSave(false)
+    
  }
+ function handleNoteChange(e){
+    setNote(e.target.value);
+
+ }
+
+ async function getNotes(id){
+  let response = await getNotesByOrderId(id);
+  response.data.forEach((not)=> {
+    if(not.noteCreatorType === 'seller' && user._id === orderDetails.assignedTo){
+         setNote(not);
+         setOpenNotepad(true);
+    }
+    else if(not.noteCreatorType === 'buyer' && user._id === orderDetails.assignedBy){
+      setNote(not)
+       setOpenNotepad(true);
+    }
+  })
+ }
+const handleOpenSave = () => {
+  setOpenNotepad(true);
+  setOpenSave(true);
+ }
+ const handleEditOpen = () => {
+  setOpenNotepad(true);
+  setOpenEdit(true);
+ }
+ const handleDeleteNote = async() =>{
+     const response = await deleteNote(note._id);
+     console.log(response);
+     setNote(null);
+     
+ }
+
+ const handleEditNote = async() => {
+  const response = await updateNote(note._id, {msg: note});
+  console.log(response);
+  if(response.status === 200){
+    setOpenEdit(false);
+  }
+
+ }
+ const handleCancel = () => {
+  setOpenEdit(false);
+ }
+
+ useEffect(()=> {
+
+    getNotes(orderDetails._id)
+
+ }, [orderDetails])
 
 
   return (
@@ -63,16 +129,54 @@ const SellerOrderDetailsRight = ({orderDetails}) => {
           <p className=' font-weight-normal h6'>{orderDetails._id}</p>
         </div>
       </div>
-      <div className='notes-container bg-white p-3 mt-4 flex flex-row justify-between'>
-        <div>
-        <p className='font-semibold text-lg'>Private Note</p>
-          <p className='font-normal text-gray-400'>Only Visible to You</p>
+      <div className='notes-container bg-white p-3 mt-4'>
+        <div className='flex flex-row justify-between'>
+            <div>
+                <p className='font-semibold text-lg'>Private Note</p>
+                <p className='font-normal text-gray-400'>Only Visible to You</p>
+            </div>
+            <div>
+            {note  && !openEdit && <button className='text-green-600 font-semibold' onClick={handleEditOpen}>Edit Note</button>}
+            {openEdit &&  <button className='text-green-600 font-semibold' onClick={handleDeleteNote}>Delete</button>}
+              {!note && !openEdit &&  <button className='text-green-600 font-semibold' onClick={handleOpenSave}>Add Note</button>}  
+            </div>
+           
         </div>
-        <div>
-          <button className='text-green-600 font-semibold'>Add Note</button>
-        </div>
+          <div>
+          <div className='p-1'>
+            <Textarea
+                  value={note && note.msg}
+                  id="note"
+                  placeholder="Leave a note..."
+                  required={true}
+                  rows={4}
+                  onChange={handleNoteChange}
+                />
+          </div>
+         
+      {!openEdit && openSave &&   <div className='flex flex-row justify-end'>
+            <Button color="gray" className="m-1" onClick={()=> setOpenNotepad(false)}>
+              Cancel
+            </Button>
+            <Button className="m-1" onClick={handleCreateNote}>
+                Save
+              </Button>
+            </div>
+}
 
+          </div>
+{openEdit && !openSave && 
+                      <div className='flex flex-row justify-end'>
+                        <Button color="gray" className="m-1" onClick={handleCancel}>
+                          Cancel
+                        </Button>
+                        <Button className="m-1" onClick={handleEditNote}>
+                            Edit
+                          </Button>
+                      </div>
+            }
       </div>
+
       <div className='bg-white p-3 mt-4'>
         <p className='font-semibold text-lg'>Feedback on the new order page?</p>
         <p className='text-blue-700 font-normal text-base cursor-pointer'>Let us know what you think</p>

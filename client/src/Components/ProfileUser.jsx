@@ -17,7 +17,8 @@ const ProfileUser = () => {
   );
   const [name, setname] = useState("Name");
   const [userRating, setUserRating] = useState(5);
-  const [reviews, setReviews] = useState([]);
+  const [sellerReviews, setSellerReviews] = useState([]);
+  const [buyerReviews, setBuyerReviews] = useState([]);
   const [title, setTitle] = useState("Dummy title");
   const [rate, setRate] = useState("5.5");
   const [description, setDescription] = useState("Describe your work");
@@ -40,7 +41,6 @@ const ProfileUser = () => {
       if (localStorageUser) {
         const response = await getUserMe();
         const user = response?.data?.data?.user;
-         console.log(localStorageUser);
         user.firstname &&
           user.lastname &&
           setname(user.firstname + " " + user.lastname);
@@ -66,11 +66,23 @@ const ProfileUser = () => {
     }
   };
   async function getReviews(id){
+    setSellerReviews([]);
+    setBuyerReviews([])
     let data = await getReviewsByUserId(id);
-    setReviews(data.data)
    let rat = 0;
    data.data.forEach((rati)=> {
+
      rat += rati.overallRating;
+     if(rati.rtype === "Seller"){
+      console.log(rati)
+      setSellerReviews((prev)=> [...prev, rati])
+     }else if(rati.rtype === "Buyer"){
+      if(rati.reviewTo === localStorageUser._id){
+        
+      }else{
+        setBuyerReviews((prev) => [...prev, rati]);
+      }
+     }
    })
    let finalRating = rat/data.data.length;
    setUserRating(finalRating);
@@ -184,7 +196,7 @@ const ProfileUser = () => {
                               readOnly
                               value={userRating}
                             />
-                            <p className="m-1">{"("}{reviews.length}{")"} Reviews</p>
+                            <p className="m-1">{"("}{sellerReviews.length + buyerReviews.length}{")"} Reviews</p>
                       </div>
 
                         <div className="flex flex-row">
@@ -589,12 +601,20 @@ const ProfileUser = () => {
               </div>
               <div>
                 <div className="reviews p-2">
-                   <p className="font-semibold text-lg">{(reviews.length> 0)? 'Reviews as Seller': null}</p>
+                   <p className="font-semibold text-lg">{(sellerReviews.length> 0)? 'Reviews as Seller': null}</p>
                    <div>
-                    {reviews && reviews.map((review)=> {
+                    {sellerReviews && sellerReviews.map((review)=> {
                       return <Review review={review} />
                     })}
                    </div>
+                   <div className="reviews p-2">
+                   <p className="font-semibold text-lg">{(buyerReviews.length> 0)? 'Reviews as Buyer': null}</p>
+                   <div>
+                    {buyerReviews && buyerReviews.map((review)=> {
+                      return <Review review={review} />
+                    })}
+                   </div>
+                </div>
                 </div>
               </div>
             </div>

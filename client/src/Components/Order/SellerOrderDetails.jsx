@@ -18,8 +18,6 @@ const SellerOrderDetails = () => {
       }
       getOrderDetails(id);
   }, [])
-  console.log(orderDetails);
-  console.log(user._id)
   return (
     <div>
       {user._id === orderDetails.assignedTo? <SellerNavbar />: <BuyerNavbar />}

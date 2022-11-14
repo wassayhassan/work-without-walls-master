@@ -16,6 +16,7 @@ const orderSchema = new Schema({
       status: {
         type: String,
         enum: [
+          "started",
           "active",
           "inactive",
           "assigned",

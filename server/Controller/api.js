@@ -17,7 +17,7 @@ const uploadImage = async (image) => {
 const signup = asyncHandler(async (req, res) => {
   //corrected
   try {
-    console.log(req.files)
+    
     const { cnicFront, cnicBack } = req.files;
     const { CNIC, password, firstname, lastname, email, phone } = req.body;
     const cnicBackImage = await uploadImage(cnicBack.tempFilePath);
@@ -36,11 +36,9 @@ const signup = asyncHandler(async (req, res) => {
     const userExist = await User.findOne({ CNIC });
     if (userExist) {
       res.status(400);
-      console.log("User Already Exist")
       throw new Error("User already exists");
     }
     user.save().then(() => {
-      console.log("data inserted.........");
       res.status(200).json({
         _id: user.id,
         CNIC: user.CNIC,
@@ -65,7 +63,6 @@ const signup = asyncHandler(async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err)
     res.status(400).json({ message: err.message });
   }
 });
@@ -103,9 +100,7 @@ const userUpdateHandler = asyncHandler(async (req, res) => {
   if (req.files) {
     
     profileImg = req.files.profileImg.tempFilePath;
-    console.log(profileImg)
     profileImg = await uploadImage(profileImg);
-    console.log(profileImg);
   }
   let userDB = await User.find({ _id: id });
   console.log(userDB)

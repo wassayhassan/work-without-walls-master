@@ -26,7 +26,6 @@ const addDelivery = async(req, res) => {
         
         for(let i = 0; i < file.length; i++){         
             let fil = file[i];
-            console.log(fil);
             let ext = getExtension(file[i].name);
             let name = uuidv4() +'.'+ ext; 
             DeliveryMaterials.push(name);    
@@ -44,7 +43,6 @@ const addDelivery = async(req, res) => {
        const delivery = new Delivery(dat);
        
        delivery.save().then((data)=> {
-        console.log(data);
         let newData =  {orderId: req.params.id, msg: 'sent a Delivery', activityType: 'delivery', deliveryId: data._id};
         axios.post('http:localhost:7900/orderactivity/create', newData).then((response)=> {
         })
@@ -58,7 +56,6 @@ const addDelivery = async(req, res) => {
 const getDeliveriesByOrderId = async(req, res) => {
      try{
         let deliveries = await Delivery.find({orderId: req.params.id});
-        console.log(deliveries);
         res.status(200).json(deliveries);
      }catch(err){
         res.status(400).json(err);

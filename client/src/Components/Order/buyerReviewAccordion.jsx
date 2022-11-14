@@ -17,16 +17,13 @@ export default function BuyerReviewAccordion({orderDetails, user}){
         comment: ''
       })
 
-        function handleRatingChange(e){
-    
-           
+        function handleRatingChange(e){   
            let name = e.target.name;
            let value = e.target.value
            setReview({...review, [name]: value});
         }
         async function SubmitReview(){
-    
-          let OR = (review.communication + review.service + review.buyagain)/ 3;
+          let OR = (parseInt(review.communication) + parseInt(review.service) + parseInt(review.buyagain)) /3;
           let data = {
             ...review,
             overallRating: OR,

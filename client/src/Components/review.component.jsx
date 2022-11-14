@@ -9,12 +9,14 @@ const Review = ({review}) => {
     async function getReviewerData(id){
        const data = await getUserById(id);
        setReviewerData(data.data)
-       console.log(data.data);
        return data.data;
     }
     useEffect(()=> {
-       getReviewerData(review.reviewedBy)
+      if(review.reviewedBy){
+         getReviewerData(review.reviewedBy)
+      }
     }, [review])
+    
   return (
     <div className='border-[1px] rounded-md shadow-sm m-2 p-2 flex flex-'>
         <div className='w-16 p-2'>

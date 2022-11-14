@@ -23,14 +23,12 @@ export default function ReviewAccordion({orderDetails, user}){
            setReview({...review, [name]: value});
         }
        async function SubmitReview(){
-        
-          let OR = (review.communication + review.service + review.buyagain)/ 3;
           let data = {
             ...review,
             rtype: "Buyer",
             reviewedBy: user._id,
             name: user.firstname + ' ' + user.lastname,
-            reviewedTo: orderDetails.assignedTo,
+            reviewedTo: orderDetails.assignedBy,
             reviewOf: orderDetails._id
           }
           let response = await createReview(orderDetails._id, data);

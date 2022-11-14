@@ -16,6 +16,8 @@ export default function Message({ member, current, message, own }) {
 
 
  async function handleAccept(){
+  console.log(user._id);
+  console.log(message.senderId);
   let dat = {
     assignedBy: user._id,
     offerid: message._id,
@@ -89,7 +91,7 @@ export default function Message({ member, current, message, own }) {
           <h5>Offer Includes</h5>
           <li> {message.dealTime} days delivery</li>
           <li>{message.percentOff} % Off</li>
-          <li>{message.budget}</li>
+          <li>${message.budget}</li>
         </div>
         <div className="d-flex flex-row justify-content-end">
        {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/seller/orderdetails/${offerOrderId}`)}>View Order</button>}

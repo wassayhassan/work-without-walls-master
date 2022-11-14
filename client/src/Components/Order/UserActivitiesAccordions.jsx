@@ -14,8 +14,6 @@ import BuyerReviewAccordion from './buyerReviewAccordion';
 export default function UserActivitiesAccordion({orderDetails, sellerReview, buyerReview}) {
   const [activities, setActivities] = useState([]);
   const { user } = useContext(UserContext);
-   console.log(sellerReview);
-   console.log(buyerReview)
   useEffect(()=> {
     if(orderDetails._id){
       async function getActivities(id){

@@ -7,12 +7,12 @@ const createNewOrder = async(req, res) => {
     const order = new Order(req.body);
     try{
             const data = await order.save()
+            console.log(data)
             const update = await bidModel.findByIdAndUpdate(req.body.offerid, {accepted: "true", orderId: data._id}, {new: true});
             res.status(200).json(update);
-            console.log(update);
-            console.log(data);
         
     }catch(err){
+        console.log(err);
         res.status(500).json(err);
     }
 
