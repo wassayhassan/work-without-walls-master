@@ -18,10 +18,11 @@ const orderSchema = new Schema({
         enum: [
           "started",
           "active",
+          'Requested Cancel',
           "inactive",
           "assigned",
           "completed",
-          "cancelled",
+          "Cancelled",
           "closed",
           "deleted",
         ],
@@ -67,11 +68,11 @@ const orderSchema = new Schema({
         type: String,
         default: "",
       },
-      canceledAt: {
+      cancelledAt: {
         type: String,
         default: "",
       },
-      canceled: {
+      cancelled: {
         type: String,
         default: "",
       },

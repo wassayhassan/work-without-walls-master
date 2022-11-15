@@ -7,7 +7,7 @@ import { UserContext } from "../../context/user.context";
 
 export default function Message({ member, current, message, own }) {
   const [accepted, setAccepted] = useState(message.accepted === "true"? true: false);
-  const [Withdraw, setWithdraw] = useState(false);
+  const [Withdraw, setWithdraw] = useState(message.status === "withdrawn"? true: false);
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
@@ -42,6 +42,7 @@ export default function Message({ member, current, message, own }) {
  const handleOfferWithDraw = async() => {
      const data = await updateBid(message._id, {status: 'withdrawn'});
      console.log(data);
+     setWithdraw(true);
  }
 
 
@@ -69,8 +70,9 @@ export default function Message({ member, current, message, own }) {
 
 
 
-<div className={own ? "flex flex-row justify-end w-full m-1": "flex flex-row justify-end w-start m-2"}>
-<div className="messageTop">
+<div className={(message.senderId === user._id) ? "flex justify-end w-full m-1": "flex flex-row justify-start w-start m-2"}>
+<div className={(message.senderId === user._id) ? "flex flex-row-reverse w-2/3": "flex w-2/3 flex-row"}>
+  <div>
   <img
     className="messageImg"
     src={
@@ -79,6 +81,9 @@ export default function Message({ member, current, message, own }) {
     } 
     alt=""
   />
+  <div className="messageBottom">{format(message.createdAt)}</div>
+  </div>
+
         <div className="card p-1" style={{width: "25rem"}}>
         <div className="card-body">
           <h4 className="card-title">Seller Offer</h4>
@@ -95,12 +100,11 @@ export default function Message({ member, current, message, own }) {
         </div>
         <div className="d-flex flex-row justify-content-end">
        {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/seller/orderdetails/${offerOrderId}`)}>View Order</button>}
-        {(message.senderId === user._id? <button type="button" className="btn btn-light" onClick={handleOfferWithDraw} disabled={Withdraw}>{Withdraw? 'Accepted': 'Withdraw Offer'}</button>:<button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
+        {(message.senderId === user._id? <button type="button" className="btn btn-light" onClick={handleOfferWithDraw} disabled={Withdraw}>{Withdraw? 'Withdrawn': 'Withdraw Offer'}</button>:<button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
         </div>
       </div>
   
 </div>
-<div className="messageBottom">{format(message.createdAt)}</div>
 </div>
     )
   }

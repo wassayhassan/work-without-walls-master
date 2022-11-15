@@ -4,6 +4,6 @@ const  {createActivity, getActivitiesByOrderId} = require("../Controller/orderAc
 const { protect } = require("../middleware/verifyToken");
 
 router.post('/create', createActivity)
-router.get('/:id', protect, getActivitiesByOrderId)
+router.get('/:id', protect, getActivitiesByOrderId);
 
 module.exports = router

@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OrderTable from './orderTable';
 
-export default function ActivityAccordions({orderDetails}) {
+
+export default function ActivityAccordions({orderDetails, user}) {
   return (
     <div>
       <Accordion>
@@ -15,12 +16,11 @@ export default function ActivityAccordions({orderDetails}) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant='h6'>Your recent inbox conversations with ayeshabajwa563</Typography>
+          <Typography variant='h6'>Your recent inbox conversations with {orderDetails.assignedTo === user._id? 'Seller': 'Buyer'}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+               You can go to messages to view your most recent messages
           </Typography>
         </AccordionDetails>
       </Accordion>

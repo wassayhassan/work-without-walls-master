@@ -17,6 +17,7 @@ const AcceptDeliveryConfirmation = ({orderDetails, setOpenBuyerReview}) => {
      setOpenBuyerReview(true);
      setOpen(false);
  }
+ console.log(orderDetails)
 
  useEffect(()=> {
     
@@ -35,9 +36,10 @@ const AcceptDeliveryConfirmation = ({orderDetails, setOpenBuyerReview}) => {
    
         <div>
         
-        {orderDetails.status !== "completed" && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Accept Delivery </Button>}
-        {orderDetails.status !== "completed" && deliveries.length < 1 && <Button disabled={true}>Waiting for Delivery</Button>}
-        {orderDetails.status === "completed" && deliveries.length > 0 && <Button disabled={true}>Accepted Delivery</Button> }
+        {orderDetails.cancelled === "true" && <Button disabled={true}>Cant be Delivered</Button>}
+        {orderDetails.status !== "completed" && orderDetails.cancelled !== "true" && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Accept Delivery </Button>}
+        {orderDetails.status !== "completed" && orderDetails.cancelled !== "true" && deliveries.length < 1 && <Button disabled={true}>Waiting for Delivery</Button>}
+        {orderDetails.status === "completed" && orderDetails.cancelled !== "true" &&  deliveries.length > 0 && <Button disabled={true}>Accepted Delivery</Button> }
    
      
   

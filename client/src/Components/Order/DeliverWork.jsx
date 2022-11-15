@@ -53,35 +53,37 @@ export default function DeliverWork({orderDetails}) {
         form.append('file', workfile[i]);
      }
      let data = addDelivery(orderDetails._id, form);
+     setOpen(false)
   }
 
 
   return (
     <div>
-     {orderDetails.status !== 'completed' && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Deliver Again</Button>} 
-     { orderDetails.status !== 'completed' && deliveries.length < 1 && <Button onClick={handleOpen} color="success">Deliver Now</Button>}
-      {orderDetails.status === "completed" && deliveries.length > 0 &&  <Button disabled={true}>Accepted Delivery</Button> }
+     {orderDetails.status !== 'completed' && orderDetails.cancelled !== "true" && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Deliver Again</Button>} 
+     { orderDetails.status !== 'completed' && orderDetails.cancelled !== "true" && deliveries.length < 1 && <Button onClick={handleOpen} color="success">Deliver Now</Button>}
+      {orderDetails.status === "completed" && orderDetails.cancelled !== "true" && deliveries.length > 0 &&  <Button disabled={true}>Accepted Delivery</Button> }
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div style={style} className="bg-white h-full w-2/3 p-2">
+        <div style={style} className="bg-white rounded-md w-2/3 p-4">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Deliver Your Work
           </Typography>
            <div className='mt-5'>
+            <p className='font-semibold text-lg'>Describe Your Work</p>
               <textarea className='outline-none border-[1px] border-gray-200 w-4/5 rounded-md h-28 ' value={workdesc} onChange={handleDescChange} />
            </div>
            <div>
             <div>
-                <label htmlFor="work" className='p-2  bg-gray-300 rounded-md cursor-pointer font-semibold'>Upload Work</label>
+                <label htmlFor="work" className='p-2  bg-gray-300 hover:bg-gray-200 rounded-md cursor-pointer font-semibold'>Upload Work</label>
                 <input type="file" name='work' id='work' hidden multiple onChange={handleWorkChange}/>
             </div>
            </div>
            <div className='flex flex-row justify-end'>
-              <button className='p-2 bg-green-500 rounded-md text-white font-medium' onClick={handleSubmit}>Deliver</button>
+              <Button color="success" onClick={handleSubmit}>Deliver</Button>
            </div>
         </div>
       </Modal>

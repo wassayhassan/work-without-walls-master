@@ -66,30 +66,28 @@ const ProfileUser = () => {
     }
   };
   async function getReviews(id){
-    setSellerReviews([]);
-    setBuyerReviews([])
+
     let data = await getReviewsByUserId(id);
    let rat = 0;
    data.data.forEach((rati)=> {
 
-     rat += rati.overallRating;
+     
      if(rati.rtype === "Seller"){
-      console.log(rati)
+      rat += rati.overallRating;
       setSellerReviews((prev)=> [...prev, rati])
-     }else if(rati.rtype === "Buyer"){
-      if(rati.reviewTo === localStorageUser._id){
-        
-      }else{
+     }else{
         setBuyerReviews((prev) => [...prev, rati]);
-      }
+        rat += rati.overallRating;
      }
    })
    let finalRating = rat/data.data.length;
    setUserRating(finalRating);
   }
   useEffect(()=> {
+    setSellerReviews((prev)=> []);
+    setBuyerReviews((prev)=> []);
      getReviews(localStorageUser._id);
-  }, [])
+  }, [localStorageUser])
 
   useEffect(() => {
     setIsLoading(true);

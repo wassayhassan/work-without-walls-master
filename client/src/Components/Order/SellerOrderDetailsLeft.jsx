@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider';
 import OrderTable from './orderTable';
 import { UserContext } from "../../context/user.context";
 import Deliveries from './Deliveries.component';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import { getReviewsByOrderId } from '../../api';
 
 function TabPanel(props) {
@@ -46,6 +46,7 @@ function a11yProps(index) {
 }
 
 export default function SellerOrderDetailsLeft({orderDetails}) {
+  const {user} = useContext(UserContext);
   const [value, setValue] = React.useState(0);
   const [buyerReview, setBuyerReview] = useState(null);
   const [sellerReview, setSellerReview] = useState(null);
@@ -79,7 +80,7 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <SellerOrderActivities orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview}/>
+        <SellerOrderActivities user={user} orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
          <div className='p-3 mt-4 bg-white'>

@@ -4,9 +4,9 @@ const createNote = async(req, res) => {
    try{
     const note  = new OrderNote(req.body);
     const data = await note.save();
-    res.status(200).json(data);
+    res.status(200).json({msg: 'Note Saved'});
    }catch(err){
-    res.status(400).json(err);
+    res.status(400).json({msg: 'Error in Saving Note'});
    }
 }
 const getNoteByOrderId = async(req, res)=> {
@@ -29,9 +29,9 @@ const getNoteById = async(req, res) => {
 const deleteNote = async(req, res) => {
     try{
       let data = await OrderNote.findByIdAndDelete({_id: req.params.id});
-        res.status(200).json(data)
+        res.status(200).json({msg: 'Note Deleted'})
     }catch(err){
-        res.status(400).json(err);
+        res.status(400).json({msg: 'Error in Deleting Note'});
     }
 }
 module.exports = {createNote, getNoteByOrderId, getNoteById, deleteNote}

@@ -5,9 +5,14 @@ import Divider from '@mui/material/Divider';
 import { UserContext } from "../../context/user.context";
 import AcceptDeliveryConfirmation from './AcceptDeliveryConfirmation';
 import ReviewModal from './ReviewModal';
-import { createNote, getNotesByOrderId, updateNote, deleteNote } from '../../api';
+import { getNotesByOrderId, updateNote, deleteNote } from '../../api';
 import { Textarea, Button } from 'flowbite-react';
 import { useEffect } from 'react';
+import SaveNote from './saveNote';
+import DeleteNote from './deleteNote';
+import EditNote from './EditNote';
+import CancelModal from './cancelModal';
+import BuyerExtendDelivery from './buyerExtendDelivery';
 
 const SellerOrderDetailsRight = ({orderDetails}) => {
   const { user } = useContext(UserContext);
@@ -20,23 +25,8 @@ const SellerOrderDetailsRight = ({orderDetails}) => {
   const date = new Date(orderDetails.createdAt)
   const date2  = addDays(orderDetails.createdAt, 10);
 
- const  handleCreateNote = async() => {
-    let t = orderDetails.assignedBy === user._id? 'buyer': 'seller';
-    let data = {
-      orderId: orderDetails._id,
-      creatorId: user._id,
-      noteCreatorType: t,
-      msg: note
-    }
-    let response = await createNote(data);
-    console.log(response);
-    // setNote(response.data)
-    setOpenSave(false)
-    
- }
  function handleNoteChange(e){
     setNote(e.target.value);
-
  }
 
  async function getNotes(id){
@@ -60,21 +50,7 @@ const handleOpenSave = () => {
   setOpenNotepad(true);
   setOpenEdit(true);
  }
- const handleDeleteNote = async() =>{
-     const response = await deleteNote(note._id);
-     console.log(response);
-     setNote(null);
-     
- }
 
- const handleEditNote = async() => {
-  const response = await updateNote(note._id, {msg: note});
-  console.log(response);
-  if(response.status === 200){
-    setOpenEdit(false);
-  }
-
- }
  const handleCancel = () => {
   setOpenEdit(false);
  }
@@ -95,7 +71,7 @@ const handleOpenSave = () => {
         <div className='counter d-flex flex-row justify-content-center w-full my-2'>
           <h4 className=' font-weight-bold'>
             
-          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
+          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.canceled === "true" &&  orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
           </h4>
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
@@ -105,9 +81,18 @@ const handleOpenSave = () => {
         
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
-        <button type="button" className="btn btn-link diplay-6">Extend Delivery Date</button>
+        <BuyerExtendDelivery orderDetails={orderDetails} />
         </div>
       </div>
+      {orderDetails.cancelled !== 'true'? 
+      <div className='delivery-container bg-white shadow-md rounded p-3 mt-4'>
+      <p className='font-semibold text-lg'>Request Cancel</p>
+        <div className='flex flex-row justify-center items-center'>
+         <CancelModal orderDetails={orderDetails}/>
+        </div>
+        
+      </div>: null
+}
       <div className='delivery-container bg-white shadow-md rounded p-3 mt-4'>
         <h4 className='font-weight-bold'>
           Order Details
@@ -137,7 +122,8 @@ const handleOpenSave = () => {
             </div>
             <div>
             {note  && !openEdit && <button className='text-green-600 font-semibold' onClick={handleEditOpen}>Edit Note</button>}
-            {openEdit &&  <button className='text-green-600 font-semibold' onClick={handleDeleteNote}>Delete</button>}
+           <DeleteNote note={note} setNote={setNote} openEdit={openEdit} setOpenEdit={setOpenEdit} />
+            {/* {openEdit &&  <button className='text-green-600 font-semibold' onClick={handleDeleteNote}>Delete</button>} */}
               {!note && !openEdit &&  <button className='text-green-600 font-semibold' onClick={handleOpenSave}>Add Note</button>}  
             </div>
            
@@ -158,9 +144,7 @@ const handleOpenSave = () => {
             <Button color="gray" className="m-1" onClick={()=> setOpenNotepad(false)}>
               Cancel
             </Button>
-            <Button className="m-1" onClick={handleCreateNote}>
-                Save
-              </Button>
+            <SaveNote orderDetails={orderDetails} note={note} user ={user} setOpenNotepad={setOpenNotepad} />
             </div>
 }
 
@@ -170,9 +154,7 @@ const handleOpenSave = () => {
                         <Button color="gray" className="m-1" onClick={handleCancel}>
                           Cancel
                         </Button>
-                        <Button className="m-1" onClick={handleEditNote}>
-                            Edit
-                          </Button>
+                        <EditNote note={note} setOpenEdit={setOpenEdit} />
                       </div>
             }
       </div>
