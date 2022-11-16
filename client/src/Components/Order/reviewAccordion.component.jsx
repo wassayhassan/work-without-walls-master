@@ -41,7 +41,7 @@ export default function ReviewAccordion({orderDetails, user}){
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant="h6">Review</Typography>
+          <Typography variant="h6">You can leave the Review here</Typography>
         </AccordionSummary>
         <AccordionDetails>
         <div className=''>

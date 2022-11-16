@@ -20,7 +20,7 @@ export default function DeliveryAccordions({deliveries}) {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Delivery {idx}</Typography>
+                  <Typography>Delivery {idx + 1}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className='flex flex-row flex-wrap p-1'>

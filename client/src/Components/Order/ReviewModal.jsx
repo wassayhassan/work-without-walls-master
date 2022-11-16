@@ -36,6 +36,9 @@ const BuyerReviewModal = ({setOpenBuyerReview, openBuyerReview, orderDetails}) =
       }
 
       let response = await createReview(orderDetails._id, data);
+      if(response.status === 200){
+        handleOpenChange();
+      }
     }
   return (
     <div className=''>

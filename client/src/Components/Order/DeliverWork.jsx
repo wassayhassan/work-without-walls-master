@@ -72,7 +72,6 @@ export default function DeliverWork({orderDetails}) {
      console.log(res)
      setMessage(res.data.msg);
      setOpenNoti(true)
-     setOpen(false)
   }
 
 
