@@ -43,7 +43,7 @@ const addDelivery = async(req, res) => {
        const delivery = new Delivery(dat);
        
        delivery.save().then((data)=> {
-        let newData =  {orderId: req.params.id, msg: 'sent a Delivery', activityType: 'delivery', deliveryId: data._id};
+        let newData =  {orderId: req.params.id, msg: 'Seller sent a Delivery', activityType: 'delivery', deliveryId: data._id};
         axios.post('http:localhost:7900/orderactivity/create', newData).then((response)=> {
         })
         res.status(200).json(data);

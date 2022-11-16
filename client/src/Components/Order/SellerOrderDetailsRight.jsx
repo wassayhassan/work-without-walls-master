@@ -13,6 +13,7 @@ import DeleteNote from './deleteNote';
 import EditNote from './EditNote';
 import CancelModal from './cancelModal';
 import BuyerExtendDelivery from './buyerExtendDelivery';
+import SellerExtendDelivery from './SellerExtendDelivery';
 
 const SellerOrderDetailsRight = ({orderDetails}) => {
   const { user } = useContext(UserContext);
@@ -71,7 +72,7 @@ const handleOpenSave = () => {
         <div className='counter d-flex flex-row justify-content-center w-full my-2'>
           <h4 className=' font-weight-bold'>
             
-          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.canceled === "true" &&  orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
+          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.canceled !== "true" &&  orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
           </h4>
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
@@ -81,14 +82,14 @@ const handleOpenSave = () => {
         
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
-        <BuyerExtendDelivery orderDetails={orderDetails} />
+         {orderDetails.assignedBy === user._id?<BuyerExtendDelivery orderDetails={orderDetails} />: <SellerExtendDelivery orderDetails={orderDetails} /> }
         </div>
       </div>
-      {orderDetails.cancelled !== 'true'? 
+      {orderDetails.cancelled !== 'true' && orderDetails.completed !== 'true'? 
       <div className='delivery-container bg-white shadow-md rounded p-3 mt-4'>
       <p className='font-semibold text-lg'>Request Cancel</p>
         <div className='flex flex-row justify-center items-center'>
-         <CancelModal orderDetails={orderDetails}/>
+        <CancelModal orderDetails={orderDetails}/>
         </div>
         
       </div>: null
@@ -98,20 +99,20 @@ const handleOpenSave = () => {
           Order Details
         </h4>
         <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal h6 text-muted'>Ordered By</p>
-          <p className='font-weight-normal h6'>{orderDetails.assignedBy}</p>
+          <p className='font-weight-normal text-muted text-sm'>Ordered By</p>
+          <p className=' font-semibold text-sm'>{orderDetails.assignedBy}</p>
         </div>
         <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal h6 text-muted'>Delivery Date</p>
-          <p className='font-weight-normal h6'>{date2.toLocaleDateString()}</p>
+          <p className='font-weight-normal text-muted text-sm'>Delivery Date</p>
+          <p className=' font-semibold text-sm'>{date2.toLocaleDateString()}</p>
         </div>
         <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal h6 text-muted'>Total Price</p>
-          <p className='font-weight-normal h6'>${orderDetails.budget}</p>
+          <p className='font-weight-normal text-muted text-sm'>Total Price</p>
+          <p className=' font-semibold text-sm'>${orderDetails.budget}</p>
         </div>
         <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal h6 text-muted'>Order Number</p>
-          <p className=' font-weight-normal h6'>{orderDetails._id}</p>
+          <p className='font-weight-normal text-muted text-sm'>Order No. </p>
+          <p className=' font-semibold text-sm'>{orderDetails._id}</p>
         </div>
       </div>
       <div className='notes-container bg-white p-3 mt-4'>
@@ -161,17 +162,17 @@ const handleOpenSave = () => {
 
       <div className='bg-white p-3 mt-4'>
         <p className='font-semibold text-lg'>Feedback on the new order page?</p>
-        <p className='text-blue-700 font-normal text-base cursor-pointer'>Let us know what you think</p>
+        <p className='text-blue-700 font-normal text-base cursor-pointer hover:underline'>Let us know what you think</p>
       </div>
       <div className='bg-white p-3 mt-4'>
         <p className='text-semibold text-lg font-bold'>Support</p>
         <div className='cursor-pointer'>
-        <p className='font-semibold text-base'>FAQS</p>
+        <p className='font-semibold text-base hover:underline'>FAQS</p>
         <p>Find Answers Needed</p>
         </div>
         <Divider sx={{bgcolor: "gray"}} />
         <div className='cursor-pointer'>
-        <p className='font-semibold text-base'>Resolution Center</p>
+        <p className='font-semibold text-base hover:underline'>Resolution Center</p>
         <p>Resolve Order Issues</p>
         </div>
       </div>
