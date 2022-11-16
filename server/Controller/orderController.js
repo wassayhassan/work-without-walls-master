@@ -1,5 +1,6 @@
 const Order = require('../models/orderModel');
 const bidModel = require("../models/bidModel");
+const axios = require("axios");
 
 
 const createNewOrder = async(req, res) => {
@@ -8,7 +9,12 @@ const createNewOrder = async(req, res) => {
     try{
             const data = await order.save()
             console.log(data)
+            const deliveryDate = new Date(data.deliveryAt);
+            let setDate = deliveryDate.toLocaleDateString();
             const update = await bidModel.findByIdAndUpdate(req.body.offerid, {accepted: "true", orderId: data._id}, {new: true});
+            let newData =  {orderId: data._id, msg: `Your Delivery Date has been updated to ${setDate}`, activityType: 'Delivery Time'};
+            axios.post('http:localhost:7900/orderactivity/create', newData).then((response)=> {
+            })
             res.status(200).json(update);
         
     }catch(err){

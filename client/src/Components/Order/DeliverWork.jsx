@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
-import { Button } from 'flowbite-react';
+import { Button, Modal } from 'flowbite-react';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import { Snackbar } from '@mui/material';
 import { addDelivery } from '../../api';
 import { UserContext } from "../../context/user.context";
 import { getDeliveriesByOrderId } from '../../api';
+import { AiFillAlipaySquare } from 'react-icons/ai';
 
 const style = {
   position: 'absolute',
@@ -20,10 +21,22 @@ const style = {
 export default function DeliverWork({orderDetails}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openNoti, setOpenNoti] = useState(false);
+  const [message, setMessage] = useState('')
+  const NhandleClose = () => setOpen(false);
   const [workfile, setWorkfile] = useState([]);
   const [workdesc, setWorkDesc] = useState("");
   const [deliveries, setDeliveries] = useState([]);
+  const [deliverNotAllowed, setDeliveryNotAllowed] = useState(true);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenNoti(false);
+  };
+
 
     useEffect(()=> {
       if(orderDetails._id){
@@ -35,6 +48,9 @@ export default function DeliverWork({orderDetails}) {
       }
    
   }, [orderDetails._id])
+  useEffect(()=> {
+    setDeliveryNotAllowed(isDeliveryNotAllowed(orderDetails));
+  }, [orderDetails])
   
   function handleWorkChange(e){
     for(let i = 0; i < e.target.files.length; i++){
@@ -46,33 +62,37 @@ export default function DeliverWork({orderDetails}) {
       setWorkDesc(e.target.value);
   }
 
-  function handleSubmit(){
+  async function handleSubmit(){
     let form = new FormData();
      form.append('description', workdesc);
      for(let i = 0; i < workfile.length; i++){
         form.append('file', workfile[i]);
      }
-     let data = addDelivery(orderDetails._id, form);
+     let res = await addDelivery(orderDetails._id, form);
+     console.log(res)
+     setMessage(res.data.msg);
+     setOpenNoti(true)
      setOpen(false)
   }
 
 
   return (
     <div>
-     {orderDetails.status !== 'completed' && orderDetails.cancelled !== "true" && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Deliver Again</Button>} 
+      <React.Fragment>
+{orderDetails.status !== 'completed' && orderDetails.cancelled !== "true" && deliveries.length > 0 && <Button onClick={handleOpen} color="success">Deliver Again</Button>} 
      { orderDetails.status !== 'completed' && orderDetails.cancelled !== "true" && deliveries.length < 1 && <Button onClick={handleOpen} color="success">Deliver Now</Button>}
       {orderDetails.status === "completed" && orderDetails.cancelled !== "true" && deliveries.length > 0 &&  <Button disabled={true}>Accepted Delivery</Button> }
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div style={style} className="bg-white rounded-md w-2/3 p-4">
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Deliver Your Work
-          </Typography>
-           <div className='mt-5'>
+  <Modal
+    show={open}
+    onClose={NhandleClose}
+  >
+    
+
+    <Modal.Body>
+      <div>
+        <p className='font-bold text-xl'>Deliver Your Work</p>
+      </div>
+    <div className='mt-5'>
             <p className='font-semibold text-lg'>Describe Your Work</p>
               <textarea className='outline-none border-[1px] border-gray-200 w-4/5 rounded-md h-28 ' value={workdesc} onChange={handleDescChange} />
            </div>
@@ -83,10 +103,34 @@ export default function DeliverWork({orderDetails}) {
             </div>
            </div>
            <div className='flex flex-row justify-end'>
-              <Button color="success" onClick={handleSubmit}>Deliver</Button>
+              <Button onClick={()=> setOpen(false)}>Close</Button>
+              <Button color="success" onClick={handleSubmit} disabled={deliverNotAllowed}>Deliver</Button>
+                <Snackbar
+                  open={openNoti}
+                  autoHideDuration={3000}
+                  onClose={handleClose}
+                  message={message}
+                />
            </div>
-        </div>
-      </Modal>
+    </Modal.Body>
+  </Modal>
+</React.Fragment>
+  
     </div>
   );
+}
+function isDeliveryNotAllowed(orderDetails){
+  const startedDate = new Date(orderDetails.createdAt)
+  const date = new Date();
+  const deliveryDate = new Date(orderDetails.deliveryAt);
+  console.log(date);
+  console.log(startedDate)
+  console.log(deliveryDate)
+  if(date.getTime() >= startedDate.getTime() && date.getTime() <= deliveryDate.getTime()){
+    return false
+
+  }else{
+    return true;
+    
+  }
 }

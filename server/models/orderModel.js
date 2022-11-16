@@ -38,6 +38,9 @@ const orderSchema = new Schema({
         ref: "User",
         required: true,
       },
+      deliveryAt: {
+        type: String
+      },
       assignedTo: {
         type: Schema.Types.ObjectId,
         default: "",

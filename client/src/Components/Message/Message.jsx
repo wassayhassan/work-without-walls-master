@@ -16,8 +16,15 @@ export default function Message({ member, current, message, own }) {
 
 
  async function handleAccept(){
-  console.log(user._id);
-  console.log(message.senderId);
+
+  Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+var date = new Date();
+date = date.addDays(parseInt(message.dealTime));
+
   let dat = {
     assignedBy: user._id,
     offerid: message._id,
@@ -32,6 +39,7 @@ export default function Message({ member, current, message, own }) {
     completed: "false",
     canceled: 'false',
     deleted: 'false',
+    deliveryAt: date
   }
 
     const data = await createOrder(dat);

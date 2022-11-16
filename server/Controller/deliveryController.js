@@ -10,10 +10,11 @@ function getExtension(filename) {
 
 
 const addDelivery = async(req, res) => {
-     const {file} = req.files;
+     
 
      let DeliveryMaterials = [];
     try{
+        const {file} = req.files;
         if(file.length === undefined){
             let ext = getExtension(file.name);
             let name = uuidv4() +'.'+ ext; 
@@ -46,10 +47,10 @@ const addDelivery = async(req, res) => {
         let newData =  {orderId: req.params.id, msg: 'Seller sent a Delivery', activityType: 'delivery', deliveryId: data._id};
         axios.post('http:localhost:7900/orderactivity/create', newData).then((response)=> {
         })
-        res.status(200).json(data);
+        res.status(200).json({msg: "Delivery has been sent to Buyer"});
        })
     }catch(err){
-        res.status(400).json(err);
+        res.status(400).json({msg: err});
 
     }
 }
