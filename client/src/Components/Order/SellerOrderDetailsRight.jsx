@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import { UserContext } from "../../context/user.context";
 import AcceptDeliveryConfirmation from './AcceptDeliveryConfirmation';
 import ReviewModal from './ReviewModal';
-import { getNotesByOrderId, updateNote, deleteNote } from '../../api';
+import { getNotesByOrderId, getDeliveriesByOrderId} from '../../api';
 import { Textarea, Button } from 'flowbite-react';
 import { useEffect } from 'react';
 import SaveNote from './saveNote';
@@ -14,9 +14,13 @@ import EditNote from './EditNote';
 import CancelModal from './cancelModal';
 import BuyerExtendDelivery from './buyerExtendDelivery';
 import SellerExtendDelivery from './SellerExtendDelivery';
+import TrackOrder from './TrackOrder';
+import OrderDetails from './orderDetails';
+
 
 const SellerOrderDetailsRight = ({orderDetails}) => {
   const { user } = useContext(UserContext);
+  const [deliveries, setDeliveries] = useState([]);
   const [openBuyerReview, setOpenBuyerReview] = useState(false);
   const [note, setNote] = useState(null);
   const [openEdit, setOpenEdit] = useState(false);
@@ -29,6 +33,20 @@ const SellerOrderDetailsRight = ({orderDetails}) => {
  function handleNoteChange(e){
     setNote(e.target.value);
  }
+
+
+ useEffect(()=> {
+    
+  if(orderDetails._id){
+      const getDeliveries = async(id) => {
+          let data =  await getDeliveriesByOrderId(id);
+
+          setDeliveries(data.data)
+  }
+getDeliveries(orderDetails._id)
+  }
+
+}, [orderDetails._id])
 
  async function getNotes(id){
   let response = await getNotesByOrderId(id);
@@ -94,25 +112,11 @@ const handleOpenSave = () => {
         
       </div>: null
 }
-      <div className='delivery-container bg-white shadow-md rounded p-3 mt-4'>
-        <h4 className='font-weight-bold'>
-          Order Details
-        </h4>
-        <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal text-muted text-sm'>Ordered By</p>
-          <p className=' font-semibold text-sm'>{orderDetails.assignedBy}</p>
-        </div>
-        <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal text-muted text-sm'>Delivery Date</p>
-          <p className=' font-semibold text-sm'>{date2.toLocaleDateString()}</p>
-        </div>
-        <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal text-muted text-sm'>Total Price</p>
-          <p className=' font-semibold text-sm'>${orderDetails.budget}</p>
-        </div>
-        <div className='d-flex flex-row justify-content-between'>
-          <p className='font-weight-normal text-muted text-sm'>Order No. </p>
-          <p className=' font-semibold text-sm'>{orderDetails._id}</p>
+   <OrderDetails orderDetails={orderDetails} date={date} date2={date2} />
+      <div className=' bg-white p-3 mt-4'>
+        <p className='font-semibold text-lg'>Track Your Order</p>
+        <div className='ml-3'>
+          <TrackOrder orderDetails={orderDetails} deliveries={deliveries} />
         </div>
       </div>
       <div className='notes-container bg-white p-3 mt-4'>

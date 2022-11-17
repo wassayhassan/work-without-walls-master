@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../context/user.context";
 
-export default function Message({ member, current, message, own }) {
+export default function Message({currentChat, member, current, message, own }) {
   const [accepted, setAccepted] = useState(message.accepted === "true"? true: false);
   const [Withdraw, setWithdraw] = useState(message.status === "withdrawn"? true: false);
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ var date = new Date();
 date = date.addDays(parseInt(message.dealTime));
 
   let dat = {
+    conversationId: currentChat._id,
     assignedBy: user._id,
     offerid: message._id,
     description: message.offer,

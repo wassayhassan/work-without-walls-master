@@ -146,7 +146,7 @@ export default function Messenger() {
                  
                   {messages.map((m) => (
                     <div ref={scrollRef} key={m._id}>
-                      <Message
+                      <Message currentChat={currentChat}
                         
                         member={currentChat.members.find(
                           (m) => m._id !== user?._id

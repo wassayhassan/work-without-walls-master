@@ -52,5 +52,7 @@ export const getNoteById = (id) => Base.get(`/order/notes/${id}`);
 export const deleteNote = (id) => Base.delete(`/order/notes/${id}`);
 export const updateNote = (id, data) => Base.put(`/order/notes/${id}`, data);
 export const makeReqCancelActivity = (data) => Base.post('/orderactivity/create', data);
-export const makeActivity = (data) => Base.post('/orderactivity/create', data)
+export const makeActivity = (data) => Base.post('/orderactivity/create', data);
+export const createOrderMessage = (id, data) => Base.post(`/order/${id}/message/create`, data);
+export const getOrderMessages = (id) => Base.get(`/order/${id}/messages`);
 

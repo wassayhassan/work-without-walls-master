@@ -2,7 +2,7 @@ import * as React from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
+import { AiTwotoneFileAdd } from 'react-icons/ai';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {useState, useEffect, useContext} from 'react';
 import {BsCloudDownload} from "react-icons/bs";
@@ -49,8 +49,8 @@ export default function IndividualActivity({activity, orderDetails, sellerReview
           id="panel1a-header"
         >
             <div className='flex flex-row ml-3'>
-            <p className='font-semibold text-lg text-gray-600'>{activity.msg}</p>
-          <p className='m-2 '>{date.toUTCString()}</p>
+              <p className='font-semibold text-lg text-gray-600'>{activity.msg}</p>
+              <p className='m-2 '>{date.toUTCString()}</p>
             </div>
 
         </AccordionSummary>
@@ -59,12 +59,15 @@ export default function IndividualActivity({activity, orderDetails, sellerReview
              <div className='flex flex-row flex-wrap p-1'>
              {deliveryData && deliveryData.DeliveryMaterials && deliveryData.DeliveryMaterials.map((material, ix)=> {
              return (<div className='h-20 w-20 bg-gray-300 rounded-md m-1' key={ix}>
-                 <div>
-                     <p className='font-medium text-base'>{ext = getFileExtension(material)}</p>
-                 </div>
-                 <a href={`http://localhost:7900/uploads/${material}`} download>
-                     <BsCloudDownload size="1.2em" />
-                 </a>
+                        <div className='h-3/4'>
+                          <AiTwotoneFileAdd size="3em" />
+                        </div>
+                        <div className='h-3/4 flex flex-row'>
+                          <p className='font-medium text-base'>.{ext = getFileExtension(material)}</p>  
+                          <a href={`http://localhost:7900/uploads/${material}`} download>
+                              <BsCloudDownload size="1.2em"  className='ml-3'/>
+                          </a>
+                        </div>
                  </div>)
             })}
              </div>: null

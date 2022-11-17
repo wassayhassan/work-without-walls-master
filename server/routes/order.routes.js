@@ -4,6 +4,7 @@ const {createNewOrder, getOrderById, updateOrder} = require("../Controller/order
 const { protect } = require("../middleware/verifyToken");
 const {addDelivery, getDeliveriesByOrderId, getDeliveryById} = require("../Controller/deliveryController");
 const {createNote, getNoteByOrderId, getNoteById, deleteNote} = require("../Controller/orderNotesController");
+const {createMessage, getMessagesByOrderId} = require("../Controller/orderMessageController");
 
 router.post('/create', protect, createNewOrder);
 router.get('/:id', protect, getOrderById)
@@ -14,7 +15,9 @@ router.post('/:id/update', updateOrder);
 router.get('/notes/:id', getNoteById);
 router.get('/:id/notes', getNoteByOrderId);
 router.post('/notes/create', createNote);
-router.delete('/notes/:id', deleteNote)
+router.delete('/notes/:id', deleteNote);
+router.post('/:id/message/create', createMessage);
+router.get('/:id/messages', getMessagesByOrderId);
 
 module.exports = router;
 

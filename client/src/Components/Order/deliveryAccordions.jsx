@@ -25,14 +25,17 @@ export default function DeliveryAccordions({deliveries}) {
                 <AccordionDetails>
                     <div className='flex flex-row flex-wrap p-1'>
                     {delivery.DeliveryMaterials.map((material, ix)=> {
-                    return (<div className='h-16 w-16 bg-gray-200 rounded-md m-1' key={ix}>
-                        {/* <div className='flexf flex-row justify-center w-full'>
-                            <p className='font-medium text-base'>.{ext = getFileExtension(material)}</p>  
-                        </div> */}
-                        <AiTwotoneFileAdd size="3em" />
-                        <a href={`http://localhost:7900/uploads/${material}`} download>
-                            <BsCloudDownload size="1.2em"  className='ml-3'/>
-                        </a>
+                    return (<div className='h-16 w-20 bg-gray-200 rounded-md m-1' key={ix}>
+                        <div className='h-3/4'>
+                          <AiTwotoneFileAdd size="3em" />
+                        </div>
+                        <div className='h-3/4 flex flex-row'>
+                          <p className='font-medium text-base'>.{ext = getFileExtension(material)}</p>  
+                          <a href={`http://localhost:7900/uploads/${material}`} download>
+                              <BsCloudDownload size="1.2em"  className='ml-3'/>
+                          </a>
+                        </div>
+
                         </div>)
                    })}
                     </div>

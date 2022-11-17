@@ -9,6 +9,9 @@ const orderSchema = new Schema({
       dealTime: {
         type: String,
       },
+      conversationId: {
+         type: String
+      },
       budget: {
         type: Number,
         default: "",
@@ -18,6 +21,7 @@ const orderSchema = new Schema({
         enum: [
           "started",
           "active",
+          'delivered',
           'Requested Cancel',
           "inactive",
           "assigned",
