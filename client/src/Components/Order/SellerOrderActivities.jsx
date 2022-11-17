@@ -9,7 +9,7 @@ import { createOrderMessage, getOrderMessages } from '../../api';
 import OrderMessages from './orderMesages';
 
 
-const SellerOrderActivities = ({orderDetails, sellerReview, buyerReview, user}) => {
+const SellerOrderActivities = ({orderDetails, sellerReview,setSellerReview, setBuyerReview, buyerReview, user}) => {
   const [newmessage, setnewmessage] = useState('');
   const [newfiles, setnewfiles] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -74,7 +74,7 @@ const SellerOrderActivities = ({orderDetails, sellerReview, buyerReview, user}) 
         </div>
        <ActivityAccordions orderDetails={orderDetails} user={user} />
        <div>
-        <UserActivitiesAccordion orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview} />
+        <UserActivitiesAccordion orderDetails={orderDetails} setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview} />
        </div>
        <div className='messages'>
          <OrderMessages messages={messages} orderDetails={orderDetails} user={user} />

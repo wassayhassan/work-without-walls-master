@@ -80,7 +80,7 @@ export default function SellerOrderDetailsLeft({orderDetails}) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <SellerOrderActivities user={user} orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview}/>
+      <SellerOrderActivities user={user} orderDetails={orderDetails} setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
          <div className='p-3 mt-4 bg-white'>

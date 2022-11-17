@@ -9,7 +9,7 @@ import {Button, Modal, Textarea} from 'flowbite-react';
 import Rating from '@mui/material/Rating';
 import { createReview } from '../../api';
 
-export default function BuyerReviewAccordion({orderDetails, user}){
+export default function BuyerReviewAccordion({orderDetails, setBuyerReview,setSellerReview, user}){
     const [review, setReview] = useState({
         communication: 0,
         service: 0,
@@ -34,6 +34,9 @@ export default function BuyerReviewAccordion({orderDetails, user}){
             reviewOf: orderDetails._id
           }
           let response = await createReview(orderDetails._id, data);
+          if(response){
+            setSellerReview(response.data);
+          }
         }
     return (
         <div>

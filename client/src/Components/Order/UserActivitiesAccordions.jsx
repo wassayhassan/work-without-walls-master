@@ -11,7 +11,7 @@ import IndividualActivity from './IndividualActivity';
 import ReviewAccordion from './reviewAccordion.component';
 import BuyerReviewAccordion from './buyerReviewAccordion';
 
-export default function UserActivitiesAccordion({orderDetails, sellerReview, buyerReview}) {
+export default function UserActivitiesAccordion({orderDetails,setSellerReview, setBuyerReview , sellerReview, buyerReview}) {
   const [activities, setActivities] = useState([]);
   const { user } = useContext(UserContext);
   useEffect(()=> {
@@ -30,8 +30,8 @@ export default function UserActivitiesAccordion({orderDetails, sellerReview, buy
       {activities && activities.map((activity)=> {
           return <IndividualActivity activity={activity} key={activity._id} orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview} />
       })}
-      {(orderDetails.status === "completed" && orderDetails.assignedTo === user._id && buyerReview === null)? <ReviewAccordion orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
-      {(orderDetails.status === "completed" && orderDetails.assignedTo !== user._id && sellerReview === null)? <BuyerReviewAccordion orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
+      {(orderDetails.status === "completed" && orderDetails.assignedTo === user._id && buyerReview === null)? <ReviewAccordion orderDetails={orderDetails} setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
+      {(orderDetails.status === "completed" && orderDetails.assignedTo !== user._id && sellerReview === null)? <BuyerReviewAccordion orderDetails={orderDetails} setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
     </div>
   );
 }
