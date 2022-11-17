@@ -30,9 +30,10 @@ export default function SaveNote({orderDetails, user, setOpenSave, note}) {
     let res = await createNote(data);
     if(res){
       setMessage(res.data.msg)
+      setOpenSave(false)
       handleClick();
     }
-    setOpenSave(false)
+    
  }
 
   return (

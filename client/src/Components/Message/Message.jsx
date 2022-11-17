@@ -108,7 +108,7 @@ date = date.addDays(parseInt(message.dealTime));
           <li>${message.budget}</li>
         </div>
         <div className="d-flex flex-row justify-content-end">
-       {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/user/manage-order/${offerOrderId}`)}>View Order</button>}
+       {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/user/manage/order/${offerOrderId}`)}>View Order</button>}
         {(message.senderId === user._id? <button type="button" className="btn btn-light" onClick={handleOfferWithDraw} disabled={Withdraw}>{Withdraw? 'Withdrawn': 'Withdraw Offer'}</button>:<button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
         </div>
       </div>

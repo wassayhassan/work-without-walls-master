@@ -74,7 +74,7 @@ function App() {
           <Route path="/first" element={< Firstteam />} />
           <Route path="/second" element={<Second />} />
           <Route path="/sellerTeam" element={<SellerTeam />} />
-          <Route path="/seller/orderdetails/:id" element={<SellerOrderDetails />} />
+          <Route path="/user/manage/order/:id" element={<SellerOrderDetails />} />
         </Route>
       </>
     </Routes>

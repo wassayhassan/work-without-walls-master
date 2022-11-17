@@ -34,4 +34,12 @@ const deleteNote = async(req, res) => {
         res.status(400).json({msg: 'Error in Deleting Note'});
     }
 }
-module.exports = {createNote, getNoteByOrderId, getNoteById, deleteNote}
+const updateNote = async(req, res) => {
+  try{
+  let data = await OrderNote.findByIdAndUpdate(req.params.id, req.body);
+   res.status(200).json(data);
+  }catch(err){
+    res.status(400).json(err);
+  }
+}
+module.exports = {createNote, getNoteByOrderId, getNoteById,updateNote, deleteNote}

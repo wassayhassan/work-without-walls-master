@@ -149,7 +149,7 @@ const handleOpenSave = () => {
             <Button color="gray" className="m-1" onClick={()=> setOpenNotepad(false)}>
               Cancel
             </Button>
-            <SaveNote orderDetails={orderDetails} note={note} user ={user} setOpenNotepad={setOpenNotepad} />
+            <SaveNote orderDetails={orderDetails} note={note} user ={user} setOpenSave={setOpenSave} setOpenNotepad={setOpenNotepad} />
             </div>
 }
 
