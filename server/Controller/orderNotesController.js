@@ -4,7 +4,7 @@ const createNote = async(req, res) => {
    try{
     const note  = new OrderNote(req.body);
     const data = await note.save();
-    res.status(200).json({msg: 'Note Saved'});
+    res.status(200).json(data);
    }catch(err){
     res.status(400).json({msg: 'Error in Saving Note'});
    }

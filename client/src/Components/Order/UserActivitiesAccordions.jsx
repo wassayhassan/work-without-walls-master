@@ -31,7 +31,7 @@ export default function UserActivitiesAccordion({orderDetails,setSellerReview, s
           return <IndividualActivity activity={activity} key={activity._id} orderDetails={orderDetails} sellerReview={sellerReview} buyerReview={buyerReview} />
       })}
       {(orderDetails.status === "completed" && orderDetails.assignedTo === user._id && buyerReview === null)? <ReviewAccordion orderDetails={orderDetails} setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
-      {(orderDetails.status === "completed" && orderDetails.assignedTo !== user._id && sellerReview === null)? <BuyerReviewAccordion orderDetails={orderDetails} setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
+      {(orderDetails.status === "completed" && orderDetails.assignedTo !== user._id && sellerReview === null)? <BuyerReviewAccordion orderDetails={orderDetails}setSellerReview={setSellerReview} setBuyerReview={setBuyerReview} sellerReview={sellerReview} buyerReview={buyerReview} user={user} />: null}
     </div>
   );
 }

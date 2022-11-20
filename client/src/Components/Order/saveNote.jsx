@@ -4,7 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { createNote } from '../../api';
 
 
-export default function SaveNote({orderDetails, user, setOpenSave, note}) {
+export default function SaveNote({orderDetails, user,setNote, setOpenSave, note}) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -29,6 +29,7 @@ export default function SaveNote({orderDetails, user, setOpenSave, note}) {
     }
     let res = await createNote(data);
     if(res){
+      setNote(res.data);
       setMessage(res.data.msg)
       setOpenSave(false)
       handleClick();

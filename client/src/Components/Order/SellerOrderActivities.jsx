@@ -55,7 +55,7 @@ const SellerOrderActivities = ({orderDetails, sellerReview,setSellerReview, setB
 
   return (
     <div className='p-2'>
-         {orderDetails.assignedTo === user._id && orderDetails.cancelled === "false"?
+         {orderDetails.assignedTo === user._id && orderDetails.status === "Requested Cancel" && orderDetails.cancelled !== "true"?
           <div className='bg-white shadow-md rounded-md p-3 my-2'>
           <div className='ml-3'>
             <p className='h4'>Buyer has requested to cancel the order</p>

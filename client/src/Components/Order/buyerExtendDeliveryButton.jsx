@@ -20,10 +20,19 @@ export default function BuyerExtendDeliveryButton({orderDetails, days, setOpenEx
   };
 
   const handleExtendDelivery = async() => {
-    const res = await updateOrder(orderDetails._id, {dealTime: parseInt(orderDetails.dealTime) + parseInt(days)})
+
+    Date.prototype.addDays = function(days) {
+      var date = new Date(orderDetails.deliveryAt);
+      date.setDate(date.getDate() + days);
+      return date;
+  }
+  var date = new Date(orderDetails.deliveryAt);
+  date = date.addDays(days);
+
+    const res = await updateOrder(orderDetails._id, {deliveryAt: date,  dealTime: (parseInt(orderDetails.dealTime) + parseInt(days)) })
     if(res.status === 200){
         setOpenExtend(false);
-        const dat = await makeActivity({orderId: orderDetails._id, activityType: 'extendDays', msg: 'Buyer has extended the days of delivery'});
+        const dat = await makeActivity({orderId: orderDetails._id, activityType: 'extendDays', msg: `Your delivery date was updated to ${date.toLocaleDateString()}`});
        handleClick();
     }
  }

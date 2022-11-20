@@ -90,7 +90,7 @@ const handleOpenSave = () => {
         <div className='counter d-flex flex-row justify-content-center w-full my-2'>
           <h4 className=' font-weight-bold'>
             
-          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.canceled !== "true" &&  orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
+          {(orderDetails && orderDetails.status !=="completed" && orderDetails.status !== "delivered" && orderDetails.cancelled !== "true" &&  orderDetails.dealTime)? <Countdown date={(Date.now() + 24 * 60 * 60 * 1000 * parseInt(orderDetails.dealTime)-(Date.now()-date.getTime())) } />: null}
           </h4>
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
@@ -100,10 +100,10 @@ const handleOpenSave = () => {
         
         </div>
         <div className='d-flex flex-row justify-content-center w-full'>
-         {orderDetails.assignedBy === user._id?<BuyerExtendDelivery orderDetails={orderDetails} />: <SellerExtendDelivery orderDetails={orderDetails} /> }
+         {orderDetails.assignedBy === user._id && orderDetails.cancelled !== 'true' && orderDetails.completed !== "true"?<BuyerExtendDelivery orderDetails={orderDetails} />: <SellerExtendDelivery orderDetails={orderDetails} /> }
         </div>
       </div>
-      {orderDetails.cancelled !== 'true' && orderDetails.completed !== 'true'? 
+      {orderDetails.cancelled !== 'true' && orderDetails.completed !== 'true' && orderDetails.assignedBy === user._id? 
       <div className='delivery-container bg-white shadow-md rounded p-3 mt-4'>
       <p className='font-semibold text-lg'>Request Cancel</p>
         <div className='flex flex-row justify-center items-center'>
@@ -149,7 +149,7 @@ const handleOpenSave = () => {
             <Button color="gray" className="m-1" onClick={()=> setOpenNotepad(false)}>
               Cancel
             </Button>
-            <SaveNote orderDetails={orderDetails} note={note} user ={user} setOpenSave={setOpenSave} setOpenNotepad={setOpenNotepad} />
+            <SaveNote orderDetails={orderDetails} setNote={setNote} note={note} user ={user} setOpenSave={setOpenSave} setOpenNotepad={setOpenNotepad} />
             </div>
 }
 
