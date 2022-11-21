@@ -81,7 +81,7 @@ date = date.addDays(parseInt(message.dealTime));
 
 
 <div className={(message.senderId === user._id) ? "flex justify-end w-full m-1": "flex flex-row justify-start w-start m-2"}>
-<div className={(message.senderId === user._id) ? "flex flex-row-reverse w-2/3": "flex w-2/3 flex-row"}>
+<div className={(message.senderId === user._id) ? "flex flex-row-reverse w-96": "flex w-96 flex-row"}>
   <div>
   <img
     className="messageImg"
@@ -94,7 +94,7 @@ date = date.addDays(parseInt(message.dealTime));
   <div className="messageBottom">{format(message.createdAt)}</div>
   </div>
 
-        <Card className="h-80 shadow-md rounded-lg p-1" style={{width: "25rem"}}>
+        <Card className="h-80 shadow-md rounded-lg p-1 mx-1" style={{width: "25rem"}}>
           <div className="flex flex-row justify-between">
             <div>
                 <div className="">
