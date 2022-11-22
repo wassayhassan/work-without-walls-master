@@ -17,6 +17,7 @@ import { UserContext } from "../../context/user.context";
 import { logoutUser } from "../../api";
 import "./sellerNavbar.css";
 import { io } from "socket.io-client";
+import SellerOrdersModal from "../Orders/SellerOrdersModal";
 const SellerNavBar = () => {
   const navigate = useNavigate();
   const { setuser, user } = useContext(UserContext);
@@ -47,11 +48,14 @@ const SellerNavBar = () => {
       </div>
       <div className="topbarRight">
         <div className="topbarIcons">
-          <div className="topbarIconItem">
+          {/* <div className="topbarIconItem">
             <Link className="text-light" aria-current="page" to="/">
               Order
             </Link>
-          </div>
+          </div> */}
+          <div className="topbarIconItem">
+          <SellerOrdersModal />
+        </div>
           <div className="topbarIconItem">
             <Link className="text-light" to="/">
               <BsFillBellFill />

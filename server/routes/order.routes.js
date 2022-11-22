@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {createNewOrder, getOrderById, updateOrder} = require("../Controller/orderController");
+const {createNewOrder, getOrderById, updateOrder, getBuyerOrdersByUserId, getSellerOrdersByUserId} = require("../Controller/orderController");
 const { protect } = require("../middleware/verifyToken");
 const {addDelivery, getDeliveriesByOrderId, getDeliveryById} = require("../Controller/deliveryController");
 const {createNote, getNoteByOrderId, getNoteById, deleteNote, updateNote} = require("../Controller/orderNotesController");
@@ -8,6 +8,8 @@ const {createMessage, getMessagesByOrderId} = require("../Controller/orderMessag
 
 router.post('/create', protect, createNewOrder);
 router.get('/:id', protect, getOrderById)
+router.get('/user/buyer/:id', getBuyerOrdersByUserId);
+router.get('/user/seller/:id', getSellerOrdersByUserId);
 router.post('/:id/delivery/add', protect, addDelivery);
 router.get('/:id/deliveries', protect, getDeliveriesByOrderId);
 router.get('/delivery/:id', protect, getDeliveryById);

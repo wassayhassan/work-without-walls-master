@@ -9,6 +9,9 @@ const bidSchema = new Schema({
         ref:'Job',
         required: true
     },
+    title: {
+        type: String
+    },
     senderId: {
         type: Schema.Types.ObjectId,
         ref: 'User',

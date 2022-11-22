@@ -11,6 +11,8 @@ import ProfileUser from "./Components/ProfileUser";
 import Register from "./Components/register";
 import Profile from "./Components/UserNavbar";
 import SellerOrderDetails from "./Components/Order/SellerOrderDetails";
+import BuyerOrdersPage from "./Components/Orders/BuyerOrdersPage";
+import SellerOrdersPage from "./Components/Orders/SellerOrderPage";
 
 // Team
 import { Route, Routes } from "react-router-dom";
@@ -75,6 +77,8 @@ function App() {
           <Route path="/second" element={<Second />} />
           <Route path="/sellerTeam" element={<SellerTeam />} />
           <Route path="/user/manage/order/:id" element={<SellerOrderDetails />} />
+          <Route path="/user/buyer/orders" element={<BuyerOrdersPage />} />
+          <Route path="/user/seller/orders" element={<SellerOrdersPage />} />
         </Route>
       </>
     </Routes>

@@ -49,4 +49,22 @@ const updateOrder = async(req, res) => {
         console.log(err);
     }
 }
-module.exports = {createNewOrder, getOrderById, addDelivery, updateOrder};
+
+const getBuyerOrdersByUserId = async(req, res) => {
+    try{
+      let data = await Order.find({assignedBy: req.params.id});
+      res.status(200).json(data);
+    }catch(err){
+        res.status(400).json(err);
+    }
+}
+const getSellerOrdersByUserId = async(req, res) => {
+    try{
+      let data = await Order.find({assignedTo: req.params.id});
+      res.status(200).json(data);
+    }catch(err){
+        res.status(400).json(err);
+    }
+}
+
+module.exports = {createNewOrder, getOrderById, addDelivery, updateOrder,getBuyerOrdersByUserId, getSellerOrdersByUserId };

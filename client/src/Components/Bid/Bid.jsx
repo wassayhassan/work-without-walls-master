@@ -17,6 +17,7 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
   );
   const [bidDetails, setBidDetails] = useState({
       jobId: jobid,
+      title: job.gigTitle,
       status: 'sent',
       senderId: user._id,
       receiverId: creator,

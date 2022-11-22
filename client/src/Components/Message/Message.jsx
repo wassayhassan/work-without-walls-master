@@ -27,6 +27,7 @@ var date = new Date();
 date = date.addDays(parseInt(message.dealTime));
 
   let dat = {
+    title: message.title,
     conversationId: currentChat._id,
     assignedBy: user._id,
     offerid: message._id,

@@ -6,6 +6,9 @@ const orderSchema = new Schema({
         type: String,
         default: "",
       },
+      title: {
+        type: String
+      },
       dealTime: {
         type: String,
       },

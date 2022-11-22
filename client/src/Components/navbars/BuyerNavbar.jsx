@@ -15,6 +15,7 @@ import { FaFirstOrderAlt } from "react-icons/fa";
 import { Dropdown,NavDropdown} from "react-bootstrap";
 import { UserContext } from "../../context/user.context";
 import { logoutUser } from "../../api";
+import BuyerOrdersModal from "../Orders/BuyerOrdersModal";
 const BuyerNavbar = () => {
   const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ const BuyerNavbar = () => {
     </div>
     <div className="topbarRight">
       <div className="topbarIcons">
-          <div className="topbarIconItem">
+          {/* <div className="topbarIconItem">
               <Link
                 className="text-light"
                 aria-current="page"
@@ -52,6 +53,9 @@ const BuyerNavbar = () => {
               >
                 Order
               </Link>
+        </div> */}
+        <div className="topbarIconItem">
+          <BuyerOrdersModal />
         </div>
         <div className="topbarIconItem">
               <Link className="text-light"  to="/">
