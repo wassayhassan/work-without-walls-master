@@ -16,6 +16,7 @@ import { Dropdown,NavDropdown} from "react-bootstrap";
 import { UserContext } from "../../context/user.context";
 import { logoutUser } from "../../api";
 import BuyerOrdersModal from "../Orders/BuyerOrdersModal";
+import NotifcationModal from "../Notification/NotificationModal";
 const BuyerNavbar = () => {
   const navigate = useNavigate();
 
@@ -57,12 +58,15 @@ const BuyerNavbar = () => {
         <div className="topbarIconItem">
           <BuyerOrdersModal />
         </div>
-        <div className="topbarIconItem">
+        {/* <div className="topbarIconItem">
               <Link className="text-light"  to="/">
                 <BsFillBellFill />
               </Link>
               <span className="topbarIconBadge"></span>
-        </div>
+        </div> */}
+           <div className="topbarIconItem">
+            <NotifcationModal />
+          </div>
         <div className="topbarIconItem">
               <Link className=" text-light" to="/messages">
                 <BsChatTextFill />

@@ -57,4 +57,6 @@ export const makeReqCancelActivity = (data) => Base.post('/orderactivity/create'
 export const makeActivity = (data) => Base.post('/orderactivity/create', data);
 export const createOrderMessage = (id, data) => Base.post(`/order/${id}/message/create`, data);
 export const getOrderMessages = (id) => Base.get(`/order/${id}/messages`);
-
+export const getNotificationsByUserId = (id) => Base.get(`/notification/${id}`);
+export const createNotification = (data) => Base.post('/notification', data);
+export const updateNotification = (id, data) => Base.put(`/notification/${id}`, data);

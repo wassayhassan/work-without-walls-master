@@ -68,9 +68,12 @@ export default function Messenger() {
         const res2 = await getBidsById(user._id);
         if(res && res2){
           let newArr = [...res.data, ...res2.data];
-          console.log(newArr)
+          newArr.sort(function(x, y){
+            let date1 = new Date(x.createdAt);
+            let date2 = new Date(y.createdAt);
+            return date1 - date2;
+        })
           setMessages(newArr);
-          // newArr.sort()
 
         }
         
@@ -82,21 +85,24 @@ export default function Messenger() {
   }, [currentChat]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const message = {
-      sender: user._id,
-      text: newMessage,
-      conversationId: currentChat._id,
-    };
-
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
     );
+    e.preventDefault();
+    const message = {
+      sender: user._id,
+      receiverId: receiverId._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+    };
+    console.log(message)
+
+
 
     socket.current.emit("sendMessage", {
       mtype: "message",
       senderId: user._id,
-      receiverId,
+      receiverId: receiverId,
       text: newMessage,
       conversationId: currentChat?._id,
     });

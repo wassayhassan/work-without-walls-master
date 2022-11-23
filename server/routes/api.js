@@ -24,6 +24,6 @@ router.get("/", async (req, res) => {
 
 router.put("/profile/:id([0-9a-fA-F]{24})", protect, userUpdateHandler);
 router.get("/user", protect, getSingleUser); //corected
-router.get('/user/:id', protect, getUserById);
+router.get('/user/:id', getUserById);
 
 module.exports = router;

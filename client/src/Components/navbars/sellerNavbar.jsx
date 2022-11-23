@@ -18,6 +18,7 @@ import { logoutUser } from "../../api";
 import "./sellerNavbar.css";
 import { io } from "socket.io-client";
 import SellerOrdersModal from "../Orders/SellerOrdersModal";
+import NotifcationModal from "../Notification/NotificationModal";
 const SellerNavBar = () => {
   const navigate = useNavigate();
   const { setuser, user } = useContext(UserContext);
@@ -56,11 +57,14 @@ const SellerNavBar = () => {
           <div className="topbarIconItem">
           <SellerOrdersModal />
         </div>
-          <div className="topbarIconItem">
+          {/* <div className="topbarIconItem">
             <Link className="text-light" to="/">
               <BsFillBellFill />
             </Link>
             <span className="topbarIconBadge"></span>
+          </div> */}
+          <div className="topbarIconItem">
+            <NotifcationModal />
           </div>
           <div className="topbarIconItem">
             <Link className=" text-light" to="/messages">

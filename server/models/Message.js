@@ -14,6 +14,9 @@ const MessageSchema = new mongoose.Schema(
     text: {
       type: String,
     },
+    receiverId: {
+      type: String
+    },
   },
   { timestamps: true }
 );

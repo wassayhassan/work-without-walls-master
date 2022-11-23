@@ -96,6 +96,7 @@ const bids = require("./routes/bid.routes");
 const order = require("./routes/order.routes");
 const orderActivites = require('./routes/orderactivitiesRoutes');
 const reviews = require("./routes/review.routes");
+const notifications = require("./routes/notification.routes");
 const uploads = require("./routes/ordermaterial.routes");
 
 dbConnection();
@@ -113,4 +114,5 @@ app.use('/orderactivity', orderActivites)
 app.use("/Team", Team);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.use("/notification", notifications)
 server.listen(PORT, () => console.log(`Server is Running on ${PORT}`));
