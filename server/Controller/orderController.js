@@ -52,7 +52,7 @@ const updateOrder = async(req, res) => {
 
 const getBuyerOrdersByUserId = async(req, res) => {
     try{
-      let data = await Order.find({assignedBy: req.params.id});
+      let data = await Order.find({assignedBy: req.params.id}).sort({createdAt: -1});
       res.status(200).json(data);
     }catch(err){
         res.status(400).json(err);
@@ -60,7 +60,7 @@ const getBuyerOrdersByUserId = async(req, res) => {
 }
 const getSellerOrdersByUserId = async(req, res) => {
     try{
-      let data = await Order.find({assignedTo: req.params.id});
+      let data = await Order.find({assignedTo: req.params.id}).sort({createdAt: -1});
       res.status(200).json(data);
     }catch(err){
         res.status(400).json(err);
