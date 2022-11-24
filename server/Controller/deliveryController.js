@@ -43,13 +43,21 @@ const addDelivery = async(req, res) => {
         
        const delivery = new Delivery(dat);
        
-       delivery.save().then((data)=> {
-        let newData =  {orderId: req.params.id, msg: 'Seller sent a Delivery', activityType: 'delivery', deliveryId: data._id};
+       delivery.save().then(async(data)=> {
+        const response = await axios.get(`http:localhost:7900/api/user/${req.body.sellerId}`);
+        let newData =  {orderId: req.params.id, msg: `${response.data.name} sent a Delivery`, activityType: 'delivery', deliveryId: data._id};
         axios.post('http:localhost:7900/orderactivity/create', newData).then((response)=> {
         })
         axios.post(`http:localhost:7900/order/${req.params.id}/update`, {status: 'delivered'}).then(()=> {
 
         })
+        
+        let newData2 = {
+          userId: req.body.receiverId,
+          message: `<a href="/user/manage/order/${req.params.id}" className="font-normal text-base text-black"><span className="font-medium text-base">${response.data.name}</span> sent a delivery </a>`,
+          read: 'false'
+        }
+        axios.post('http:localhost:7900/notification', newData2);
         res.status(200).json({msg: "Delivery has been sent to Buyer"});
        })
     }catch(err){

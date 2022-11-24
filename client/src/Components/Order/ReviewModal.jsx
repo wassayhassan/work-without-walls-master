@@ -3,6 +3,7 @@ import {Button, Modal, Textarea} from 'flowbite-react';
 import Rating from '@mui/material/Rating';
 import { UserContext } from "../../context/user.context";
 import { createReview } from '../../api';
+import axios from 'axios';
 
 const BuyerReviewModal = ({setOpenBuyerReview, openBuyerReview, orderDetails}) => {
   const { user } = useContext(UserContext);
@@ -37,6 +38,12 @@ const BuyerReviewModal = ({setOpenBuyerReview, openBuyerReview, orderDetails}) =
 
       let response = await createReview(orderDetails._id, data);
       if(response.status === 200){
+        let newData3 = {
+          userId: orderDetails.assignedTo,
+          message: `<a href="/user/manage/order/${orderDetails._id}" className="font-normal text-base text-black"><span className="font-medium text-base">${user.firstname + ' ' + user.lastname}</span> left a review </a>`,
+          read: 'false'
+      }
+      const dati = await axios.post('/notification', newData3);
         handleOpenChange();
       }
     }

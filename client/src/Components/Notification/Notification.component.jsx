@@ -8,14 +8,14 @@ const Notification = ({notification}) => {
   return (
 
     <div className={(notification.read === 'true')? read: unread}>
-        <div className='flex flex-row'>
+        <div className='flex flex-row w-3/4'>
 
             <p className='font-normal text-base text-blue-400 mx-1 hover:text-blue-500'>
               {parse(notification.message)}
             </p>
         </div>
         <div>
-            <p className='text-gray-400 text-sm font-light'>{format(notification.createdAt)}</p>
+            <p className='text-gray-400 text-xs font-light'>{format(notification.createdAt)}</p>
         </div>
 
 

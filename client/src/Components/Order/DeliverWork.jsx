@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 import { Button, Modal } from 'flowbite-react';
@@ -8,6 +8,7 @@ import { addDelivery } from '../../api';
 import { UserContext } from "../../context/user.context";
 import { getDeliveriesByOrderId } from '../../api';
 import { AiFillAlipaySquare } from 'react-icons/ai';
+
 
 const style = {
   position: 'absolute',
@@ -28,6 +29,7 @@ export default function DeliverWork({orderDetails}) {
   const [workdesc, setWorkDesc] = useState("");
   const [deliveries, setDeliveries] = useState([]);
   const [deliverNotAllowed, setDeliveryNotAllowed] = useState(true);
+  const {user} = useContext(UserContext)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -65,6 +67,8 @@ export default function DeliverWork({orderDetails}) {
   async function handleSubmit(){
     let form = new FormData();
      form.append('description', workdesc);
+     form.append('sellerId', user._id);
+     form.append('receiverId', orderDetails.assignedBy)
      for(let i = 0; i < workfile.length; i++){
         form.append('file', workfile[i]);
      }

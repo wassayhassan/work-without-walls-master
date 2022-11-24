@@ -51,7 +51,7 @@ export default function NotifcationModal() {
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Notifcation">
 
-         <Badge color="secondary" badgeContent={readNotificationCount}>
+         <Badge color="error" badgeContent={readNotificationCount}>
           <IoMdNotifications color='white' size="1.4em" onClick={handleClick} />
          </Badge>
           

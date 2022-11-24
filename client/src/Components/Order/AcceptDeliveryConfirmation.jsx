@@ -4,6 +4,7 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi';
 import { updateOrder } from '../../api';
 import { UserContext } from "../../context/user.context";
 import { getDeliveriesByOrderId } from '../../api';
+import axios from 'axios';
 
 const AcceptDeliveryConfirmation = ({orderDetails, setOpenBuyerReview}) => {
    const [open, setOpen] = useState(false);
@@ -14,6 +15,12 @@ const AcceptDeliveryConfirmation = ({orderDetails, setOpenBuyerReview}) => {
  }
  const handleAccept = async() => {
      const data = await updateOrder(orderDetails._id, {completed: "true", completedAt: getCurrentDateTime(), status: "completed"});
+     let newData3 = {
+               userId: orderDetails.assignedTo,
+               message: `<a href="/user/manage/order/${orderDetails._id}" className="font-normal text-base text-black"><span className="font-medium text-base">${user.firstname + ' ' + user.lastname}</span> accepted the Order  </a>`,
+               read: 'false'
+           }
+      const dati = await axios.post('/notification', newData3);
      setOpenBuyerReview(true);
      setOpen(false);
  }

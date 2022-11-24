@@ -1,11 +1,14 @@
-import  React, {useState} from 'react';
+import  React, {useState, useContext} from 'react';
 import {Button} from 'flowbite-react';
 import Snackbar from '@mui/material/Snackbar';
 import { updateOrder, makeActivity } from '../../api';
+import { UserContext } from '../../context/user.context';
+import axios from 'axios';
 
 
 export default function OrderCancelSeller({orderDetails}) {
   const [open, setOpen] = useState(false);
+  const {user} = useContext(UserContext)
 
   const handleClick = () => {
     setOpen(true);
@@ -22,6 +25,12 @@ export default function OrderCancelSeller({orderDetails}) {
     const res = await updateOrder(orderDetails._id, {status: 'Cancelled', cancelled: "true", cancelledAt: getCurrentTimeStamps()});
     if(res.status === 200){
         let dat = await makeActivity({orderId: orderDetails._id, msg: 'Seller has accepted the Order Cancellation Request', activityType: 'acceptCancel'});
+        let newData3 = {
+          userId: orderDetails.assignedBy,
+          message: `<a href="/user/manage/order/${orderDetails._id}" className="font-normal text-base text-black"><span className="font-medium text-base">${user.firstname + ' ' + user.lastname}</span> has accepted your Order Cancellation Request </a>`,
+          read: 'false'
+      }
+       const dati = await axios.post('/notification', newData3);
         handleClick();
     }
 }

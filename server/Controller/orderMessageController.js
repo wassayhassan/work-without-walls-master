@@ -1,6 +1,7 @@
 const OrderMessage = require("../models/orderMessagesModel");
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
+const axios = require("axios")
 
 function getExtension(filename) {
     var ext = path.extname(filename||'').split('.');
@@ -23,7 +24,15 @@ const createMessage = async(req, res) => {
             
             const message = new OrderMessage(dat);
            
-           message.save().then((data)=> {
+           message.save().then(async(data)=> {
+            const response = await axios.get(`http:localhost:7900/api/user/${req.body.senderId}`);       
+            console.log(response.data)
+            let newData3 = {
+                      userId: req.body.receiverId,
+                      message: `<a href="/user/manage/order/${req.params.id}" className="font-normal text-base text-black">You received a new message from <span className="font-medium text-base">${response.data.name}</span>  </a>`,
+                      read: 'false'
+                  }
+             const dati = await axios.post('http:localhost:7900/notification', newData3);
             res.status(200).json(data);
            })
            return;
@@ -59,10 +68,16 @@ const createMessage = async(req, res) => {
         
         const message = new OrderMessage(dat);
        
-       message.save().then((data)=> {
+       const data = await message.save();
+       const response = await axios.get(`http:localhost:7900/api/user/${req.body.senderId}`);       
+       console.log(response.data)
+       let newData3 = {
+                 userId: req.body.receiverId,
+                 message: `<a href="/user/manage/order/${req.params.id}" className="font-normal text-base text-black">You received a new message from <span className="font-medium text-base">${response.data.name}</span>  </a>`,
+                 read: 'false'
+             }
+        const dati = await axios.post('http:localhost:7900/notification', newData3);
         res.status(200).json(data);
-       })
-
     }catch(err){
         console.log(err);
         res.status(400).json(err);
