@@ -31,6 +31,7 @@ import { UserContext } from "./context/user.context";
 import Firstteam from "./Components/TeamBuyerEnd/Firstteam"
 import Second from "./Components/TeamBuyerEnd/SecondScreen"
 import SellerTeam from "./Components/Teams-At-Seller-End/SellerTeam"
+import SellerTeamByCategory from "./Components/Teams-At-Seller-End/SellerTeamByCategory";
 import { io } from "socket.io-client";
 function App() {
   const { user } = useContext(UserContext);
@@ -67,7 +68,7 @@ function App() {
           <Route path="/createTeam" element={<CreateTeam />} />
           <Route path="/catagory" element={<Catagory />} />
           <Route path="/teamTitle" element={<TeamTitle />} />
-          <Route path="/members" element={<Members />} />
+          <Route path="/team/:id/members/" element={<Members />} />
           <Route path="/BuyerTeamCategory" element={<BuyerTeamCategory />} />
           <Route path="/bid" element={<Bid />} />
           <Route path="/buyer-request" element={<BuyerReq />} />
@@ -75,7 +76,8 @@ function App() {
           <Route path="/messages" element={<Messenger />} />
           <Route path="/first" element={< Firstteam />} />
           <Route path="/second" element={<Second />} />
-          <Route path="/sellerTeam" element={<SellerTeam />} />
+          <Route path="/sellerTeam/:id" element={<SellerTeam />} />
+          <Route path="/sellerTeam/category/:category" element={<SellerTeamByCategory />} />
           <Route path="/user/manage/order/:id" element={<SellerOrderDetails />} />
           <Route path="/user/buyer/orders" element={<BuyerOrdersPage />} />
           <Route path="/user/seller/orders" element={<SellerOrdersPage />} />

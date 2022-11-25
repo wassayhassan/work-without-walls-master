@@ -31,13 +31,13 @@ const addNewTeam = asyncHandler(async (req, res) => {
     const {
     title,
     leaderName,
-    teamMembers,
     category,
       reviews = null,
      responsibility,
       completedAt,
       assignedAt,
       canceledAt,
+      membersCount,
       createdBy = req.user._id,
       assignedTo = null,
     } = req.body;
@@ -49,12 +49,18 @@ const addNewTeam = asyncHandler(async (req, res) => {
       logo = await uploadImage(img?.tempFilePath);
     }
     Team.createdAt=date;
+    let teamMembers = [];
+    for(let i = 0; i < membersCount; i++){
+      teamMembers.push({id: i, name: `Member ${i+ 1}`, responsibility: 'Responsiblity'});
+    }
+    
     
     const teams = new Team({
       title,
     leaderName,
     teamMembers,
       reviews,
+      membersCount,
      responsibility,
       completedAt,
       assignedAt,
@@ -65,12 +71,10 @@ const addNewTeam = asyncHandler(async (req, res) => {
       reviews,
       logo,
     });
-    teams.save().then(() => {
-      console.log("Team Created");
-    });
-    res.status(201).json({ message: "Team Created", id: req.params.id });
+    const data = await teams.save();
+    res.status(200).json(data);
   } catch (err) {
-    res.status(300).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -275,11 +279,67 @@ const reviewJob = async (req, res) => {
   }
 };
 
+const updateTeam = async(req, res) => {
+  try{
+    const img= req?.files?.logo;
+    let logo = null;
+    if (img) {
+      logo = await uploadImage(img?.tempFilePath);
+    }
+    req.body.logo = logo;
+    console.log(req.body);
+     if(req.body.teamMembers[0].id !== 0){
+        let teamMembers = req.body.teamMembers.map((mem)=> {
+          return JSON.parse(mem);
+        })
+        req.body.teamMembers = teamMembers;
+     }
+
+   let data = await Team.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json(data);
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err);
+  }
+}
+const getTeamById = async(req, res) => {
+  try{
+    let data = await Team.findOne({_id: req.params.id});
+    console.log(data)
+    res.status(200).json(data);
+  }catch(err){
+    res.status(500).json(err);
+  }
+}
+const deleteTeamById = async(req, res)=> {
+  try{
+    let data = await Team.findByIdAndDelete(req.params.id)
+    res.status(200).json(data);
+  }catch(err){
+    res.status(500).json(err);
+  }
+}
+
+const getTeamByCategoryAndId = async(req, res) => {
+  try{
+    let data = await Team.findOne({createdBy: req.params.id, category: req.params.category});
+    res.status(200).json(data);
+  }catch(err){
+    console.log(err)
+    res.status(500).json(err);
+  }
+}
+
+
 module.exports = {
   addNewTeam,
   updateTeamHandler,
+  updateTeam,
   deleteTeam,
   getAllTeams,
   reviewJob,
-  getYourTeam
+  getYourTeam,
+  getTeamById,
+  deleteTeamById,
+  getTeamByCategoryAndId
 };

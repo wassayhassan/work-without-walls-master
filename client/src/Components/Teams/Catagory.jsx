@@ -33,7 +33,7 @@ const Catagory = () => {
             <Row>
               <Col>
                 <Link
-                  to="/sellerTeam"
+                  to="/sellerTeam/category/webdevelopment"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("Web Development");
@@ -48,7 +48,7 @@ const Catagory = () => {
               </Col>
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/database"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("DataBase");
@@ -63,7 +63,7 @@ const Catagory = () => {
               </Col>
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/gamedevelopment"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("Game Development");
@@ -78,7 +78,7 @@ const Catagory = () => {
               </Col>
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/artificialintelligence"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("Artifical Intelligence");
@@ -96,7 +96,7 @@ const Catagory = () => {
             <Row className="sec_row">
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/dataentry"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("Data Entry");
@@ -111,7 +111,7 @@ const Catagory = () => {
               </Col>
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/dip"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("DIP");
@@ -126,7 +126,7 @@ const Catagory = () => {
               </Col>
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/appdevelopment"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("App Development");
@@ -141,7 +141,7 @@ const Catagory = () => {
               </Col>
               <Col>
                 <Link
-                  to=""
+                  to="/sellerTeam/category/machinelearning"
                   className="link_upload"
                   onClick={(e) => {
                     setCatagory("Machine Learning");

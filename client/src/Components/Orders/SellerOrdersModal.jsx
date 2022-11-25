@@ -26,7 +26,6 @@ export default function SellerOrdersModal() {
 
   async function getOrders(id){
     const res = await getSellerOrdersByUserId(id);
-    console.log(res.data)
     setOrders(res.data);
   }
   useEffect(()=> {

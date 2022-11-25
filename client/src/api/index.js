@@ -60,3 +60,8 @@ export const getOrderMessages = (id) => Base.get(`/order/${id}/messages`);
 export const getNotificationsByUserId = (id) => Base.get(`/notification/${id}`);
 export const createNotification = (data) => Base.post('/notification', data);
 export const updateNotification = (id, data) => Base.put(`/notification/${id}`, data);
+export const createTeam = async(data) => Base.post('/team/create', data);
+export const updateTeam = (id, data) => Base.put(`/team/${id}`, data);
+export const getTeamById = (id) => Base.get(`/team/${id}`);
+export const deleteTeamById = (id) => Base.delete(`/team/${id}`);
+export const getTeamByCategoryAndId = (id, category) => Base.get(`/team/${id}/${category}`);

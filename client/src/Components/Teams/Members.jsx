@@ -1,49 +1,51 @@
 import "../../Css Files/team.css";
 import star from "../../Images/team/star.png";
 import profile from "../../Images/team/gall6.jpg";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { updateTeam } from "../../api";
 import SellerNavbar from "../navbars/sellerNavbar";
 import Button from 'react-bootstrap/Button';
+import { useParams, useNavigate } from "react-router-dom";
+import { getTeamById } from "../../api";
 const Members = () => {
-  const [rat, setrat] = useState(null);
-  const [rat1, setrat1] = useState(null);
-  const [rat2, setrat2] = useState(null);
-  const [rat3, setrat3] = useState(null);
 
-  const title = "The Team";
-  const teamLogo =
-    "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80";
-  const leaderName = "The Leader Team";
-  const leaderImg = profile;
-  const members="";
-  let teamMembers = [
-    { id: 1, name: "", responsibility: "", prevProject: "" },
-    { id: 2, name: "", responsibility: "", prevProject: "" },
-    { id: 3, name: "", responsibility: "", prevProject: "" },
-    { id: 4, name: "", responsibility: "", prevProject: "" },
-    { id: 5, name: "", responsibility: "", prevProject: "" },
-    { id: 6, name: "", responsibility: "", prevProject: "" },
-    { id: 7, name: "", responsibility: "", prevProject: "" },
-    { id: 8, name: "", responsibility: "", prevProject: "" },
-    { id: 9, name: "", responsibility: "", prevProject: "" },
-  ];
+  const [teamData, setTeamData] = useState({});
+  const [membersData, setMembersData] = useState([]);
+  const navigate = useNavigate();
+  const {id} = useParams();
+  async function getTeamData(id){
+     const response = await getTeamById(id);
+     if(response.status === 200){
+       console.log(response.data)
+        setTeamData(response.data);
+        setMembersData(response.data.teamMembers);
+     }
+  }
 
-  let name = "";
-  let responsibility = "";
+  useEffect(()=> {
+    getTeamData(id);
+  }, [id])
+  
 
-  let index = 0;
+  const handleUpdateTeam = async() => {
+    let data = {
+        teamMembers: membersData
+    };
+    const response = await updateTeam(id, data);
+    if(response.status === 200){
+      navigate(`/sellerteam/${teamData._id}`)
+    }
+  }
 
-  let handleClick = (e) => {
-    teamMembers[index].name = name;
-    teamMembers[index].responsibility = responsibility;
+  const handleMembersChange = (e) => {
+   let id = e.target.id;
+   let name = e.target.name;
+   let value = e.target.value;
+   setMembersData(membersData.map((mem)=> parseInt(mem.id) === parseInt(id)? {...mem, [name]: value}: mem))
+  }
 
-    console.log("id: ", teamMembers[index].id);
-    console.log("name: ", teamMembers[index].name);
-    console.log("responsibility: ", teamMembers[index].responsibility);
-    index += 1;
-  };
 
   return (
     <>
@@ -51,10 +53,10 @@ const Members = () => {
       <div className="main_4">
         <div className="sec_one_pg_4">
           <div>
-            <img src={teamLogo} alt="" className="circle" srcset="" />
+            <img src={teamData.teamLogo} alt="" className="circle" srcset="" />
           </div>
           <div className="name">
-            <span className="team_ti">{title}</span>
+            <span className="team_ti">{teamData.title}</span>
           </div>
         </div>
 
@@ -63,7 +65,7 @@ const Members = () => {
             <div className="about">
 
               <div className="name">
-                <span>{leaderName}</span>
+                <span>{teamData.leaderName}</span>
                 <br />
                 <span className="team_text">Team Leader</span>
               </div>
@@ -76,22 +78,24 @@ const Members = () => {
           </div>
 
           <div className="contact align-items-center">
-            {[...Array(members)].map((i) => {
+            {(membersData).map((mem, idx) => {
               return (
-                <div className="input_sec" key={i}>
+                <div className="input_sec" key={idx}>
                   <input
+                    id={idx}
                     placeholder="Member Name"
-                    className="inp_data"
-                    onChange={(e) => {
-                      name = e.target.value;
-                    }}
+                    name="name"
+                    value={mem.name}
+                    className="inp_data outline-none"
+                    onChange={handleMembersChange}
                   />
-                  <input
+                  <input 
+                    id={idx}
+                    name="responsibility"
                     placeholder="Responsibility"
-                    className="inp_data"
-                    onChange={(e) => {
-                      responsibility = e.target.value;
-                    }}
+                    className="inp_data outline-none"
+                    value={mem.responsibility}
+                    onChange={handleMembersChange}
                   />
                  
                 </div>
@@ -102,9 +106,8 @@ const Members = () => {
             <br />
 
             <div style={{marginLeft:"12rem"}}>
-              <Link  to="/">
-                <Button className="align-items-center">submit</Button>
-              </Link>
+
+                <Button className="align-items-center" onClick={handleUpdateTeam}>Submit</Button>
             </div>
           </div>
         </div>

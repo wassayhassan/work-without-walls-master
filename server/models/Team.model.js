@@ -10,10 +10,7 @@ leaderName:{
     type:String,
 },
 teamMembers:{
-    type:String,
-},
-responsibility:{
-    type:String,
+    type: Array,
 },
 status: {
     type: String,
@@ -28,6 +25,10 @@ status: {
     ],
     default: "active",
   },
+  membersCount: {
+    type: Number
+  }
+  ,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

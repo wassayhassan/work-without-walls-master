@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { UserContext } from '../../context/user.context';
 import './seller.css'
 import { BsTrash } from 'react-icons/bs';
 import { FaEdit } from 'react-icons/fa';
@@ -6,19 +7,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import SellerNavBar from '../navbars/sellerNavbar';
 import { useParams, useNavigate } from "react-router-dom";
-import { getTeamById } from "../../api";
-import { updateTeam, deleteTeamById } from "../../api";
+import { getTeamByCategoryAndId, updateTeam, deleteTeamById } from "../../api";
 
-const SellerTeam = () => {
+const SellerTeamByCategory = () => {
     const [file, setFile] = useState(null)
-
+    const {user} = useContext(UserContext)
     const [mode, setMode] = useState(false);
     const [teamData, setTeamData] = useState({});
     const [membersData, setMembersData] = useState([]);
     const navigate = useNavigate();
-    const {id} = useParams();
-    async function getTeamData(id){
-       const response = await getTeamById(id);
+    const {category} = useParams();
+    async function getTeamData(id, category){
+       const response = await getTeamByCategoryAndId(id, category);
        if(response.status === 200){
           setMembersData(response.data.teamMembers);
           setTeamData(response.data);
@@ -26,8 +26,9 @@ const SellerTeam = () => {
     }
   
     useEffect(()=> {
-      getTeamData(id);
-    }, [id])
+        console.log(user._id)
+      getTeamData(user._id, category);
+    }, [category])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,8 +43,8 @@ const SellerTeam = () => {
           })
 
         data.append('logo', file);
-        const response = await updateTeam(id, data);
-         
+        const response = await updateTeam(teamData._id, data);
+
       }
     
     
@@ -74,7 +75,7 @@ const SellerTeam = () => {
         setMode(true);
       }
       const handleDelete = async() => {
-         const data = await deleteTeamById(id);
+         const data = await deleteTeamById(teamData._id);
         setMode(false);
       }
   
@@ -174,5 +175,5 @@ const SellerTeam = () => {
     );
 }
  
-export default SellerTeam;
+export default SellerTeamByCategory
 
