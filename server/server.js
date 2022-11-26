@@ -14,7 +14,7 @@ require('dotenv').config({ path: path.resolve(__dirname, './config.env') });
 
 const { Server } = require("socket.io");
 
-
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 
 const app = express();
 const server = createServer(app);
@@ -98,7 +98,7 @@ const orderActivites = require('./routes/orderactivitiesRoutes');
 const reviews = require("./routes/review.routes");
 const notifications = require("./routes/notification.routes");
 const uploads = require("./routes/ordermaterial.routes");
-
+const payments = require("./routes/payment.routes");
 dbConnection();
 
 app.use("/home", home);
@@ -115,4 +115,5 @@ app.use("/Team", Team);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 app.use("/notification", notifications)
+app.use("/payment", payments);
 server.listen(PORT, () => console.log(`Server is Running on ${PORT}`));

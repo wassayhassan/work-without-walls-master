@@ -1,110 +1,72 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./second.css";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import TextField from "@material-ui/core/TextField";
 import BuyerNavBar from "../navbars/BuyerNavbar"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import Bid from "../Bid/Bid"
+import BuyerBid from "../Bid/BuyerBid";
+import { getTeamById } from "../../api";
+
 const Second = () => {
-    const [title, settitle] = useState("title");
-    const [leader,setLeader]=useState("leader Name");
-    const [teamImg,setTeamImg]=useState("https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGljfGVufDB8fDB8fA%3D%3D&w=1000&q=80")
-    const [Member1,setMember1]=useState("Member1")
-    const [Member2,setMember2]=useState("Member2")
-    const [Member3,setMember3]=useState("Member3")
-    const [Member4,setMember4]=useState("Member4")
-    const [R1,seR1]=useState("Responsible1")
-    const [R2,setR22]=useState("Responsible2")
-    const [R3,setR3]=useState("Responsible3")
-    const [R4,setR4]=useState("Responsible4")
+  const [teamData, setTeamData] = useState({});
+  const {id} = useParams();
+  async function getTeamData(id){
+     const response = await getTeamById(id);
+     if(response.status === 200){
+       console.log(response.data)
+        setTeamData(response.data);
+     }
+  }
+
+  useEffect(()=> {
+    
+    getTeamData(id);
+    console.log(teamData)
+  }, [id])
+
     return ( 
         <>
         <BuyerNavBar />
              <div className="container con">
-     <Link><Button className="ct" variant="outline-primary">Contact Now</Button></Link>
+              {teamData && teamData.teamMembers?  <BuyerBid teamData={teamData} />: null}
+        
        <div className="row justify-content-center">
           <div className="col-md-5">
             <div className="row ">
             <div className="col image">
-              <img src={teamImg} className="rounded-circle" style={{width:"125px"}}/>
+              <img src={teamData.logo} className="rounded-circle" style={{width:"125px"}}/>
             </div>
             <div className="col text">
-              <p>{title}</p> 
-              <p><b> {leader}</b></p>        
+              <p>{teamData.title}</p> 
+              <p><b> {teamData.leader}</b></p>        
             </div>
             </div>  
           </div>
           <div className="col-md-7">
             
             <div className="row">
-              <div className="col">
-              <TextField
-                  required
-                  defaultValue={Member1}
-                  id="standard-required"
-                  variant="standard"
-                />
-                 <br/>
-        <br/>
-                <TextField
-          required
-          defaultValue={Member2}
-          id="standard-required"
-          variant="standard"
-        />
-         <br/>
-        <br/>
-        <TextField
-         required
-         defaultValue={Member3}
-         id="standard-required"
-         variant="standard"
-        />
-        <br/>
-        <br/>
-        <TextField
-          required
-          defaultValue={Member4}
-          id="standard-required"
-          variant="standard"
-        />
-              </div>
-              <div className="col">
-              <TextField
-          required
-          defaultValue={R1}
-          id="standard-required"
-          variant="standard"
-        />
-         <br/>
-        <br/>
-        <TextField
-          required
-          defaultValue={R2}
-          id="standard-required"
-          variant="standard"
-        />
-         <br/>
-        <br/>
-        <TextField
-         required
-         defaultValue={R3}
-         id="standard-required"
-         variant="standard"
-        />
-         <br/>
-        <br/>
-        <TextField
-          required
-          defaultValue={R4}
-          id="standard-required"
-          variant="standard"
-        />
-        
-              </div>
+            {teamData && teamData.teamMembers && (teamData.teamMembers).map((mem, idx) => {
+              return (
+                <div className="input_sec" key={idx}>
+                  <input
+                    id={idx}
+                    placeholder="Member Name"
+                    name="name"
+                    value={mem.name}
+                    className="inp_data outline-none"
+                  />
+                  <input 
+                    id={idx}
+                    name="responsibility"
+                    placeholder="Responsibility"
+                    className="inp_data outline-none"
+                    value={mem.responsibility}
+                  />
+                 
+                </div>
+              );
+            })}
             </div>
           </div>
        </div>

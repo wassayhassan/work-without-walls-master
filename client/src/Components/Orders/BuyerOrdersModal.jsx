@@ -25,7 +25,6 @@ export default function BuyerOrdersModal() {
 
   async function getOrders(id){
     const res = await getBuyerOrdersByUserId(id);
-    console.log(res.data)
     setOrders(res.data);
   }
   useEffect(()=> {
@@ -34,7 +33,7 @@ export default function BuyerOrdersModal() {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Typography sx={{ minWidth: 100 }} onClick={handleClick}>Orders</Typography>
+        <Typography  onClick={handleClick} className="cursor-pointer hover:text-gray-300 text-gray-200">Orders</Typography>
 
 
       </Box>
@@ -83,7 +82,7 @@ export default function BuyerOrdersModal() {
         <div className='p-1 flex flex-row justify-between'>
           <p className='font-semibold text-lg'>Orders</p>
           <div>
-            <p className='cursor-pointer text-blue-400 font-medium' onClick={handleGoto}>Show All Order</p>
+            <p className='cursor-pointer text-blue-400 font-medium hover:underline' onClick={handleGoto}>Show All Order</p>
           </div>
         </div>
         <div>

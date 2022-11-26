@@ -34,7 +34,7 @@ export default function ActivityAccordions({orderDetails, user}) {
         </AccordionSummary>
         <AccordionDetails>
          {messages && messages.map((message)=> {
-            return (<div className='w-full he-10 flex flex-row flex-wrap ml-2 mb-1 p-1 border-gray-300 border-[1px] rounded'>
+            return (<div className='w-full he-10 flex flex-row flex-wrap ml-2 mb-1 p-1 border-gray-300 border-[1px] rounded' key={message._id}>
               <p className='font-medium text-base mx-2'>{message.sender === user._id? 'Me': 'Him'}: </p>
               <p className='text-gray-500 text-base mx-2'>{message.text}</p>
               <p className='text-sm font-light'>{format(message.createdAt)}</p>

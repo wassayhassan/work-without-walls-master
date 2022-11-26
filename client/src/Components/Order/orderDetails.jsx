@@ -8,7 +8,9 @@ const OrderDetails = ({orderDetails, date, date2}) => {
         setData(res.data)
     }
     useEffect(()=> {
-        getUser(orderDetails.assignedBy)
+        if(orderDetails.assignedBy){
+            getUser(orderDetails.assignedBy)
+        }
     }, [orderDetails])
   return (
     <div className='delivery-container bg-white shadow-md rounded p-3 mt-4'>

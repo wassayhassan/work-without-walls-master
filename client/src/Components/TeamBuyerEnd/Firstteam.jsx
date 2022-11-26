@@ -1,33 +1,51 @@
-import React from "react";
-import { useState } from "react";
+import React,  { useState, useEffect, useContext }  from "react";
 import "./firstteam.css";
 import BuyerNavBar from "../navbars/BuyerNavbar"
 import Button from 'react-bootstrap/Button';
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { getTeamsByCategory } from "../../api";
+import { UserContext } from "../../context/user.context";
 const Firstteam = () => {
-    const [teamImg,setTeamImg]=useState("https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80")
-  const [title,setTitle]=useState("Title");
-  const [leaderName,setleaderName]=useState("Leader Name");
+  const [teams, setTeams] = useState([]);
+  const {user} = useContext(UserContext)
+  const {category} = useParams();
+  async function getTeams(categ){
+    const response = await getTeamsByCategory(categ);
+    console.log(response)
+    if(response.status === 200){
+      setTeams(response.data);
+    }
+  }
+  useEffect(()=> {
+    getTeams(category);
+  }, [category])
     return ( 
     <>
-    <BuyerNavBar/>
-    <div className="new">
+        <BuyerNavBar/>
+    {teams && teams.map((team)=> {
+      return (
+        <div className="new" key={team._id}>
         <div className="main">
-        <div class="container-md p-5 my-5 border">
+        <div className="container-md p-5 my-5 border">
           <div className="icons">
-            <img className="rounded-circle" style={{width:"100px"}} src={teamImg} />
+            <img className="rounded-circle" style={{width:"100px"}} src={team.logo} />
          </div>
          <div className="data" >
-      <p >{title} </p>
+      <p >{team.title} </p>
+      {team.createdBy === user._id? <p>{"(mine)"}</p>: null}
       <div className="head">
-        <p><b>{leaderName}</b></p>
-        <Link to="/second">
+        <p><b>{team.leaderName}</b></p>
+        <Link to={`/buyer/team/${team._id}`}>
         <Button variant="outline-primary">Details</Button></Link>
       </div>
       </div>
         </div>
       </div>
       </div>
+      )
+    })}
+
+   
     </> );
 }
  

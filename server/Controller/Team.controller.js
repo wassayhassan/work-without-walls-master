@@ -329,6 +329,16 @@ const getTeamByCategoryAndId = async(req, res) => {
     res.status(500).json(err);
   }
 }
+const getTeamsByCategory = async(req, res) => {
+  try{
+     const data = await Team.find({category: req.params.category});
+     console.log(data)
+     res.status(200).json(data);
+  }catch(err){
+    console.log(err);
+    res.status(500).json(err);
+  }
+}
 
 
 module.exports = {
@@ -341,5 +351,6 @@ module.exports = {
   getYourTeam,
   getTeamById,
   deleteTeamById,
-  getTeamByCategoryAndId
+  getTeamByCategoryAndId,
+  getTeamsByCategory
 };

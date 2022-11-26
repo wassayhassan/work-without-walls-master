@@ -4,10 +4,12 @@ const bidSchema = new Schema({
     mtype: {
         type: String
       },
+      offerType: {
+        type: String
+      },
     jobId: {
         type: Schema.Types.ObjectId,
         ref:'Job',
-        required: true
     },
     title: {
         type: String
@@ -19,8 +21,14 @@ const bidSchema = new Schema({
     },
     status: {
         type: String
-    }
-    ,
+    },
+    assignedBy: {
+        type: String
+    },
+    assignedTo: {
+        type: String
+    },
+    
     receiverId: {
         type: Schema.Types.ObjectId,
         ref: 'User',

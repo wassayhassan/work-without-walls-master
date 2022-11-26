@@ -8,7 +8,8 @@ const {
     getYourTeam,
     getTeamById,
     deleteTeamById,
-    getTeamByCategoryAndId
+    getTeamByCategoryAndId,
+    getTeamsByCategory
   } = require("../Controller/Team.controller");
 
   const { protect } = require("../middleware/verifyToken");
@@ -24,6 +25,7 @@ const {
   router.delete("/delete/:id([0-9a-fA-F]{24})", protect, deleteTeam);
   router.delete('/:id', deleteTeamById);
   router.get('/:id', getTeamById);
-  router.get("/:id/:category", getTeamByCategoryAndId)
+  router.get("/get/:id/:category", getTeamByCategoryAndId)
+  router.get('/get/:category', getTeamsByCategory);
   
   module.exports = router;

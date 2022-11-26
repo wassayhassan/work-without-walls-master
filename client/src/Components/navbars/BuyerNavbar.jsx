@@ -33,16 +33,11 @@ const BuyerNavbar = () => {
   };
   return (
     <div className="topbarContainer">
-    <div className="topbarLeft">
-      <Link to="/" style={{ textDecoration: "none" }}>
-        <span className="logo">
-          <img
-             className="pic"
-              src={logo}
-              alt=""
-            ></img></span>
-      </Link>
-    </div>
+      <div className="topbarLeft h-full ">
+        <Link to="/" className="h-full object-cover max-h-[60px]">
+            <img className="" src={logo} alt=""></img>
+        </Link>
+      </div>
     <div className="topbarRight">
       <div className="topbarIcons">
           {/* <div className="topbarIconItem">
@@ -55,7 +50,7 @@ const BuyerNavbar = () => {
                 Order
               </Link>
         </div> */}
-        <div className="topbarIconItem">
+        <div className="m-2 mx-2 mt-1">
           <BuyerOrdersModal />
         </div>
         {/* <div className="topbarIconItem">
@@ -64,18 +59,18 @@ const BuyerNavbar = () => {
               </Link>
               <span className="topbarIconBadge"></span>
         </div> */}
-           <div className="topbarIconItem">
+           <div className="m-2 mx-2 mt-1">
             <NotifcationModal />
           </div>
         <div className="topbarIconItem">
               <Link className=" text-light" to="/messages">
-                <BsChatTextFill />
+                <BsChatTextFill size="1.05em" />
               </Link>
           <span className="topbarIconBadge"></span>
         </div>
         <div className="topbarIconItem">
-              <Link className=" text-light"  to="/BuyerTeamCategory">
-                <BsFillPeopleFill />
+              <Link className=" text-light"  to="/buyer/teams/">
+                <BsFillPeopleFill size="1.05em" />
               </Link>
           <span className="topbarIconBadge"></span>
         </div>

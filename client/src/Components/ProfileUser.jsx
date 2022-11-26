@@ -602,14 +602,14 @@ const ProfileUser = () => {
                    <p className="font-semibold text-lg">{(sellerReviews.length> 0)? 'Reviews as Seller': null}</p>
                    <div>
                     {sellerReviews && sellerReviews.map((review)=> {
-                      return <Review review={review} />
+                      return <Review review={review} key={review._id} />
                     })}
                    </div>
                    <div className="reviews p-2">
                    <p className="font-semibold text-lg">{(buyerReviews.length> 0)? 'Reviews as Buyer': null}</p>
                    <div>
                     {buyerReviews && buyerReviews.map((review)=> {
-                      return <Review review={review} />
+                      return <Review review={review} key={review._id}/>
                     })}
                    </div>
                 </div>

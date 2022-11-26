@@ -20,13 +20,17 @@ const SellerTeamByCategory = () => {
     async function getTeamData(id, category){
        const response = await getTeamByCategoryAndId(id, category);
        if(response.status === 200){
-          setMembersData(response.data.teamMembers);
-          setTeamData(response.data);
+          if(response.data){
+            setMembersData(response.data.teamMembers);
+            setTeamData(response.data);
+          }else{
+            navigate('/createteam')
+          }
+
        }
     }
   
     useEffect(()=> {
-        console.log(user._id)
       getTeamData(user._id, category);
     }, [category])
 
@@ -61,14 +65,12 @@ const SellerTeamByCategory = () => {
         let id = e.target.id;
         let name = e.target.name;
         let value = e.target.value;
-        console.log(membersData)
         setMembersData(membersData.map((mem)=> parseInt(mem.id) === parseInt(id)? {...mem, [name]: value}: mem))
        }
        const handleDataChange = (e) => {
         let name = e.target.name;
         let value = e.target.value;
         setTeamData({...teamData, [name]: value});
-        console.log(teamData)
        }
 
       const handleEdit = () => {
@@ -149,12 +151,12 @@ const SellerTeamByCategory = () => {
                 </div>
               ) : (
                 <>
-                  { teamData && teamData.teamMembers && membersData.map((inputField) => {
+                  { teamData && teamData.teamMembers && membersData.map((inputField, idx) => {
                     return (
-                    <>
+                    <div key={idx}>
                       <div className="col-md-6 col-6 my-3"><div className='customBorder'>{inputField.name}</div></div>
                       <div className="col-md-6 col-6 my-3"><div className='customBorder'>{inputField.responsibility}</div></div>
-                    </>
+                    </div>
                   )})}
                 </>
               )}

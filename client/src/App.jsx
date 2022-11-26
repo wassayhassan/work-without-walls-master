@@ -69,12 +69,14 @@ function App() {
           <Route path="/catagory" element={<Catagory />} />
           <Route path="/teamTitle" element={<TeamTitle />} />
           <Route path="/team/:id/members/" element={<Members />} />
-          <Route path="/BuyerTeamCategory" element={<BuyerTeamCategory />} />
+          <Route path="/buyer/teams/" element={<BuyerTeamCategory />} />
+
           <Route path="/bid" element={<Bid />} />
           <Route path="/buyer-request" element={<BuyerReq />} />
           <Route path="/active-orders" element={<ActiveOrders />} />
           <Route path="/messages" element={<Messenger />} />
-          <Route path="/first" element={< Firstteam />} />
+          <Route path="/buyer/teams/:category" element={< Firstteam />} />
+          <Route path="/buyer/team/:id" element={< Second  />} />
           <Route path="/second" element={<Second />} />
           <Route path="/sellerTeam/:id" element={<SellerTeam />} />
           <Route path="/sellerTeam/category/:category" element={<SellerTeamByCategory />} />

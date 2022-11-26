@@ -64,4 +64,6 @@ export const createTeam = async(data) => Base.post('/team/create', data);
 export const updateTeam = (id, data) => Base.put(`/team/${id}`, data);
 export const getTeamById = (id) => Base.get(`/team/${id}`);
 export const deleteTeamById = (id) => Base.delete(`/team/${id}`);
-export const getTeamByCategoryAndId = (id, category) => Base.get(`/team/${id}/${category}`);
+export const getTeamByCategoryAndId = (id, category) => Base.get(`/team/get/${id}/${category}`);
+export const getTeamsByCategory = (category) => Base.get(`/team/get/${category}`);
+export const getPaymentIntent = (data) => Base.post('/payment/create/paymentintent', data);

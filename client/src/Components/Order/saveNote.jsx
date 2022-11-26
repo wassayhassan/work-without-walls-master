@@ -25,7 +25,7 @@ export default function SaveNote({orderDetails, user,setNote, setOpenSave, note}
       orderId: orderDetails._id,
       creatorId: user._id,
       noteCreatorType: t,
-      msg: note
+      msg: note.msg
     }
     let res = await createNote(data);
     if(res){

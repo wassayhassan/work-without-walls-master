@@ -5,11 +5,17 @@ import { useNavigate } from "react-router-dom";
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../context/user.context";
 import { Card } from "flowbite-react";
+import AcceptPaymentModal from "../Payment/AcceptPaymentModal";
+import { getPaymentIntent } from "../../api";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Message({currentChat, member, current, message, own }) {
   const [accepted, setAccepted] = useState(message.accepted === "true"? true: false);
   const [Withdraw, setWithdraw] = useState(message.status === "withdrawn"? true: false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [acceptOpen, setAcceptOpen] = useState(false);
+  const [paymentIntent, setPaymentIntent] = useState(null);
   const { user } = useContext(UserContext);
 
   const[offerOrderId, setOfferOrderId] = useState(message.orderId);
@@ -17,7 +23,7 @@ export default function Message({currentChat, member, current, message, own }) {
 
 
  async function handleAccept(){
-
+  setLoading(true);
   Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
@@ -26,28 +32,45 @@ export default function Message({currentChat, member, current, message, own }) {
 var date = new Date();
 date = date.addDays(parseInt(message.dealTime));
 
-  let dat = {
-    title: message.title,
-    conversationId: currentChat._id,
-    assignedBy: user._id,
-    offerid: message._id,
-    description: message.offer,
-    budget: message.budget,
-    dealTime: message.dealTime,
-    status: 'started',
-    createdBy: message.senderId,
-    assignedTo: message.senderId,
-    category: message.category,
-    assigned: "true",
-    completed: "false",
-    canceled: 'false',
-    deleted: 'false',
-    deliveryAt: date
-  }
+let dat = {
+  title: message.title,
+  payment: "true",
+  conversationId: currentChat._id,
+  assignedBy: message.assignedBy,
+  offerid: message._id,
+  description: message.offer,
+  budget: message.budget,
+  dealTime: message.dealTime,
+  status: 'started',
+  createdBy: message.senderId,
+  assignedTo:  message.assignedTo,
+  category: message.category,
+  assigned: "true",
+  completed: "false",
+  canceled: 'false',
+  deleted: 'false',
+  deliveryAt: date
+}
+  let dat0 = {
+    amount: message.budget,
+     description: message.offer
+    }
+    if(message.offerType === "Seller"){
+      const response = await getPaymentIntent(dat0);
+      if(response.status === 200){
+        setPaymentIntent(response.data.client_secret);
+        console.log(response.data.client_secret)
+        setAcceptOpen(true);
+      }
+    }else{
+      const data = await createOrder(dat);
+      setOfferOrderId(data.data.orderId);
+      setAccepted(true)
+    }
 
-    const data = await createOrder(dat);
-    setOfferOrderId(data.data.orderId);
-    setAccepted(true)
+
+  setLoading(false)
+
 
  }
  const handleOfferWithDraw = async() => {
@@ -81,7 +104,7 @@ date = date.addDays(parseInt(message.dealTime));
 
 
 
-<div className={(message.senderId === user._id) ? "flex justify-end w-full m-1": "flex flex-row justify-start w-start m-2"}>
+<div className={(message.senderId === user._id) ? "flex justify-end w-full m-1 mt-1": "flex flex-row justify-start w-start m-2 mt-1"}>
 <div className={(message.senderId === user._id) ? "flex flex-row-reverse w-96": "flex w-96 flex-row"}>
   <div>
   <img
@@ -92,14 +115,14 @@ date = date.addDays(parseInt(message.dealTime));
     } 
     alt=""
   />
-  <div className="messageBottom">{format(message.createdAt)}</div>
+  <div className="messageBottom w-10">{format(message.createdAt)}</div>
   </div>
 
         <Card className="h-80 shadow-md rounded-lg p-1 mx-1" style={{width: "25rem"}}>
           <div className="flex flex-row justify-between">
             <div>
                 <div className="">
-                    <h4 className="font-semibold">Seller Offer</h4>
+                    <h4 className="font-semibold">{message.offerType} Offer</h4>
                     <p className="text-base font-medium">Description</p>
                     <p className="">{message.offer}</p>
                     {/* <a href="#" class="card-link">Card link</a>
@@ -122,8 +145,14 @@ date = date.addDays(parseInt(message.dealTime));
 
 
         <div className="d-flex flex-row justify-content-end">
+      {  paymentIntent &&   <AcceptPaymentModal paymentIntent={paymentIntent} acceptOpen={acceptOpen} setAcceptOpen={setAcceptOpen} message={message} currentChat={currentChat} setOfferOrderId={setOfferOrderId} setAccepted={setAccepted} /> }
        {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/user/manage/order/${offerOrderId}`)}>View Order</button>}
-        {(message.senderId === user._id? <button type="button" className="btn btn-light" onClick={handleOfferWithDraw} disabled={Withdraw}>{Withdraw? 'Withdrawn': 'Withdraw Offer'}</button>:<button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
+        {(message.senderId !== user._id && loading !== true && <button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
+        {loading? <button type="button" className="btn btn-light" disabled={true}>
+        <CircularProgress color="inherit" sx={{marginX: 1}} size="1.5em" />
+          Processing
+          </button>: null}
+      {message.senderId === user._id && loading !== true && <button type="button" className="btn btn-light" onClick={handleOfferWithDraw} disabled={Withdraw}>{Withdraw? 'Withdrawn': 'Withdraw Offer'}</button>}
         </div>
       </Card>
   

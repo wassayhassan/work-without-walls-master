@@ -35,7 +35,7 @@ export default function DeleteNote({note, setNote, openEdit}) {
     {openEdit &&  <button className='text-green-600 font-semibold' onClick={handleDeleteNote}>Delete</button>}
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleClose}
         message={message}
       />

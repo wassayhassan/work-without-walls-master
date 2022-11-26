@@ -5,30 +5,25 @@ import { useState } from "react";
 import { addBid } from "../../api";
 import { useContext } from "react";
 import { UserContext } from "../../context/user.context";
+import Button from 'react-bootstrap/Button';
 
 
-
-const Bid = ({jobid, jobDescription, creator, job}) => {
-  const { setuser, user } = useContext(UserContext);
-
-  
-  const [request, setRequest] = useState(
-    jobDescription
-  );
+const BuyerBid = ({teamData}) => {
+  const { user } = useContext(UserContext);
+  console.log(teamData)
   const [bidDetails, setBidDetails] = useState({
-      jobId: jobid,
-      title: job.gigTitle,
+      title: '',
       status: 'sent',
       senderId: user._id,
-      receiverId: creator,
-      assignedBy: creator,
-      offerType: 'Seller',
-      assignedTo: user._id,
+      receiverId: teamData.createdBy,
+      assignedBy: user._id,
+      offerType: 'Buyer',
+      assignedTo: teamData.createdBy,
       offer: '',
       budget: '',
       dealTime: '',
       percentOff: '',
-      category: job.category,
+      category: teamData.category,
   })
   function handleBidChange(e){
     let name = e.target.name;
@@ -39,6 +34,7 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
   
  const handlePlaceBid = async() => {
    try{
+    
     const response = await addBid(bidDetails);
     console.log(response);
     document.querySelector(".close").click();
@@ -53,9 +49,7 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
       <span>
         <Popup
           trigger={
-            <button type="button" class="btn btn-primary">
-              Bid
-            </button>
+            <Button className="ct" variant="outline-primary">Contact Now</Button>
           }
           modal
           nested
@@ -68,12 +62,20 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
 
               <div className="container ml">
                 <div >
-                  <div className="request-area area">
-                    <p>{request}</p>
+                  <div className="offer">
+                    <textarea
+                      className=" w-96 rounded-md border-gray-300"
+                      name="title"
+                      id="exampleFormControlTextarea1"
+                      rows="1"
+                      placeholder="Write Your Title"
+                      onChange={handleBidChange}
+                      value={bidDetails.title}
+                    ></textarea>
                   </div>
                   <div className="offer">
                     <textarea
-                      className="form-control"
+                      className=" w-96 rounded-md border-gray-300"
                       name="offer"
                       id="exampleFormControlTextarea1"
                       rows="3"
@@ -82,7 +84,7 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
                       value={bidDetails.offer}
                     ></textarea>
                   </div>
-                  <div className="buget">
+                  <div className="buget  w-96 rounded-md">
                     <h5>Buget</h5>
                     <input
                       type="number"
@@ -90,10 +92,10 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
                       id=""
                       placeholder="$"
                       onChange={handleBidChange}
-                      value={bidDetails.buget}
+                      value={bidDetails.budget}
                     />
                   </div>
-                  <div className="buget">
+                  <div className="buget  w-96 rounded-md">
                     <h5>Delivery Time</h5>
                     <input
                       type="number"
@@ -103,7 +105,7 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
                       value={bidDetails.dealTime}
                     />
                   </div>
-                  <div className="buget">
+                  <div className="buget  w-96 rounded-md">
                     <h5>Percntage Off</h5>
                     <input
                       type="number"
@@ -115,7 +117,7 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
                   </div>
 
                   <div className="submit">
-                    <button type="button" className="btn btn-primary" onClick={handlePlaceBid}>
+                    <button type="button" className="w-24 h-10 bg-blue-600 text-white hover:bg-blue-400" onClick={handlePlaceBid}>
                       Submit
                     </button>
                   </div>
@@ -129,4 +131,4 @@ const Bid = ({jobid, jobDescription, creator, job}) => {
   );
 };
 
-export default Bid;
+export default BuyerBid;

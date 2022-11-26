@@ -19,7 +19,7 @@ export default function EditNote({note, setOpenEdit}) {
   };
 
   const handleEditNote = async() => {
-    const response = await updateNote(note._id, {msg: note});
+    const response = await updateNote(note._id, {msg: note.msg});
     if(response){
       setMessage(response.data.msg);
       handleClick();

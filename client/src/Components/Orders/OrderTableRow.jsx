@@ -17,7 +17,9 @@ const OrderTableRow = ({order}) => {
       setData(res.data)
   }
   useEffect(()=> {
-      getUser(order.assignedBy)
+    if(order.assignedBy){
+        getUser(order.assignedBy);
+    }  
   }, [order])
 
   return (

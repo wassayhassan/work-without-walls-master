@@ -15,7 +15,10 @@ const SellerOrderActivities = ({orderDetails, sellerReview,setSellerReview, setB
   const [messages, setMessages] = useState([]);
 
   useEffect(()=> {
-    getMessages(orderDetails._id);
+    if(orderDetails._id){
+      getMessages(orderDetails._id);
+    }
+
   }, [orderDetails])
 
   async function getMessages(id){
@@ -69,7 +72,9 @@ const SellerOrderActivities = ({orderDetails, sellerReview,setSellerReview, setB
        
           <div className='ml-3'>
           <p className='h4'>Order {orderDetails.status}</p>
-          {orderDetails.status !== 'assigned' && orderDetails.assignedTo === user._id? <p className='text-muted text-lg'>Seller shared all the information to you</p>: null}
+          {orderDetails.status === 'started' && orderDetails.assignedTo === user._id? <p className='text-muted text-lg'>Seller shared all the information to you</p>: null}
+          {orderDetails.status === "delivered" && <p className='text-muted text-lg'>Order has been Delivered</p>}
+          {orderDetails.status === "completed" && <p className='text-muted text-lg'>Seller Accepted the Order</p>}
           </div>
         </div>
        <ActivityAccordions orderDetails={orderDetails} user={user} />

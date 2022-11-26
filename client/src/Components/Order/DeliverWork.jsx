@@ -73,7 +73,6 @@ export default function DeliverWork({orderDetails}) {
         form.append('file', workfile[i]);
      }
      let res = await addDelivery(orderDetails._id, form);
-     console.log(res)
      setMessage(res.data.msg);
      setOpenNoti(true)
   }
@@ -126,9 +125,6 @@ function isDeliveryNotAllowed(orderDetails){
   const startedDate = new Date(orderDetails.createdAt)
   const date = new Date();
   const deliveryDate = new Date(orderDetails.deliveryAt);
-  console.log(date);
-  console.log(startedDate)
-  console.log(deliveryDate)
   if(date.getTime() >= startedDate.getTime() && date.getTime() <= deliveryDate.getTime()){
     return false
 

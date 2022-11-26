@@ -6,6 +6,9 @@ const orderSchema = new Schema({
         type: String,
         default: "",
       },
+      payment: {
+        type: String
+      },
       title: {
         type: String
       },

@@ -44,7 +44,6 @@ const SellerNavBar = () => {
       <div className="topbarLeft h-full ">
         <Link to="/" className="h-full object-cover max-h-[60px]">
             <img className="" src={logo} alt=""></img>
-
         </Link>
       </div>
       <div className="topbarRight">
@@ -54,27 +53,27 @@ const SellerNavBar = () => {
               Order
             </Link>
           </div> */}
-          <div className="topbarIconItem">
-          <SellerOrdersModal />
-        </div>
+          <div className="m-2 mx-2 mt-1">
+            <SellerOrdersModal />
+           </div>
           {/* <div className="topbarIconItem">
             <Link className="text-light" to="/">
               <BsFillBellFill />
             </Link>
             <span className="topbarIconBadge"></span>
           </div> */}
-          <div className="topbarIconItem">
+          <div className="m-2 mx-2 mt-1">
             <NotifcationModal />
           </div>
           <div className="topbarIconItem">
             <Link className=" text-light" to="/messages">
-              <BsChatTextFill />
+              <BsChatTextFill size="1.05em" />
             </Link>
             <span className="topbarIconBadge"></span>
           </div>
           <div className="topbarIconItem">
             <Link className=" text-light" to="/catagory">
-              <BsFillPeopleFill />
+              <BsFillPeopleFill size="1.05em" />
             </Link>
             <span className="topbarIconBadge"></span>
           </div>

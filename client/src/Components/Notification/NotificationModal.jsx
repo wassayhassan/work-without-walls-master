@@ -52,7 +52,7 @@ export default function NotifcationModal() {
         <Tooltip title="Notifcation">
 
          <Badge color="error" badgeContent={readNotificationCount}>
-          <IoMdNotifications color='white' size="1.4em" onClick={handleClick} />
+          <IoMdNotifications  size="1.4em" className='cursor-pointer hover:text-gray-300 text-gray-200' onClick={handleClick} />
          </Badge>
           
         </Tooltip>

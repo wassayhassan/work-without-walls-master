@@ -31,7 +31,10 @@ const SellerOrderDetailsRight = ({orderDetails}) => {
   const date2  = addDays(orderDetails.createdAt, 10);
 
  function handleNoteChange(e){
-    setNote(e.target.value);
+  let no = {
+    msg: e.target.value
+  };
+    setNote(no);
  }
 
 
@@ -75,8 +78,11 @@ const handleOpenSave = () => {
  }
 
  useEffect(()=> {
-
+  if(orderDetails._id){
     getNotes(orderDetails._id)
+  }
+
+
 
  }, [orderDetails])
 
@@ -136,7 +142,7 @@ const handleOpenSave = () => {
           <div>
           <div className='p-1'>
             <Textarea
-                  value={note && note.msg}
+                  value={note && note.msg? note.msg: ""}
                   id="note"
                   placeholder="Leave a note..."
                   required={true}
