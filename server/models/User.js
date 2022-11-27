@@ -5,6 +5,9 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'First Name is Required'],
   },
+  stripeAccount: {
+     type: Object
+  },
   lastname: {
     type: String,
     required: [true, 'Last Name is Required'],

@@ -32,8 +32,10 @@ export const getConversation=(id)=>Base.get(`/api/conversations/${id}`)  //done
 export const getMessage=(id)=>Base.get(`/api/messages/${id}`)//done
 export const AddMessages=(data)=>Base.post("/api/messages", data)
 export const getFriednsConversation=(senderId,receiverId)=>Base.get(`/api/conversations/find/${senderId}/${receiverId}`) //chat online
+export const getConversationByTwoUser = (id1, id2) => Base.get(`/api/conversations/get/${id1}/${id2}`)
 export const addBid = (data) => Base.post('/bid/addnew', data);
 export const getBidsById = (id) => Base.get(`/bid/getbyid/${id}`);
+export const getBidsByTwoIds = (id1, id2) => Base.get(`/bid/get/${id1}/${id2}`)
 export const createOrder = (data) =>  Base.post('/order/create', data);
 export const getOrderById = (id) => Base.get(`/order/${id}`);
 export const getBuyerOrdersByUserId = (id) => Base.get(`/order/user/buyer/${id}`);
@@ -67,3 +69,8 @@ export const deleteTeamById = (id) => Base.delete(`/team/${id}`);
 export const getTeamByCategoryAndId = (id, category) => Base.get(`/team/get/${id}/${category}`);
 export const getTeamsByCategory = (category) => Base.get(`/team/get/${category}`);
 export const getPaymentIntent = (data) => Base.post('/payment/create/paymentintent', data);
+export const startFinancialConnect = (data) => Base.post('/payment/start/financialconnection', data);
+export const addBank = (data) => Base.post('/payment/addbank', data);
+export const sendPayment = (data) => Base.post('/payment/send/payment', data);
+export const createConversation = (data) => Base.post('/api/conversations/', data);
+export const getConversationById = (id) => Base.get(`/api/conversations/getbyid/${id}`);

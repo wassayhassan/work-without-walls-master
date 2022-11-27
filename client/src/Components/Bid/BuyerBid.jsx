@@ -49,7 +49,7 @@ const BuyerBid = ({teamData}) => {
       <span>
         <Popup
           trigger={
-            <Button className="ct" variant="outline-primary">Contact Now</Button>
+            <Button className="ct" variant="outline-primary">Send An Offer</Button>
           }
           modal
           nested

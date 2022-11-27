@@ -20,6 +20,7 @@ import Bid from "./Components/Bid/Bid";
 import BuyerTeamCategory from "./Components/BuyerTeamCategory";
 import { ForgotPasswordPage } from "./Components/forgot-password";
 import Messenger from "./Components/Messenger/Messenger";
+import Messenger2 from "./Components/Messenger/Messenger2";
 import { ProtectedRoute } from "./Components/protected-route";
 import ActiveOrders from "./Components/ShowBuyerRequest/ActiveOrders";
 import BuyerReq from "./Components/ShowBuyerRequest/BuyerReq";
@@ -33,6 +34,7 @@ import Second from "./Components/TeamBuyerEnd/SecondScreen"
 import SellerTeam from "./Components/Teams-At-Seller-End/SellerTeam"
 import SellerTeamByCategory from "./Components/Teams-At-Seller-End/SellerTeamByCategory";
 import { io } from "socket.io-client";
+import SellerEarning from "./Components/SellerEarning/SellerEarning";
 function App() {
   const { user } = useContext(UserContext);
   const socket = useRef();
@@ -75,6 +77,7 @@ function App() {
           <Route path="/buyer-request" element={<BuyerReq />} />
           <Route path="/active-orders" element={<ActiveOrders />} />
           <Route path="/messages" element={<Messenger />} />
+          <Route path="/messages/:id" element={<Messenger2 />} />
           <Route path="/buyer/teams/:category" element={< Firstteam />} />
           <Route path="/buyer/team/:id" element={< Second  />} />
           <Route path="/second" element={<Second />} />
@@ -83,6 +86,7 @@ function App() {
           <Route path="/user/manage/order/:id" element={<SellerOrderDetails />} />
           <Route path="/user/buyer/orders" element={<BuyerOrdersPage />} />
           <Route path="/user/seller/orders" element={<SellerOrdersPage />} />
+          <Route path="/seller/earning" element={<SellerEarning />} />
         </Route>
       </>
     </Routes>

@@ -47,5 +47,22 @@ router.get("/find/:firstUserId/:secondUserId", protect, async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.get('/get/:id1/:id2', async(req, res)=> {
+  try{
+    const data = await Conversation.findOne({members: { $all: [req.params.id1, req.params.id2]}});
+    res.status(200).json(data)
+  }catch(err){
+    res.status(400).json(err);
+  }
+});
+
+router.get('/getbyid/:id', async(req, res)=> {
+  try{
+    const data = await Conversation.findOne({_id: req.params.id});
+    res.status(200).json(data)
+  }catch(err){
+    res.status(400).json(err);
+  }
+});
 
 module.exports = router;

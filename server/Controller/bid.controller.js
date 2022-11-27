@@ -47,6 +47,20 @@ const getOffersById = async(req, res) => {
       res.status(400).json(err)
     }
 }
+const getBidsByTwoId = async(req, res) => {
+   try{
+      const offers = await bidModel.find({"senderId" : {
+         $in : [
+           req.params.id1,
+           req.params.id2
+         ]
+       }, 'receiverId':  {$in: [req.params.id1, req.params.id2 ] }});
+      res.status(200).json(offers);
+  }catch(err){
+   console.log(err)
+    res.status(400).json(err)
+  }
+}
 const updateBid = async(req, res) => {
    try{
        let offer = await bidModel.findByIdAndUpdate({_id: req.params.id}, req.body,{new: true});
@@ -57,4 +71,4 @@ const updateBid = async(req, res) => {
 }
 
 
-module.exports = {addNewBid, deleteBid, getOffersById, updateBid}
+module.exports = {addNewBid, deleteBid, getOffersById, updateBid, getBidsByTwoId}

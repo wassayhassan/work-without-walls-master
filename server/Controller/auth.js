@@ -21,6 +21,7 @@ const logins = asyncHandler(async (req, res) => {
         lastname: user.lastname,
         email: user.email,
         phone: user.phone,
+        stripeAccount: user.stripeAccount,
         token: generateTOKEN(user._id),
         profileImg:user.profileImg,
         approve: user.approve,

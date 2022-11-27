@@ -5,10 +5,12 @@ import Message from "../Message/Message";
 import ChatOnline from "../ChatOnline/ChatOnline";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/user.context";
-import { AddMessages, getMessage, getConversation, getBidsById, getBidsByTwoIds } from "../../api/index";
+import { AddMessages, getMessage, getConversation, getBidsById ,getBidsByTwoIds,  getConversationById } from "../../api/index";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
 
-export default function Messenger() {
+export default function Messenger2() {
+    const {id} = useParams();
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -19,6 +21,13 @@ export default function Messenger() {
   const socket = useRef();
   const { user } = useContext(UserContext);
   const scrollRef = useRef();
+  async function getConv(id){
+    const data = await getConversationById(id);
+    setCurrentChat(data.data);
+  }
+  useEffect(()=> {
+    getConv(id);
+  }, [id])
 
   useEffect(() => {
     socket.current = io("ws://localhost:7900"); //
@@ -62,9 +71,8 @@ export default function Messenger() {
   }, [user._id]);
   const getMessages = async () => {
     try {
-
       const res = await getMessage(currentChat?._id);
-      const res2 = await getBidsByTwoIds(currentChat.members[0]._id, currentChat.members[1]._id);
+      const res2 = await getBidsByTwoIds(currentChat.members[0], currentChat.members[1]);
       if(res && res2){
         let newArr = [...res.data, ...res2.data];
         newArr.sort(function(x, y){
@@ -83,15 +91,13 @@ export default function Messenger() {
 
   useEffect(() => {
     if(currentChat){
-      getMessages();
+        getMessages();
     }
- 
-
   }, [currentChat]);
 
   const handleSubmit = async (e) => {
     const receiverId = currentChat.members.find(
-      (member) => member._id !== user._id
+      (member) => member !== user._id
     );
     e.preventDefault();
     const message = {
@@ -100,6 +106,8 @@ export default function Messenger() {
       text: newMessage,
       conversationId: currentChat._id,
     };
+
+
 
     socket.current.emit("sendMessage", {
       mtype: "message",
@@ -115,7 +123,6 @@ export default function Messenger() {
       newEntry.text = newMessage;
       newEntry.mtype = "message";
       newEntry.sender = (user._id);
-      newEntry.receiverId = (receiverId._id);
       setMessages([...messages, newEntry]);
       setNewMessage("");
     } catch (err) {

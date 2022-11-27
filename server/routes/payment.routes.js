@@ -16,6 +16,45 @@ router.post('/create/paymentintent', async(req, res)=> {
         res.status(500).json(err);
     }
 })
+router.post('/start/financialconnection', async(req, res)=> {
+    try{
+        const session = await stripe.financialConnections.sessions.create({
+            account_holder: {type: 'account', account: req.body.stripeAccount.id},
+            filters: {countries: ['US']},
+            permissions: ['ownership', 'payment_method', 'transactions'],
+
+          });
+          res.status(200).json(session);
+    }catch(err){
+        console.log(err);
+        res.status(500).json(err);
+    }
+
+})
+router.post('/addbank', async(req, res)=> {
+    try{
+        const account = await stripe.accounts.update(
+            req.body.stripeAccountId,
+            {external_account: req.body.bankId}
+          );
+    res.status(200).json(account);
+    }catch(err){
+        res.status(200).json(err);
+    }
+})
+router.post('/send/payment', async(req, res)=> {
+    try{
+        const transfer = await stripe.transfers.create({
+            amount: req.body.amount,
+            currency: "usd",
+            destination: req.body.stripeAccount,
+          });
+          res.status(200).json(transfer);
+    }catch(err){
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
 
 module.exports  = router;
 
