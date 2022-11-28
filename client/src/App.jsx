@@ -13,6 +13,10 @@ import Profile from "./Components/UserNavbar";
 import SellerOrderDetails from "./Components/Order/SellerOrderDetails";
 import BuyerOrdersPage from "./Components/Orders/BuyerOrdersPage";
 import SellerOrdersPage from "./Components/Orders/SellerOrderPage";
+import Settings from "./Components/Setting/Settings";
+import RefreshAccount from "./Components/Setting/RefreshAccount";
+import PaymentSucess from "./Components/Setting/PaymentSucess";
+import PaymentFailure from "./Components/Setting/PaymentFailure";
 
 // Team
 import { Route, Routes } from "react-router-dom";
@@ -87,6 +91,11 @@ function App() {
           <Route path="/user/buyer/orders" element={<BuyerOrdersPage />} />
           <Route path="/user/seller/orders" element={<SellerOrdersPage />} />
           <Route path="/seller/earning" element={<SellerEarning />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/stripe/return" element={<Settings />} />
+          <Route path="/stripe/reauth/:id" element={<RefreshAccount />} />
+          <Route path="/payment/success/:id" element={<PaymentSucess />} />
+          <Route path="/payment/failure" element={<PaymentFailure />} />
         </Route>
       </>
     </Routes>

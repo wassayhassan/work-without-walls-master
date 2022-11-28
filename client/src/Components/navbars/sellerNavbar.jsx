@@ -104,7 +104,7 @@ const SellerNavBar = () => {
               <BsPersonFill className="mx-2" />
               Profile
             </Dropdown.Item>
-            <Dropdown.Item to="/">
+            <Dropdown.Item to="" onClick={()=> navigate("/settings")}>
               <BsGearWide className="mx-2" />
               Settings
             </Dropdown.Item>

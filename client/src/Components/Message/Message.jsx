@@ -8,6 +8,7 @@ import { Card } from "flowbite-react";
 import AcceptPaymentModal from "../Payment/AcceptPaymentModal";
 import { getPaymentIntent } from "../../api";
 import CircularProgress from '@mui/material/CircularProgress';
+import { createCheckoutSession } from "../../api";
 
 export default function Message({currentChat, member, current, message, own }) {
   const [accepted, setAccepted] = useState(message.accepted === "true"? true: false);
@@ -19,6 +20,24 @@ export default function Message({currentChat, member, current, message, own }) {
   const { user } = useContext(UserContext);
 
   const[offerOrderId, setOfferOrderId] = useState(message.orderId);
+
+  async function createCheckout(){
+    console.log("hello")
+    const receiverId = currentChat.members.find(
+      (member) => member._id !== user._id
+    );
+    console.log(receiverId)
+    let data = {
+      name: message.title,
+      amount: message.budget,
+      offerId: message._id,
+      destinationId: receiverId.stripeAccount
+    }
+
+    let response = await createCheckoutSession(data);
+    console.log(response.data);
+    window.location = response.data.url;
+  }
 
 
 
@@ -147,7 +166,7 @@ let dat = {
         <div className="d-flex flex-row justify-content-end">
       {  paymentIntent &&   <AcceptPaymentModal paymentIntent={paymentIntent} acceptOpen={acceptOpen} setAcceptOpen={setAcceptOpen} message={message} currentChat={currentChat} setOfferOrderId={setOfferOrderId} setAccepted={setAccepted} /> }
        {accepted && <button type="button" className="btn btn-dark" onClick={()=> navigate(`/user/manage/order/${offerOrderId}`)}>View Order</button>}
-        {(message.senderId !== user._id && loading !== true && <button type="button" className="btn btn-light" onClick={handleAccept} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
+        {(message.senderId !== user._id && loading !== true && <button type="button" className="btn btn-light" onClick={createCheckout} disabled={accepted}>{accepted? 'Accepted': 'Accept'}</button>)}
         {loading? <button type="button" className="btn btn-light" disabled={true}>
         <CircularProgress color="inherit" sx={{marginX: 1}} size="1.5em" />
           Processing

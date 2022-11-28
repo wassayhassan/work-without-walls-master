@@ -35,6 +35,7 @@ export const getFriednsConversation=(senderId,receiverId)=>Base.get(`/api/conver
 export const getConversationByTwoUser = (id1, id2) => Base.get(`/api/conversations/get/${id1}/${id2}`)
 export const addBid = (data) => Base.post('/bid/addnew', data);
 export const getBidsById = (id) => Base.get(`/bid/getbyid/${id}`);
+export const getBidById = (id) => Base.get(`/bid/${id}`);
 export const getBidsByTwoIds = (id1, id2) => Base.get(`/bid/get/${id1}/${id2}`)
 export const createOrder = (data) =>  Base.post('/order/create', data);
 export const getOrderById = (id) => Base.get(`/order/${id}`);
@@ -74,3 +75,6 @@ export const addBank = (data) => Base.post('/payment/addbank', data);
 export const sendPayment = (data) => Base.post('/payment/send/payment', data);
 export const createConversation = (data) => Base.post('/api/conversations/', data);
 export const getConversationById = (id) => Base.get(`/api/conversations/getbyid/${id}`);
+export const createStripeAccount = (data) => Base.post('/payment/stripe/create/account', data);
+export const getAccountLink = (data) => Base.post('/payment/stripe/account/link', data)
+export const createCheckoutSession = (data) => Base.post('/payment/create-checkout-session', data);

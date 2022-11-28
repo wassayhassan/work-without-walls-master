@@ -17,11 +17,7 @@ const uploadImage = async (image) => {
 const signup = asyncHandler(async (req, res) => {
   //corrected
   try {
-    const account = await stripe.accounts.create({
-      country: 'US',
-      type: 'custom',
-      capabilities: {card_payments: {requested: true}, transfers: {requested: true}},
-    })
+
     
     const { cnicFront, cnicBack } = req.files;
     const { CNIC, password, firstname, lastname, email, phone } = req.body;
@@ -35,7 +31,6 @@ const signup = asyncHandler(async (req, res) => {
       cnicFront: cnicFrontImage,
       cnicBack: cnicBackImage,
       password: hashedPaswword,
-      stripeAccount:  account,
       userRole: "user",
       approve: false,
     });
@@ -44,10 +39,6 @@ const signup = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error("User already exists");
     }
-    const dat = await stripe.accounts.update(
-      account.id,
-      {tos_acceptance: {date: new Date(), ip: req.ip}}
-    );
     user.save().then(() => {
       res.status(200).json({
         _id: user.id,
@@ -57,7 +48,6 @@ const signup = asyncHandler(async (req, res) => {
         email: user.email,
         phone: user.phone,
         title:user.title,
-        stripeAccount: user.stripeAccount,
         description:user.description,
         rate:user.rate,
         skill1:user.skill1,
@@ -67,7 +57,6 @@ const signup = asyncHandler(async (req, res) => {
         lang2:user.lang2,
         lang3:user.lang3,
         workHistory:user.workHistory,
-        token: generateTOKEN(user._id),
         approve: false,
         userrole: "user",
 
@@ -202,7 +191,7 @@ const getSingleUser = asyncHandler(async (req, res) => {
 const getUserById = async(req, res) => {
   try{
     let user = await User.findById(req.params.id);
-    res.status(200).json({name: user.firstname + ' ' + user.lastname, profileImg: user.profileImg, id: user._id})
+    res.status(200).json({name: user.firstname + ' ' + user.lastname, profileImg: user.profileImg, id: user._id, stripeAccount: user.stripeAccount})
   }catch(err){
     res.status(400).json(err);
   }

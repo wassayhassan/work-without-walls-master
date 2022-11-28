@@ -4,6 +4,8 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi';
 import { updateOrder } from '../../api';
 import { UserContext } from "../../context/user.context";
 import { getDeliveriesByOrderId } from '../../api';
+import { sendPayment } from '../../api';
+import { getUserById } from '../../api';
 import axios from 'axios';
 
 const AcceptDeliveryConfirmation = ({orderDetails, setOpenBuyerReview}) => {
@@ -14,15 +16,23 @@ const AcceptDeliveryConfirmation = ({orderDetails, setOpenBuyerReview}) => {
     setOpen((prev)=> !prev)
  }
  const handleAccept = async() => {
+
      const data = await updateOrder(orderDetails._id, {completed: "true", completedAt: getCurrentDateTime(), status: "completed"});
+     const res = await getUserById(orderDetails.assignedTo);
+
      let newData3 = {
                userId: orderDetails.assignedTo,
                message: `<a href="/user/manage/order/${orderDetails._id}" className="font-normal text-base text-black"><span className="font-medium text-base">${user.firstname + ' ' + user.lastname}</span> accepted the Order  </a>`,
                read: 'false'
-           }
-      const dati = await axios.post('/notification', newData3);
+        }
+      const dati =  axios.post('/notification', newData3);
      setOpenBuyerReview(true);
      setOpen(false);
+     const temp = {
+        amount: orderDetails.budget,
+        receiverStripeId: res.data.stripeAccount
+     }
+     const res2 = await sendPayment(temp);
  }
  console.log(orderDetails)
 

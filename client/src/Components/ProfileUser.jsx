@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Popup from "reactjs-popup";
-import axios from "axios";
 import { FaPen } from "react-icons/fa";
 import "reactjs-popup/dist/index.css";
 import Loading from "./Loading";

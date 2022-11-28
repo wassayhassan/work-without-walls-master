@@ -15,6 +15,7 @@ const SellerOrderDetails = () => {
       async function getOrderDetails(id){
            const data = await getOrderById(id);
            setOrderDetails(data.data);
+           console.log(data)
       }
       getOrderDetails(id);
   }, [])
