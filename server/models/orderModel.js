@@ -9,6 +9,13 @@ const orderSchema = new Schema({
       payment: {
         type: String
       },
+      paymentIntentId: {
+        type: String
+      },
+      teamId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teams'
+      },
       title: {
         type: String
       },

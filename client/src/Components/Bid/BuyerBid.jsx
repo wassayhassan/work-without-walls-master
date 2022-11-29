@@ -19,6 +19,7 @@ const BuyerBid = ({teamData}) => {
       assignedBy: user._id,
       offerType: 'Buyer',
       assignedTo: teamData.createdBy,
+      teamId: teamData._id,
       offer: '',
       budget: '',
       dealTime: '',

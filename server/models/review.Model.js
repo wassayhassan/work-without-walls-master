@@ -7,6 +7,10 @@ const ReviewModel = new Schema(
     rtype: {
        type: String
     },
+    teamId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Teams'
+    },
     reviewedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',

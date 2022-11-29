@@ -38,4 +38,12 @@ const getReviewById = async(req, res) => {
     res.status(400).json(err);
   }
 }
-module.exports = {createReview, getReviewsByUserId, getReviewsByOrderId, getReviewById}
+const getReviewsByTeamId = async(req, res)=> {
+  try{
+    const review = await Review.find({teamId: req.params.id});
+    res.status(200).json(review);
+  }catch(err){
+    res.status(400).json(err);
+  }
+}
+module.exports = {createReview, getReviewsByUserId, getReviewsByOrderId, getReviewById,  getReviewsByTeamId}

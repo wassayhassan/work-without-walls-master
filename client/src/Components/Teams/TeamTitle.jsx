@@ -8,19 +8,28 @@ import { UserContext } from "../../context/user.context";
 import { createTeam } from "../../api";
 import { useNavigate } from "react-router-dom";
 const TeamTitle = () => {
-  const [logo, setLogo] = useState(
-    "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-  );
+  const [logo, setLogo] = useState(null);
   const {user} = useContext(UserContext);
+
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [leaderName, setLeaderName] = useState("");
   const [teamMembers, setTeamMembers] = useState(2);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('webdevelopment');
+  const options = [
+    { value: "webdevelopment", text: "Web Development" },
+    { value: "database", text: "Database" },
+    { value: "Content Writting", text: "Content Writting" },
+    { value: "artificalintelligence", text: "Artifical Intelligence" },
+    { value: "gamedevelopment", text: "Game Development" },
+    { value: "dataentry", text: "Data Entry" },
+    { value: "dip", text: "DIP" },
+    { value: "appdevelopment", text: "App Development" },
+    { value: "machinelearning", text: "Machine Learning" },
+  ];
 
   const handleCreateTeam = async() => {
     let data = new FormData();
-
     data.append("title", title);
     data.append("logo", logo);
     data.append('membersCount', teamMembers)
@@ -29,7 +38,6 @@ const TeamTitle = () => {
     data.append('category', category);
     const response = await createTeam(data);
     if(response.status !== 400){
-      console.log(response.data)
       navigate(`/team/${response.data._id}/members/`);
     }
    
@@ -44,7 +52,7 @@ const TeamTitle = () => {
           <div className="sec_uplod_logo">
             <div className="to_flex">
               <div className="circle">
-                <img src={logo} alt="" className="circle" srcset="" />
+                <img src={logo? URL.createObjectURL(logo): null} alt="" className="circle" srcset="" />
               </div>
               <div>
                 <input
@@ -64,7 +72,7 @@ const TeamTitle = () => {
                 id="file-upload"
                 type="file"
                 onChange={(e) => {
-                  setLogo(URL.createObjectURL(e.target.files[0]));
+                  setLogo(e.target.files[0]);
                 }}
               />
             </div>
@@ -82,14 +90,20 @@ const TeamTitle = () => {
                 }}
               />
             </div>
-            <div className="to_flex">
-              <input
-                placeholder="Category Name"
-                className="Up_Name inp_data outline-none"
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                }}
-              />
+            <div className="flex flex-col mt-3 ml-2">
+                  <select
+                    className="w-56 rounded-md"
+                    value={category}
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
             </div>
 
             <div className="to_flex" id="Last_div">

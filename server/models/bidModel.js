@@ -7,6 +7,11 @@ const bidSchema = new Schema({
       offerType: {
         type: String
       },
+      teamId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teams'
+      }
+      ,
     jobId: {
         type: Schema.Types.ObjectId,
         ref:'Job',

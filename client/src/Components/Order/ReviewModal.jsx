@@ -26,19 +26,22 @@ const BuyerReviewModal = ({setOpenBuyerReview, openBuyerReview, orderDetails}) =
     }
    async function SubmitReview(){
       let OR = (parseInt(review.communication) + parseInt(review.service) + parseInt(review.buyagain)) /3;
+     
       let data = {
         ...review,
         overallRating: OR,
-        rtype: "Seller",
+        teamId: orderDetails.teamId,
+        rtype: 'Seller',
         reviewedBy: user._id,
         name: user.firstname + ' ' + user.lastname,
-        reviewedTo: orderDetails.assignedTo,
+        reviewedTo: orderDetails.teamId? orderDetails.teamId: orderDetails.assignedTo,
         reviewOf: orderDetails._id
       }
 
       let response = await createReview(orderDetails._id, data);
       if(response.status === 200){
         let newData3 = {
+          teamId: orderDetails.teamId,
           userId: orderDetails.assignedTo,
           message: `<a href="/user/manage/order/${orderDetails._id}" className="font-normal text-base text-black"><span className="font-medium text-base">${user.firstname + ' ' + user.lastname}</span> left a review </a>`,
           read: 'false'

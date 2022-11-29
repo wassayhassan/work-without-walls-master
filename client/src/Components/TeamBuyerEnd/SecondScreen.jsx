@@ -9,9 +9,14 @@ import BuyerBid from "../Bid/BuyerBid";
 import { getTeamById } from "../../api";
 import { getConversationByTwoUser, createConversation } from "../../api";
 import { UserContext } from "../../context/user.context";
+import { getReviewsByTeamId } from "../../api";
+import Review from "../review.component";
 
 const Second = () => {
   const [teamData, setTeamData] = useState({});
+  const [rating, setRating] = useState(null);
+  console.log(teamData);
+  const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
   const {id} = useParams();
   const {user} = useContext(UserContext)
@@ -23,11 +28,32 @@ const Second = () => {
      }
   }
 
+  async function getReviews(id){
+
+      let data = await getReviewsByTeamId(id);
+     let rat = 0;
+     setReviews(data.data);
+     data.data.forEach((rati)=> {
+      rat += rati.overallRating;
+     })
+     let finalRating = rat/data.data.length;
+     setRating(finalRating);
+    }
+
+
   useEffect(()=> {
     
     getTeamData(id);
     console.log(teamData)
   }, [id])
+  useEffect(()=> {
+    if(teamData._id){
+      setReviews([])
+      setRating(null);
+      getReviews(teamData._id);
+    }
+
+  }, [teamData])
 
   const handleContact = async() => {
      const response = await getConversationByTwoUser(user._id, teamData.createdBy);
@@ -47,19 +73,22 @@ const Second = () => {
     return ( 
         <>
         <BuyerNavBar />
+
+             
              <div className="container con">
               {teamData && teamData.teamMembers?  <BuyerBid teamData={teamData} />: null}
               <Button className="ct" variant="outline-primary" onClick={handleContact}>Contact Now</Button>
        <div className="row justify-content-center">
           <div className="col-md-5">
             <div className="row ">
-            <div className="col image">
+            <div className="col text">
+              <p className="font-semibold text-2xl ml-1">{teamData.title}</p> 
+              <p className="font-normal text-base text-gray-400 ml-1"><b> {teamData.leaderName}</b></p>        
+            </div>
+            <div className="image mt-5">
               <img src={teamData.logo} className="rounded-circle" style={{width:"125px"}}/>
             </div>
-            <div className="col text">
-              <p>{teamData.title}</p> 
-              <p><b> {teamData.leader}</b></p>        
-            </div>
+
             </div>  
           </div>
           <div className="col-md-7">
@@ -87,6 +116,12 @@ const Second = () => {
               );
             })}
             </div>
+          </div>
+          <div className="mt-5">
+            {reviews.length > 0?<p className="font-semibold text-lg ml-3">Reviews</p> : null}
+            {reviews && reviews.map((review)=> {
+              return <Review review={review} />
+            })}
           </div>
        </div>
      </div>

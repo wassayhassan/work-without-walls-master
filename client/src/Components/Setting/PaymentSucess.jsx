@@ -29,6 +29,7 @@ const PaymentSucess = () => {
           conversationId: con.data._id,
           assignedBy: bid.assignedBy,
           offerid: bid._id,
+          teamId: bid.teamId,
           description: bid.offer,
           budget: bid.budget,
           dealTime: bid.dealTime,

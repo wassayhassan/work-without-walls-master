@@ -77,6 +77,7 @@ router.post("/stripe/account/link", async (req, res)=> {
 });
 router.post('/create-checkout-session', async(req, res)=> {
     try{
+        let fees = parseInt(((100 * 20) / req.body.amount) * 100);
         const session = await stripe.checkout.sessions.create({
             line_items: [{
               price_data: {
@@ -84,7 +85,7 @@ router.post('/create-checkout-session', async(req, res)=> {
                 product_data: {
                     name: req.body.name
                 },
-                unit_amount: req.body.amount * 100
+                unit_amount: (req.body.amount * 100) +  fees,
               },
               quantity: 1,
             }],
@@ -92,7 +93,7 @@ router.post('/create-checkout-session', async(req, res)=> {
             success_url: `http://localhost:3000/payment/success/${req.body.offerId}`,
             cancel_url: `http://localhost:3000/payment/failure/${req.body.offerId}`,
             payment_intent_data: {
-              application_fee_amount: 123,
+              application_fee_amount: fees + fees,
               transfer_data: {
                 destination: req.body.destinationId,
               },
@@ -120,6 +121,24 @@ router.post('/send/payment', async(req, res)=> {
     }catch(err){
         console.log(err);
         res.status(400).json(err);
+    }
+})
+router.post('/refund', async(req, res)=> {
+    try{
+        const refund = await stripe.refunds.create({payment_intent: req.body.paymentIntentId});
+        res.status(200).json(refund);
+    }catch(err){
+        res.status(200).json(err);
+    }
+})
+router.get('/account/:id', async(req, res)=> {
+    try{
+        const account = await stripe.accounts.retrieve(
+            req.params.id
+          );
+          res.status(200).json(account);
+    }catch(err){
+        res.status(200).json(err)
     }
 })
 

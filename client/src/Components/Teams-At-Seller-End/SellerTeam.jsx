@@ -24,15 +24,13 @@ const SellerTeam = () => {
           setTeamData(response.data);
        }
     }
+    console.log(teamData)
   
     useEffect(()=> {
       getTeamData(id);
     }, [id])
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setMode(false);
-      };
+
       const handleUpdateTeam = async() => {
         let data = new FormData();
           data.append('title', teamData.title);
@@ -43,7 +41,7 @@ const SellerTeam = () => {
 
         data.append('logo', file);
         const response = await updateTeam(id, data);
-         
+        setMode(false);
       }
     
     
@@ -114,7 +112,7 @@ const SellerTeam = () => {
             <div className="row members">
               {mode ? (
                 <div className='container'>
-                  <form onSubmit={handleSubmit}>
+                  <form>
                     {membersData.map((inputField) => {
                       return (
                       <div className='row' key={inputField.id}>

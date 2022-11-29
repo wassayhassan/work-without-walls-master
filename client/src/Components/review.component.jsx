@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getUserById } from '../api'
+
 import Rating from '@mui/material/Rating';
 import { format } from 'timeago.js';
 import Divider from '@mui/material/Divider';

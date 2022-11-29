@@ -23,9 +23,7 @@ const uploadImage = async (image) => {
 };
 
 const addNewTeam = asyncHandler(async (req, res) => {
-  console.log("req is: ", req.user);
- console.log("Here 1")
-  //complete
+
   try {
     console.clear();
     const {
@@ -54,7 +52,6 @@ const addNewTeam = asyncHandler(async (req, res) => {
       teamMembers.push({id: i, name: `Member ${i+ 1}`, responsibility: 'Responsiblity'});
     }
     
-    
     const teams = new Team({
       title,
     leaderName,
@@ -73,6 +70,8 @@ const addNewTeam = asyncHandler(async (req, res) => {
     });
     const data = await teams.save();
     res.status(200).json(data);
+   
+
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -285,8 +284,9 @@ const updateTeam = async(req, res) => {
     let logo = null;
     if (img) {
       logo = await uploadImage(img?.tempFilePath);
+      req.body.logo = logo;
     }
-    req.body.logo = logo;
+
     console.log(req.body);
      if(req.body.teamMembers[0].id !== 0){
         let teamMembers = req.body.teamMembers.map((mem)=> {

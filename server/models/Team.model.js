@@ -3,6 +3,7 @@ const TeamModel=new mongoose.Schema({
 title:{
     type:String,
 },
+
 logo:{
     type:String,
 },

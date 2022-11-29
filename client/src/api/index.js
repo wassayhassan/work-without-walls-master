@@ -78,3 +78,5 @@ export const getConversationById = (id) => Base.get(`/api/conversations/getbyid/
 export const createStripeAccount = (data) => Base.post('/payment/stripe/create/account', data);
 export const getAccountLink = (data) => Base.post('/payment/stripe/account/link', data)
 export const createCheckoutSession = (data) => Base.post('/payment/create-checkout-session', data);
+export const getStripeAccountById = (id) => Base.get(`/payment/account/${id}`);
+export const getReviewsByTeamId = (id) => Base.get(`/review/team/${id}`);

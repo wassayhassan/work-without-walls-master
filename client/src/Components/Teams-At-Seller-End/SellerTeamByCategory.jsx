@@ -10,6 +10,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getTeamByCategoryAndId, updateTeam, deleteTeamById } from "../../api";
 
 const SellerTeamByCategory = () => {
+  
     const [file, setFile] = useState(null)
     const {user} = useContext(UserContext)
     const [mode, setMode] = useState(false);
@@ -29,14 +30,14 @@ const SellerTeamByCategory = () => {
 
        }
     }
-  
+  console.log(teamData.logo)
     useEffect(()=> {
       getTeamData(user._id, category);
     }, [category])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setMode(false);
+
       };
       const handleUpdateTeam = async() => {
         let data = new FormData();
@@ -48,7 +49,7 @@ const SellerTeamByCategory = () => {
 
         data.append('logo', file);
         const response = await updateTeam(teamData._id, data);
-
+        setMode(false);
       }
     
     
@@ -104,9 +105,9 @@ const SellerTeamByCategory = () => {
                 {mode ? (
                   <div className="col-md-6 mb-3">
                     <label className="form-label">Team Leader</label>
-                    <input type="text" value={teamData.leaderName} name="leaderName" onChange={handleDataChange} className="form-control" required />
+                    <input type="text" value={teamData.leaderName} name="leaderName" onChange={handleDataChange} className="" required />
                   </div>
-                ) : (<div className='teamLead'>{teamData.leaderName}</div>)}
+                ) : (<div className=''><p className='teamLead ml-[37px]'>{teamData.leaderName}</p></div>)}
                 {mode && <div className='col-md-6'>
                   <label className="form-label">Image</label>
                   <input className="form-control" onChange={(e) => setFile(e.target.files[0])} type="file" id="file" /></div>}
@@ -117,10 +118,10 @@ const SellerTeamByCategory = () => {
             <div className="row members">
               {mode ? (
                 <div className='container'>
-                  <form onSubmit={handleSubmit}>
+                  <form>
                     {membersData.map((inputField) => {
                       return (
-                      <div className='row' key={inputField.id}>
+                      <div className='flex flex-row' key={inputField.id}>
                         <div className="col-md-3 mb-3">
                           <label className="form-label">Member Name</label>
                           <input type="text" value={inputField.name} onChange={handleMembersChange} id={inputField.id} name="name" className="form-control"  required />
@@ -153,7 +154,7 @@ const SellerTeamByCategory = () => {
                 <>
                   { teamData && teamData.teamMembers && membersData.map((inputField, idx) => {
                     return (
-                    <div key={idx}>
+                    <div key={idx} className="flex flex-row">
                       <div className="col-md-6 col-6 my-3"><div className='customBorder'>{inputField.name}</div></div>
                       <div className="col-md-6 col-6 my-3"><div className='customBorder'>{inputField.responsibility}</div></div>
                     </div>

@@ -53,7 +53,7 @@ const Members = () => {
       <div className="main_4">
         <div className="sec_one_pg_4">
           <div>
-            <img src={teamData.teamLogo} alt="" className="circle" srcset="" />
+            <img src={teamData.logo} alt="" className="circle" srcset="" />
           </div>
           <div className="name">
             <span className="team_ti">{teamData.title}</span>
@@ -67,7 +67,7 @@ const Members = () => {
               <div className="name">
                 <span>{teamData.leaderName}</span>
                 <br />
-                <span className="team_text">Team Leader</span>
+                <span className="team_text ml-2">Team Leader</span>
               </div>
             </div>
            

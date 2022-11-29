@@ -17,6 +17,7 @@ const logins = asyncHandler(async (req, res) => {
       res.status(200).json({
         _id: user.id,
         CNIC: user.CNIC,
+        stripeAccount: user.stripeAccount,
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,

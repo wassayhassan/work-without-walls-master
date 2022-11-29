@@ -22,21 +22,54 @@ export default function Message({currentChat, member, current, message, own }) {
   const[offerOrderId, setOfferOrderId] = useState(message.orderId);
 
   async function createCheckout(){
-    console.log("hello")
+    Date.prototype.addDays = function(days) {
+      var date = new Date(this.valueOf());
+      date.setDate(date.getDate() + days);
+      return date;
+  }
+  var date = new Date();
+  date = date.addDays(parseInt(message.dealTime));
     const receiverId = currentChat.members.find(
       (member) => member._id !== user._id
     );
-    console.log(receiverId)
+    let dat = {
+      title: message.title,
+      payment: "true",
+      conversationId: currentChat._id,
+      assignedBy: message.assignedBy,
+      offerid: message._id,
+      description: message.offer,
+      budget: message.budget,
+      dealTime: message.dealTime,
+      status: 'started',
+      teamId: message.teamId,
+      createdBy: message.senderId,
+      assignedTo:  message.assignedTo,
+      category: message.category,
+      assigned: "true",
+      completed: "false",
+      canceled: 'false',
+      deleted: 'false',
+      deliveryAt: date
+    }
+
     let data = {
       name: message.title,
       amount: message.budget,
       offerId: message._id,
       destinationId: receiverId.stripeAccount
     }
+    if(message.offerType !== "Buyer"){
+      let response = await createCheckoutSession(data);
+      console.log(response.data);
+      window.location = response.data.url;
+    }else{
+      const data = await createOrder(dat);
+      setOfferOrderId(data.data.orderId);
+      setAccepted(true)
+    }
 
-    let response = await createCheckoutSession(data);
-    console.log(response.data);
-    window.location = response.data.url;
+
   }
 
 
@@ -61,6 +94,7 @@ let dat = {
   budget: message.budget,
   dealTime: message.dealTime,
   status: 'started',
+  teamId: message.teamId,
   createdBy: message.senderId,
   assignedTo:  message.assignedTo,
   category: message.category,
@@ -74,18 +108,20 @@ let dat = {
     amount: message.budget,
      description: message.offer
     }
-    if(message.offerType === "Seller"){
-      const response = await getPaymentIntent(dat0);
-      if(response.status === 200){
-        setPaymentIntent(response.data.client_secret);
-        console.log(response.data.client_secret)
-        setAcceptOpen(true);
-      }
-    }else{
-      const data = await createOrder(dat);
-      setOfferOrderId(data.data.orderId);
-      setAccepted(true)
-    }
+    console.log(message.offerType);
+    // if(message.offerType !== "Buyer"){
+    //   const response = await getPaymentIntent(dat0);
+    //   if(response.status === 200){
+    //     setPaymentIntent(response.data.client_secret);
+    //     console.log(response.data.client_secret)
+    //     setAcceptOpen(true);
+    //   }
+    // }else{
+    //   console.log(dat)
+      // const data = await createOrder(dat);
+      // setOfferOrderId(data.data.orderId);
+      // setAccepted(true)
+    // }
 
 
   setLoading(false)

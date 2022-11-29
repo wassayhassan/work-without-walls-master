@@ -6,6 +6,7 @@ import { createStripeAccount } from '../../api'
 
 const Settings = () => {
     const {user} = useContext(UserContext);
+    
 
    const handleCreateStripeAccount = async() => {
      const data ={
@@ -25,8 +26,16 @@ const Settings = () => {
             <div>
                 <p className='text-2xl font-bold'>Settings</p>
             </div>
-            <div>
-                <Button onClick={handleCreateStripeAccount}>Connect Stripe</Button>
+            <div className='flex flex-row justify-between'>
+              <div>
+                <p className='text-lg font-medium'>Connect Stripe</p>
+                <p className='text-sm font-normal'>You need to connect a Stripe connect to make and receive payment</p>
+              </div>
+              <div className='flex flex-row'>
+                <p className='m-2 font-light'>{user.stripeAccount}</p>
+              <Button onClick={handleCreateStripeAccount} disabled={user.stripeAccount? true: false}>Connect Stripe</Button>
+              </div>
+                
             </div>
 
         </div>
