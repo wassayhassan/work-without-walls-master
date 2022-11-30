@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../Css Files/team.css";
 import video from "../../Images/team/gall6.jpg";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { UserContext } from "../../context/user.context";
 import { createTeam } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { getTeamsCountByUserId } from "../../api";
 const TeamTitle = () => {
   const [logo, setLogo] = useState(null);
   const {user} = useContext(UserContext);
@@ -16,6 +17,7 @@ const TeamTitle = () => {
   const [leaderName, setLeaderName] = useState("");
   const [teamMembers, setTeamMembers] = useState(2);
   const [category, setCategory] = useState('webdevelopment');
+  const [disabled, setDisabled] = useState(false);
   const options = [
     { value: "webdevelopment", text: "Web Development" },
     { value: "database", text: "Database" },
@@ -42,6 +44,16 @@ const TeamTitle = () => {
     }
    
   }
+  async function getCount(id){
+    const res = await getTeamsCountByUserId(id);
+    if(res.data.count >= 3){
+      setDisabled(true);
+    }
+  }
+
+  useEffect(()=> {
+    getCount(user._id)
+  }, [user])
 
   return (
     <div>
@@ -158,8 +170,9 @@ const TeamTitle = () => {
       <br />
       <br /> <br />
       <br />
+      {disabled? <p className="text-base text-red-500 ml-3 font-medium">Cannot create another team as you have already created 3 Teams</p>: null}
 
-          <Button  onClick={handleCreateTeam} >Next</Button>
+          <Button  onClick={handleCreateTeam} disabled={disabled} >Next</Button>
 
         
      

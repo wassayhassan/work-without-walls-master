@@ -9,7 +9,8 @@ const {
     getTeamById,
     deleteTeamById,
     getTeamByCategoryAndId,
-    getTeamsByCategory
+    getTeamsByCategory,
+    getTeamsCountByUserId
   } = require("../Controller/Team.controller");
 
   const { protect } = require("../middleware/verifyToken");
@@ -27,5 +28,6 @@ const {
   router.get('/:id', getTeamById);
   router.get("/get/:id/:category", getTeamByCategoryAndId)
   router.get('/get/:category', getTeamsByCategory);
+  router.get('/count/user/:id', getTeamsCountByUserId)
   
   module.exports = router;

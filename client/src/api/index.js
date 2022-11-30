@@ -80,3 +80,4 @@ export const getAccountLink = (data) => Base.post('/payment/stripe/account/link'
 export const createCheckoutSession = (data) => Base.post('/payment/create-checkout-session', data);
 export const getStripeAccountById = (id) => Base.get(`/payment/account/${id}`);
 export const getReviewsByTeamId = (id) => Base.get(`/review/team/${id}`);
+export const getTeamsCountByUserId = (id) => Base.get(`/team/count/user/${id}`);

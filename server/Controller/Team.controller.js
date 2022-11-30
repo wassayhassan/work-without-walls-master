@@ -339,6 +339,14 @@ const getTeamsByCategory = async(req, res) => {
     res.status(500).json(err);
   }
 }
+const getTeamsCountByUserId = async(req, res)=> {
+  try{
+   const data = await Team.countDocuments({createdBy: req.params.id});
+   res.status(200).json({count: data});
+  }catch(err){
+    res.status(400).json(err)
+  }
+}
 
 
 module.exports = {
@@ -351,6 +359,7 @@ module.exports = {
   getYourTeam,
   getTeamById,
   deleteTeamById,
+  getTeamsCountByUserId,
   getTeamByCategoryAndId,
   getTeamsByCategory
 };
