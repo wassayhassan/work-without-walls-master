@@ -85,7 +85,7 @@ const Members = () => {
                     id={idx}
                     placeholder="Member Name"
                     name="name"
-                    value={mem.name}
+                    value={mem.name || ""}
                     className="inp_data outline-none"
                     onChange={handleMembersChange}
                   />
@@ -94,7 +94,7 @@ const Members = () => {
                     name="responsibility"
                     placeholder="Responsibility"
                     className="inp_data outline-none"
-                    value={mem.responsibility}
+                    value={mem.responsibility || ""}
                     onChange={handleMembersChange}
                   />
                  

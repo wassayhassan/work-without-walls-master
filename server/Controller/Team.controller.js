@@ -49,7 +49,7 @@ const addNewTeam = asyncHandler(async (req, res) => {
     Team.createdAt=date;
     let teamMembers = [];
     for(let i = 0; i < membersCount; i++){
-      teamMembers.push({id: i, name: `Member ${i+ 1}`, responsibility: 'Responsiblity'});
+      teamMembers.push({id: i, name: "", responsibility: ""});
     }
     
     const teams = new Team({

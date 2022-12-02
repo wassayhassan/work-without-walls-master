@@ -11,7 +11,8 @@ import { getTeamsCountByUserId } from "../../api";
 const TeamTitle = () => {
   const [logo, setLogo] = useState(null);
   const {user} = useContext(UserContext);
-
+ const [err, setErr] = useState(null);
+ const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [leaderName, setLeaderName] = useState("");
@@ -31,14 +32,37 @@ const TeamTitle = () => {
   ];
 
   const handleCreateTeam = async() => {
+    setLoading(true);
+    setErr(null);
     let data = new FormData();
+    if(!title){
+      setErr("You have not entered the Title name");
+      setLoading(false);
+      return;
+    }
     data.append("title", title);
+    if(!logo){
+      setErr("You have not selected the logo");
+      setLoading(false);
+      return;
+    }
     data.append("logo", logo);
     data.append('membersCount', teamMembers)
     data.append("leaderName", leaderName);
+    if(!leaderName){
+      setErr("You have not selected the leader Name");
+      setLoading(false);
+      return;
+    }
     data.append("createdBy", user._id);
+    if(!category){
+      setErr("You have not selected the category");
+      setLoading(false);
+      return;
+    }
     data.append('category', category);
     const response = await createTeam(data);
+    setLoading(false);
     if(response.status !== 400){
       navigate(`/team/${response.data._id}/members/`);
     }
@@ -170,9 +194,14 @@ const TeamTitle = () => {
       <br />
       <br /> <br />
       <br />
-      {disabled? <p className="text-base text-red-500 ml-3 font-medium">Cannot create another team as you have already created 3 Teams</p>: null}
+      {disabled? <p className="text-base text-red-500 ml-6 font-medium">Cannot create another team as you have already created 3 Teams</p>: null}
+      {err? <p className="text-base text-red-500 ml-40 font-medium">{err}</p>: null}
+      <div className="flex flex-row justify-end">
 
-          <Button  onClick={handleCreateTeam} disabled={disabled} >Next</Button>
+          {(!loading)? <Button className="m-4"  onClick={handleCreateTeam} disabled={disabled} >Next</Button>: null}
+          {loading?    <Button className="m-4" disabled={true} >Processing</Button>: null}
+      </div>
+
 
         
      
