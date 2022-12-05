@@ -214,10 +214,25 @@ const deleteJob = asyncHandler(async (req, res) => {
 });
 
 const getAllJobs = asyncHandler(async (req, res) => {
+  let pageRequested = parseInt(req.query.page);
+  pageRequested--;
+  const pagelimit = 10;
+  let searchkey = req.query.search;
   try {
-    const job = await Job.find({ createdBy: { $nin: [req.user._id] } });
-    res.status(200).json({ message: "success", data: job });
-  } catch {
+    if(req.query.search && req.query.search.length > 0){
+      const totalDocs = await Job.countDocuments({'description': {$regex: searchkey, $options: 'i'}});
+      const job = await Job.find({ createdBy: { $nin: [req.user._id] }, 'description': {$regex: searchkey, $options: 'i'} }).limit(pagelimit).skip(pagelimit * pageRequested).sort({category: 1,createdAt: -1,  });
+      let totalpages = Math.ceil(totalDocs/pagelimit);
+      pageRequested++;
+      res.status(200).json({message: "success",data: job,totalPages: totalpages, currentpage: pageRequested});
+    }else{
+      const totalDocs = await Job.countDocuments();
+      const job = await Job.find({ createdBy: { $nin: [req.user._id] } }).limit(pagelimit).skip(pagelimit * pageRequested).sort({category: 1,createdAt: -1,  });
+      let totalpages = Math.ceil(totalDocs/pagelimit);
+      pageRequested++;
+      res.status(200).json({message: "success",data: job,totalPages: totalpages, currentpage: pageRequested});
+    }
+  } catch(error) {
     console.log(error);
   }
 });

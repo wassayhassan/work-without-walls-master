@@ -83,9 +83,12 @@ const ProfileUser = () => {
    setUserRating(finalRating);
   }
   useEffect(()=> {
-    setSellerReviews((prev)=> []);
-    setBuyerReviews((prev)=> []);
-     getReviews(localStorageUser._id);
+    if(localStorageUser && localStorageUser._id){
+      setSellerReviews((prev)=> []);
+      setBuyerReviews((prev)=> []);
+      getReviews(localStorageUser._id);
+    }
+
   }, [localStorageUser])
 
   useEffect(() => {
@@ -113,7 +116,7 @@ const ProfileUser = () => {
     formData.append("user", localStorage.getItem("user"));
     const {
       data: { message },
-    } = await updateProfile(user._id,formData) ;
+    } = await updateProfile(user?._id,formData) ;
     window?.location?.reload()
   };
 

@@ -21,7 +21,7 @@ export const logoutUser = () => Base.post("/auth/logout");
 export const signupUser = (data) => Base.post("/api/register", data);
 export const getUserById = (id) => Base.get(`/api/user/${id}`);
 export const getUserMe = () => Base.get("/api/user");
-export const getJobs = () => Base.get("/Job/") 
+export const getJobs = (page, search) => Base.get("/Job/", {params:  {page: page, search: search}}) ;
 export const createJob=(data)=>Base.post(`/Job/create/`, data)
 export const getYourJobs = ()=>Base.get("/Job/yourJob") //being map
 export const updateYourJobs = (id, data)=>Base.put(`/Job/updateJob/${id}`, data) //being updated
@@ -68,7 +68,7 @@ export const updateTeam = (id, data) => Base.put(`/team/${id}`, data);
 export const getTeamById = (id) => Base.get(`/team/${id}`);
 export const deleteTeamById = (id) => Base.delete(`/team/${id}`);
 export const getTeamByCategoryAndId = (id, category) => Base.get(`/team/get/${id}/${category}`);
-export const getTeamsByCategory = (category) => Base.get(`/team/get/${category}`);
+export const getTeamsByCategory = (category, page, search) => Base.get(`/team/get/category`, {params: {page: page, category: category, search: search}});
 export const getPaymentIntent = (data) => Base.post('/payment/create/paymentintent', data);
 export const startFinancialConnect = (data) => Base.post('/payment/start/financialconnection', data);
 export const addBank = (data) => Base.post('/payment/addbank', data);

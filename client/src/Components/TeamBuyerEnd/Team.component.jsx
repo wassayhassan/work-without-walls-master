@@ -33,9 +33,9 @@ const Team= ({team}) => {
   return (
         <div className="new" >
             <div className="main">
-            <div className="container-md p-5 my-5 border">
+            <div className="container-md p-5 border">
             <div className="icons">
-                <img className="rounded-circle" style={{width:"100px"}} src={team.logo} />
+                <img className="rounded-circle h-20 w-20"  src={team.logo} />
             </div>
             <div className="data" >
         <p >{team.title} </p>

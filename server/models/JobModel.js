@@ -25,11 +25,6 @@ const JobSchema = new mongoose.Schema({
     ],
     default: "active",
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
   assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     default: "",
@@ -71,7 +66,7 @@ const JobSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-});
+}, {timestamps: true});
 
 const Job = mongoose.model("Job", JobSchema);
 module.exports = Job;

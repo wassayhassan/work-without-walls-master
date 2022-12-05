@@ -12,6 +12,7 @@ import { getTeamById } from "../../api";
 const Members = () => {
 
   const [teamData, setTeamData] = useState({});
+  const [saving, setSaving] = useState(false);
   const [membersData, setMembersData] = useState([]);
   const navigate = useNavigate();
   const {id} = useParams();
@@ -30,10 +31,12 @@ const Members = () => {
   
 
   const handleUpdateTeam = async() => {
+    setSaving(true)
     let data = {
         teamMembers: membersData
     };
     const response = await updateTeam(id, data);
+    setSaving(false);
     if(response.status === 200){
       navigate(`/sellerteam/${teamData._id}`)
     }
@@ -107,7 +110,8 @@ const Members = () => {
 
             <div style={{marginLeft:"12rem"}}>
 
-                <Button className="align-items-center" onClick={handleUpdateTeam}>Submit</Button>
+              {(!saving)? <Button className="align-items-center" onClick={handleUpdateTeam}>Submit</Button>:null } 
+                {saving?  <Button className="align-items-center" disabled={true}>Saving</Button>: null }
             </div>
           </div>
         </div>

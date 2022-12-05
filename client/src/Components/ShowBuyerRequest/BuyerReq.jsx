@@ -1,28 +1,53 @@
 import React, { useEffect, useState } from "react";
 import "../../Css Files/BRafterPosting.css";
 import SellerNavbar from "../navbars/sellerNavbar";
+import { Spinner, Pagination, TextInput} from 'flowbite-react';
 import {getJobs} from "../../api/index"
 import Bid from "../Bid/Bid"
 const BuyerReq = () => {
   const [allJobs, setAllJobs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState('');
+  const [filtered, setFiltered] = useState([]);
 
-  const getAllJobs = async () => {
+  async function handlePageChange(e){
+    console.log(e);
+    getAllJobs(e, search);
+  }
+  async function handleSearchChange(e){
+     setSearch(e.target.value);
+  }
+
+  const getAllJobs = async (page) => {
+    setLoading(true)
     try {
-      const response = await getJobs();
+      const response = await getJobs(page, search);
+      setLoading(false);
       const data = response?.data;
       setAllJobs(data?.data);
+      setTotalPages(data?.totalPages)
+      setCurrentPage(data?.currentpage)
     } catch (e) {
+      setLoading(false);
       setAllJobs([]);
     }
   };
 
   useEffect(() => {
-    getAllJobs();
+    getAllJobs(currentPage, search);
   }, []);
+  useEffect(()=> {
+     getAllJobs(currentPage, search);
+  }, [search])
 
   return (
     <div>
       <SellerNavbar />
+      <div className="m-2 mt-3">
+      <TextInput style={{outline: 'none'}} placeholder="Search..." onChange={handleSearchChange} value={search} />
+      </div>
       <i>
         <b>
           <h2 className="mt-5 font-weight-bold" style={{ textAlign: "center" }}>
@@ -73,7 +98,22 @@ const BuyerReq = () => {
             </div>
           </div> 
         ))}
+        
       </div>
+      <div className="flex flex-row justify-center mt-3">
+      {totalPages && totalPages > 1 &&  <Pagination
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+        showIcons={true}
+        totalPages={totalPages}
+      />}
+      </div>
+
+   
+    <div className='flex flex-row justify-center mt-3'>
+        {loading? <Spinner/>: null}
+
+    </div>
     </div>
   );
 };

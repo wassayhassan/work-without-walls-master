@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const stripe = require("stripe")("sk_test_51M8LOvJhy7FBwcuN7tu5Ty7lF00tktiwZJJms7jQJ6I5ktF7nEN6c4JYtlIz2YPE2AzTm8tkrF3BJcW7TFiQBa3z001RznBzs2");
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const User = require("../models/User");
 router.post('/create/paymentintent', async(req, res)=> {
     try{

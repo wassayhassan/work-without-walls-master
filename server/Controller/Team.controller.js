@@ -330,10 +330,28 @@ const getTeamByCategoryAndId = async(req, res) => {
   }
 }
 const getTeamsByCategory = async(req, res) => {
+  let pageRequested = parseInt(req.query.page);
+  pageRequested--;
+  const pagelimit = 10;
+  let searchkey = req.query.search;
   try{
-     const data = await Team.find({category: req.params.category});
-     console.log(data)
-     res.status(200).json(data);
+    if(req.query.search && req.query.search.length > 0){
+      const totalDocs = await Team.countDocuments({category: req.query.category, createdBy: { $nin: [req.user._id] },  'title': {$regex: searchkey, $options: 'i'} });
+      const data = await Team.find({category: req.query.category, 'title': {$regex: searchkey, $options: 'i'} }).limit(10).skip(pagelimit * pageRequested);
+      let totalpages = Math.ceil(totalDocs/pagelimit);
+      pageRequested++;
+      res.status(200).json({teams: data,totalPages: totalpages, currentpage: pageRequested});
+    }else{
+      const totalDocs = await Team.countDocuments({category: req.query.category, createdBy: { $nin: [req.user._id] }});
+      const data = await Team.find({category: req.query.category}).limit(10).skip(pagelimit * pageRequested);
+      let totalpages = Math.ceil(totalDocs/pagelimit);
+      console.log(totalDocs);
+      console.log(pagelimit);
+      console.log(totalpages);
+      pageRequested++;
+      res.status(200).json({teams: data,totalPages: totalpages, currentpage: pageRequested});
+    }
+
   }catch(err){
     console.log(err);
     res.status(500).json(err);
