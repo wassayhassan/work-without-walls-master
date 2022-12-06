@@ -12,11 +12,16 @@ const PostYourGIG = () => {
   const [buget, setBuget] = useState("");
   const [description, setDescription] = useState("");
   const options = [
-    { value: "", text: "--Choose an option--" },
+    { value: "all", text: "All" },
     { value: "Web Development", text: "Web Development" },
     { value: "Database", text: "Database" },
     { value: "Content Writting", text: "Content Writting" },
     { value: "Artifical Intelligence", text: "Artifical Intelligence" },
+    { value: "Game: Development", text: "Game Development"},
+    { value: "Machine Learning", text: "Machine Learning"},
+    { value: "App Development", text: "App Development"},
+    { value: "DIP", text: "DIP"},
+    {value: "Data Entry", text: "Data Entry"}
   ];
   const [category, setCategory] = useState(options[0].value);
   const [img1, setImg1] = useState("");

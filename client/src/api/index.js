@@ -21,7 +21,7 @@ export const logoutUser = () => Base.post("/auth/logout");
 export const signupUser = (data) => Base.post("/api/register", data);
 export const getUserById = (id) => Base.get(`/api/user/${id}`);
 export const getUserMe = () => Base.get("/api/user");
-export const getJobs = (page, search) => Base.get("/Job/", {params:  {page: page, search: search}}) ;
+export const getJobs = (page, search, category) => Base.get("/Job/", {params:  {page: page, search: search, category}}) ;
 export const createJob=(data)=>Base.post(`/Job/create/`, data)
 export const getYourJobs = ()=>Base.get("/Job/yourJob") //being map
 export const updateYourJobs = (id, data)=>Base.put(`/Job/updateJob/${id}`, data) //being updated

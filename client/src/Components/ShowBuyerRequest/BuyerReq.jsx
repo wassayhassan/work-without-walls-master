@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "../../Css Files/BRafterPosting.css";
 import SellerNavbar from "../navbars/sellerNavbar";
-import { Spinner, Pagination, TextInput} from 'flowbite-react';
+import { Spinner, Pagination, TextInput, Select} from 'flowbite-react';
 import {getJobs} from "../../api/index"
 import Bid from "../Bid/Bid"
+
+const options = [
+  { value: "all", text: "All" },
+  { value: "Web Development", text: "Web Development" },
+  { value: "Database", text: "Database" },
+  { value: "Content Writting", text: "Content Writting" },
+  { value: "Artifical Intelligence", text: "Artifical Intelligence" },
+  { value: "Game: Development", text: "Game Development"},
+  { value: "Machine Learning", text: "Machine Learning"},
+  { value: "App Development", text: "App Development"},
+  { value: "DIP", text: "DIP"},
+  {value: "Data Entry", text: "Data Entry"}
+];
+
+
 const BuyerReq = () => {
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -11,6 +26,7 @@ const BuyerReq = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState([]);
+  const [category, setCategory] = useState(options[0].value);
 
   async function handlePageChange(e){
     console.log(e);
@@ -20,10 +36,10 @@ const BuyerReq = () => {
      setSearch(e.target.value);
   }
 
-  const getAllJobs = async (page) => {
+  const getAllJobs = async (page, search, category) => {
     setLoading(true)
     try {
-      const response = await getJobs(page, search);
+      const response = await getJobs(page, search, category);
       setLoading(false);
       const data = response?.data;
       setAllJobs(data?.data);
@@ -35,18 +51,31 @@ const BuyerReq = () => {
     }
   };
 
-  useEffect(() => {
-    getAllJobs(currentPage, search);
-  }, []);
   useEffect(()=> {
-     getAllJobs(currentPage, search);
-  }, [search])
+     getAllJobs(currentPage, search, category);
+  }, [search, category])
 
   return (
     <div>
       <SellerNavbar />
-      <div className="m-2 mt-3">
-      <TextInput style={{outline: 'none'}} placeholder="Search..." onChange={handleSearchChange} value={search} />
+      <div className="m-2 mt-3 flex flex-row justify-center">
+      <TextInput style={{outline: 'none', width: "40em"}} placeholder="Search..." onChange={handleSearchChange} value={search} />
+        <div className="mx-2">
+          <Select
+                    value={category}
+                    style={{width: "12em"}}
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+          </Select>
+        </div>
       </div>
       <i>
         <b>
